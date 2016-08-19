@@ -72,25 +72,12 @@ int Core::initModules()
 	// disable mouse cursor
 	device->getCursorControl()->setVisible(false);
 
+	//
+	//MODULES
+	//
 
-	//
-	//MESH MODULE
-	//
-	IAnimatedMesh* mesh = smgr->getMesh("../../media/sydney.md2");
-	if (!mesh)
-	{
-		device->drop();
-		return 1;
-	}
-	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh);
-	if (node)
-	{
-		node->setMaterialFlag(EMF_LIGHTING, false);
-		node->setMD2Animation(scene::EMAT_STAND);
-		node->setMaterialTexture(0, driver->getTexture("../../media/sydney.bmp"));
-	}
-	node->setPosition(core::vector3df(2397 * 2, 343 * 2, 2700 * 2));
-	node->setScale(node->getScale() * 10);
+	elementsModule = new ElementsModule(device, driver, smgr, env, camera);
+	elementsModule->init();
 
 
 	// create event receiver
@@ -112,6 +99,8 @@ int Core::run()
 	while (device->run())
 		if (device->isWindowActive())
 		{
+			elementsModule->update();
+
 			driver->beginScene(true, true, 0);
 
 			smgr->drawAll();

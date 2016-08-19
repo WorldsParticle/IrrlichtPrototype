@@ -3,6 +3,7 @@
 #include <irrlicht.h>
 #include "driverChoice.h"
 #include "MyEventReceiver.h"
+#include "ElementsModule.h"
 
 class Core
 {
@@ -22,8 +23,11 @@ private:
 	scene::ISceneManager* smgr;
 	gui::IGUIEnvironment* env;
 
-	//scene::ITerrainSceneNode* terrain;
 	scene::ICameraSceneNode* camera;
+
+private:
+	ElementsModule *elementsModule;
+	//scene::ITerrainSceneNode* terrain;
 
 };
 
