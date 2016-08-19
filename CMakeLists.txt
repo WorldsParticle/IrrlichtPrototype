@@ -3,11 +3,11 @@ PROJECT(IrrlichtProto)
 
 INCLUDE_DIRECTORIES(
    "/usr/include/irrlicht"
-   ${PROJECT_SOURCE_DIR}
+   ${PROJECT_SOURCE_DIR}/include
 )
 
-FILE(GLOB SRCS *.cpp)
-FILE(GLOB HDRS *.h)
+FILE(GLOB SRCS src/*.cpp)
+FILE(GLOB HDRS include/*.h)
 
 ADD_EXECUTABLE(IrrlichtProto
    ${SRCS}
