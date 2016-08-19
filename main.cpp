@@ -34,7 +34,5 @@ int main()
 	if (core.run() != 0)
 		return 1;
 
-	core.drop();
-
 	return 0;
 }

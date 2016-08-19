@@ -6,11 +6,9 @@ class SkyboxModule : public AModule
 {
 public:
 	SkyboxModule(IrrlichtDevice* _device,
-		video::IVideoDriver* _driver,
-		scene::ISceneManager* _smgr,
-		gui::IGUIEnvironment* _env,
 		scene::ICameraSceneNode* _camera)
-		: AModule(_device, _driver, _smgr, _env, _camera)
+		: AModule(_device,  _camera),
+		_night(false)
 	{}
 	~SkyboxModule()
 	{}
@@ -18,6 +16,11 @@ public:
 	virtual int init();
 	virtual int update();
 
-private:
+	void activeNight(bool n);
 
+private:
+	bool _night;
+
+	scene::ISceneNode* skybox;
+	scene::ISceneNode* skydome;
 };

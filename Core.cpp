@@ -76,17 +76,16 @@ int Core::initModules()
 	//MODULES
 	//
 
-	elementsModule = new ElementsModule(device, driver, smgr, env, camera);
+	elementsModule = new ElementsModule(device, camera);
 	elementsModule->init();
-	skyboxModule = new SkyboxModule(device, driver, smgr, env, camera);
+	skyboxModule = new SkyboxModule(device, camera);
 	skyboxModule->init();
-	terrainModule = new TerrainModule(device, driver, smgr, env, camera);
+	terrainModule = new TerrainModule(device, camera);
 	terrainModule->init();
 
-
 	// create event receiver
-	//MyEventReceiver receiver(terrain, skybox, skydome);
-	//device->setEventReceiver(&receiver);
+	receiver = new MyEventReceiver(this);
+	device->setEventReceiver(receiver);
 
 	return 0;
 }
@@ -104,6 +103,8 @@ int Core::run()
 		if (device->isWindowActive())
 		{
 			elementsModule->update();
+			skyboxModule->update();
+			terrainModule->update();
 
 			driver->beginScene(true, true, 0);
 
@@ -133,7 +134,7 @@ int Core::run()
 	return 0;
 }
 
-void Core::drop()
+void Core::close()
 {
-	device->drop();
+	device->closeDevice();
 }

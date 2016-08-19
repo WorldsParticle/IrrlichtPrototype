@@ -16,7 +16,7 @@ public:
 	int initIrrlicht();
 	int initModules();
 	int run();
-	void drop();
+	void close();
 
 private:
 
@@ -27,7 +27,9 @@ private:
 
 	scene::ICameraSceneNode* camera;
 
-private:
+	MyEventReceiver *receiver;
+
+public:
 	ElementsModule *elementsModule;
 	SkyboxModule *skyboxModule;
 	TerrainModule *terrainModule;

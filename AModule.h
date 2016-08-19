@@ -12,12 +12,13 @@ class AModule
 {
 public:
 	AModule(IrrlichtDevice* _device,
-		video::IVideoDriver* _driver,
-		scene::ISceneManager* _smgr,
-		gui::IGUIEnvironment* _env,
 		scene::ICameraSceneNode* _camera)
-		: device(_device), driver(_driver), smgr(_smgr), env(_env), camera(_camera)
-	{}
+		: device(_device), camera(_camera)
+	{
+		driver = device->getVideoDriver();
+		smgr = device->getSceneManager();
+		env = device->getGUIEnvironment();
+	}
 	~AModule()
 	{}
 
