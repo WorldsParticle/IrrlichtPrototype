@@ -47,11 +47,11 @@ int Core::initModules()
 	driver->setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
 
 	// add irrlicht logo
-	env->addImage(driver->getTexture("../../media/irrlichtlogo2.png"),
+	env->addImage(driver->getTexture("./ressources/irrlichtlogo2.png"),
 		core::position2d<s32>(10, 10));
 
 	//set other font
-	env->getSkin()->setFont(env->getFont("../../media/fontlucida.png"));
+	env->getSkin()->setFont(env->getFont("./ressources/fontlucida.png"));
 
 	// add some help text
 	env->addStaticText(
