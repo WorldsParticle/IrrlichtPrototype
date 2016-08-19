@@ -5,6 +5,7 @@
 #include "MyEventReceiver.h"
 #include "ElementsModule.h"
 #include "SkyboxModule.h"
+#include "TerrainModule.h"
 
 class Core
 {
@@ -29,7 +30,7 @@ private:
 private:
 	ElementsModule *elementsModule;
 	SkyboxModule *skyboxModule;
-	//scene::ITerrainSceneNode* terrain;
+	TerrainModule *terrainModule;
 
 };
 

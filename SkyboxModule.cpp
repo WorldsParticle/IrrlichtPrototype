@@ -7,12 +7,12 @@ int SkyboxModule::init(){
 	driver->setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS, false);
 
 	smgr->addSkyBoxSceneNode(
-		driver->getTexture("../../media/irrlicht2_up.jpg"),
-		driver->getTexture("../../media/irrlicht2_dn.jpg"),
-		driver->getTexture("../../media/irrlicht2_lf.jpg"),
-		driver->getTexture("../../media/irrlicht2_rt.jpg"),
-		driver->getTexture("../../media/irrlicht2_ft.jpg"),
-		driver->getTexture("../../media/irrlicht2_bk.jpg"));
+		driver->getTexture("./ressources/irrlicht2_up.jpg"),
+		driver->getTexture("./ressources/irrlicht2_dn.jpg"),
+		driver->getTexture("./ressources/irrlicht2_lf.jpg"),
+		driver->getTexture("./ressources/irrlicht2_rt.jpg"),
+		driver->getTexture("./ressources/irrlicht2_ft.jpg"),
+		driver->getTexture("./ressources/irrlicht2_bk.jpg"));
 
 	driver->setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS, true);
 

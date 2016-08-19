@@ -80,6 +80,8 @@ int Core::initModules()
 	elementsModule->init();
 	skyboxModule = new SkyboxModule(device, driver, smgr, env, camera);
 	skyboxModule->init();
+	terrainModule = new TerrainModule(device, driver, smgr, env, camera);
+	terrainModule->init();
 
 
 	// create event receiver
