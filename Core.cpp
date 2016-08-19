@@ -42,7 +42,7 @@ int Core::initModules()
 	//
 	// BASIC ENVIRONNEMENT
 	//
-	device->setWindowCaption(L"WorldsParticle new prototype");
+	device->setWindowCaption(L"WorldsParticle prototype");
 
 	driver->setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
 
@@ -54,9 +54,9 @@ int Core::initModules()
 	env->getSkin()->setFont(env->getFont("./ressources/fontlucida.png"));
 
 	// add some help text
-	env->addStaticText(
-		L"Press 'W' to change wireframe mode\nPress 'D' to toggle detail map\nPress 'S' to toggle skybox/skydome",
-		core::rect<s32>(10, 421, 250, 475), true, true, 0, -1, true);
+	//env->addStaticText(
+	//	L"Press 'W' to change wireframe mode\nPress 'D' to toggle detail map\nPress 'S' to toggle skybox/skydome",
+	//	core::rect<s32>(10, 421, 250, 475), true, true, 0, -1, true);
 
 	//
 	// CAMERA
@@ -78,6 +78,8 @@ int Core::initModules()
 
 	elementsModule = new ElementsModule(device, driver, smgr, env, camera);
 	elementsModule->init();
+	skyboxModule = new SkyboxModule(device, driver, smgr, env, camera);
+	skyboxModule->init();
 
 
 	// create event receiver
@@ -112,7 +114,7 @@ int Core::run()
 			int fps = driver->getFPS();
 			if (lastFPS != fps)
 			{
-				core::stringw str = L"Terrain Renderer - Irrlicht Engine [";
+				core::stringw str = L"WorldsParticle prototype [";
 				str += driver->getName();
 				str += "] FPS:";
 				str += fps;
