@@ -27,7 +27,7 @@ int main()
 
 	if (core.initIrrlicht() != 0)
 		return 1;
-	
+
 	if (core.initModules() != 0)
 		return 1;
 

@@ -82,6 +82,8 @@ int Core::initModules()
 	skyboxModule->init();
 	terrainModule = new TerrainModule(device, camera);
 	terrainModule->init();
+	soundModule = new SoundModule(device, camera);
+	soundModule->init();
 
 	// create event receiver
 	receiver = new MyEventReceiver(this);
@@ -130,6 +132,9 @@ int Core::run()
 				device->setWindowCaption(str.c_str());
 				lastFPS = fps;
 			}
+            //update FMOD sound system
+            soundModule->setListenerPos(camera->getPosition().X, camera->getPosition().Y, camera->getPosition().Z);
+			soundModule->soundSystem->update();
 		}
 	return 0;
 }
