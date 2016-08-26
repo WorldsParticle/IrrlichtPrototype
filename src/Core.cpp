@@ -18,7 +18,7 @@ int Core::initIrrlicht(){
 	// you can add more parameters if desired, check irr::SIrrlichtCreationParameters
 	irr::SIrrlichtCreationParameters params;
 	params.DriverType = driverType;
-	params.WindowSize = core::dimension2d<u32>(640, 480);
+	params.WindowSize = core::dimension2d<u32>(1280, 720);
 	device = createDeviceEx(params);
 
 	if (device == 0)
@@ -61,8 +61,19 @@ int Core::initModules()
 	//
 	// CAMERA
 	//
+    irr::SKeyMap keyMap[5];
+    keyMap[0].Action = irr::EKA_MOVE_FORWARD;
+    keyMap[0].KeyCode = irr::KEY_KEY_Z;
+    keyMap[1].Action = irr::EKA_MOVE_BACKWARD;
+    keyMap[1].KeyCode = irr::KEY_KEY_S;
+    keyMap[2].Action = irr::EKA_STRAFE_LEFT;
+    keyMap[2].KeyCode = irr::KEY_KEY_Q;
+    keyMap[3].Action = irr::EKA_STRAFE_RIGHT;
+    keyMap[3].KeyCode = irr::KEY_KEY_D;
+    keyMap[4].Action = irr::EKA_JUMP_UP;
+    keyMap[4].KeyCode = irr::KEY_SPACE;
 	camera =
-		smgr->addCameraSceneNodeFPS(0, 100.0f, 1.2f);
+		smgr->addCameraSceneNodeFPS(0, 100.0f, 1.2f, -1, keyMap, 5);
 	//smgr->addCameraSceneNode(0, vector3df(0, 30, -40), vector3df(0, 5, 0));
 
 	camera->setPosition(core::vector3df(2700 * 2, 255 * 2, 2600 * 2));
@@ -84,6 +95,8 @@ int Core::initModules()
 	terrainModule->init();
 	soundModule = new SoundModule(device, camera);
 	soundModule->init();
+    particleModule = new ParticleModule(device, camera);
+    particleModule->init();
 
 	// create event receiver
 	receiver = new MyEventReceiver(this);
@@ -107,6 +120,7 @@ int Core::run()
 			elementsModule->update();
 			skyboxModule->update();
 			terrainModule->update();
+            particleModule->update();
 
 			driver->beginScene(true, true, 0);
 

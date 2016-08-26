@@ -7,6 +7,7 @@
 #include "SkyboxModule.h"
 #include "TerrainModule.h"
 #include "SoundModule.h"
+#include "ParticleModule.h"
 
 class Core
 {
@@ -35,6 +36,7 @@ public:
 	SkyboxModule *skyboxModule;
 	TerrainModule *terrainModule;
 	SoundModule *soundModule;
+    ParticleModule *particleModule;
 
 };
 
