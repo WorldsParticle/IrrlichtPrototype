@@ -40,6 +40,7 @@ int SoundModule::init()
     FMODErrorCheck(result);
 
 
+    /*
     //create test sound
     result = soundSystem->createSound("ressources/drumloop.wav", FMOD_3D, 0, &soundTest);
     FMODErrorCheck(result);
@@ -61,11 +62,13 @@ int SoundModule::init()
     FMODErrorCheck(result);
     result = channelTest->setPaused(false);
     FMODErrorCheck(result);
-    return 0;
+    */
+     return 0;
 }
 
 int SoundModule::update() {
-    //nothing to do
+    setListenerPos(camera->getPosition().X, camera->getPosition().Y, camera->getPosition().Z);
+    soundSystem->update();
     return 0;
 }
 

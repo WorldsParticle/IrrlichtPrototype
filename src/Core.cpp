@@ -87,14 +87,14 @@ int Core::initModules()
 	//MODULES
 	//
 
-	elementsModule = new ElementsModule(device, camera);
+	soundModule = new SoundModule(device, camera);
+	soundModule->init();
+	elementsModule = new ElementsModule(device, camera, soundModule->soundSystem);
 	elementsModule->init();
 	skyboxModule = new SkyboxModule(device, camera);
 	skyboxModule->init();
 	terrainModule = new TerrainModule(device, camera);
 	terrainModule->init();
-	soundModule = new SoundModule(device, camera);
-	soundModule->init();
     particleModule = new ParticleModule(device, camera);
     particleModule->init();
 
@@ -121,6 +121,7 @@ int Core::run()
 			skyboxModule->update();
 			terrainModule->update();
             particleModule->update();
+			soundModule->update();
 
 			driver->beginScene(true, true, 0);
 
@@ -146,9 +147,6 @@ int Core::run()
 				device->setWindowCaption(str.c_str());
 				lastFPS = fps;
 			}
-            //update FMOD sound system
-            soundModule->setListenerPos(camera->getPosition().X, camera->getPosition().Y, camera->getPosition().Z);
-			soundModule->soundSystem->update();
 		}
 	return 0;
 }

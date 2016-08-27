@@ -2,21 +2,16 @@
 
 int ElementsModule::init(){
 
-	IAnimatedMesh* mesh = smgr->getMesh("./ressources/sydney.md2");
-	if (!mesh)
-	{
-		device->drop();
-		return 1;
-	}
-	IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh);
-	if (node)
-	{
-		node->setMaterialFlag(EMF_LIGHTING, false);
-		node->setMD2Animation(scene::EMAT_STAND);
-		node->setMaterialTexture(0, driver->getTexture("./ressources/sydney.bmp"));
-	}
-	node->setPosition(core::vector3df(2397 * 2, 343 * 2, 2700 * 2));
-	node->setScale(node->getScale() * 10);
+	Object	*testObj = new Object(device);
+	Object	*testObj2 = new Object(device);
+
+	testObj->LoadMesh("./ressources/sydney.md2", "./ressources/sydney.bmp");
+    testObj->SetPosition(2397 * 2, 343 * 2, 2700 * 2);
+    _elements.push_back(testObj);
+	testObj2->LoadMesh("./ressources/sydney.md2", "./ressources/sydney.bmp");
+	testObj2->SetPosition(1847 * 2, 323 * 2, 2680 * 2);
+	testObj2->SetSound("./ressources/drumloop.wav", _soundSystem);
+	_elements.push_back(testObj2);
 	return 0;
 }
 int ElementsModule::update(){

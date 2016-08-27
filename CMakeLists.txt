@@ -25,7 +25,9 @@ set(IRRLICHTPROTO_SOURCE_FILES
         src/MyEventReceiver.cpp
         src/SkyboxModule.cpp
         src/SoundModule.cpp
-        src/TerrainModule.cpp)
+        src/TerrainModule.cpp
+        src/Object.cpp
+	src/ParticleModule.cpp)
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
