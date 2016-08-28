@@ -22,8 +22,7 @@ int Object::LoadMesh(std::string meshPath, std::string texturePath)
     {
         _node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
         _node->setMD2Animation(scene::EMAT_STAND);
-        _node->setMaterialTexture(0, _smgr->getVideoDriver()->getTexture("./ressources/sydney.bmp"));
-        _node->setPosition(core::vector3df(2397 * 2, 343 * 2, 2700 * 2));
+        _node->setMaterialTexture(0, _smgr->getVideoDriver()->getTexture(texturePath.c_str()));
         _node->setScale(_node->getScale() * 10);
     }
     else {
