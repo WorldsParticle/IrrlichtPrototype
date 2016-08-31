@@ -1,32 +1,24 @@
 #include "ParticleModule.h"
+#include "SnowWeather.h"
+#include "RainWeather.h"
 
 int ParticleModule::init()
 {
     // Create new ParticleSystem and disable the default Emiter
-    irr::scene::IParticleSystemSceneNode * particleSystem = smgr->addParticleSystemSceneNode(false);
-    particleSystem->setPosition(camera->getPosition());
+    _particleSystem = smgr->addParticleSystemSceneNode(false);
+    _particleSystem->setPosition(camera->getPosition());
 
-    // Create new BoxEmiter
-    irr::scene::IParticleEmitter * emitter = particleSystem->createBoxEmitter(
-        irr::core::aabbox3d<irr::f32>(-5000, 1200, -5000, 5000, 1200, 5000),    // Coordinates
-        irr::core::vector3df(0.0f, -0.15f, 0.0f),                                // Direction
-        1000, 1200,                                                             // Min/Max Particles emission
-        irr::video::SColor(255, 255, 255, 255),
-        irr::video::SColor(255, 255, 255, 255),
-        15000, 20000,                                                           // Min/Max LifeTime
-        20,                                                                     // Angle deviation
-        irr::core::dimension2df(5.0f, 5.0f),                                    // Size min
-        irr::core::dimension2df(15.0f, 15.0f));                                 // Size max
+    // Init Emitter
+    _particleSystem->setEmitter(nullptr);
+    // Set Options
+    _particleSystem->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+    _particleSystem->setMaterialFlag(irr::video::EMF_ZWRITE_ENABLE, false);
+    _particleSystem->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
 
-    // Attach the emitter to the ParticleSystem
-    particleSystem->setEmitter(emitter);
-    // Set the Material and options
-    particleSystem->setMaterialTexture(0, driver->getTexture("./ressources/snow.bmp"));
-    particleSystem->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-    particleSystem->setMaterialFlag(irr::video::EMF_ZWRITE_ENABLE, false);
-    particleSystem->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
-
-    emitter->drop();
+    // Init all weathers
+    _weathers[NONE] = nullptr;
+    _weathers[SNOW] = new SnowWeather(_particleSystem, driver);
+    _weathers[RAIN] = new RainWeather(_particleSystem, driver);
 
     return 0;
 }
@@ -35,4 +27,27 @@ int ParticleModule::update()
 {
     // Nothing to do
     return 0;
+}
+
+void ParticleModule::activate()
+{
+    // Stuff to switch between weathers. Will be replaced by activate(weather)
+    ++_weather %= _weathers.size();
+    auto weather = _weathers[_weather];
+    if (weather)
+    {
+        _particleSystem->setEmitter(weather->getEmitter());
+        _particleSystem->setMaterialTexture(0, weather->getTexture());
+    }
+    else
+        _particleSystem->setEmitter(nullptr);
+}
+
+
+ParticleModule::~ParticleModule()
+{
+    for (auto & weather : _weathers) {
+        delete weather.second;
+    }
+    _weathers.clear();
 }

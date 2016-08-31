@@ -21,6 +21,9 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 		case irr::KEY_KEY_B: // day
 			_core->skyboxModule->activeNight(false);
 			return true;
+        case irr::KEY_KEY_P: // change weather
+            _core->particleModule->activate();
+            return true;
 		case irr::KEY_ESCAPE: // quit
 			_core->close();
 			return true;
