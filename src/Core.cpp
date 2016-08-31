@@ -89,6 +89,7 @@ int Core::initModules()
 
 	soundModule = new SoundModule(device, camera);
 	soundModule->init();
+    soundModule->AddBGMusic("ressources/river_bg.ogg");
 	elementsModule = new ElementsModule(device, camera, soundModule->soundSystem);
 	elementsModule->init();
 	skyboxModule = new SkyboxModule(device, camera);

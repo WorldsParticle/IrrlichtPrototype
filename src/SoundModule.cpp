@@ -9,10 +9,6 @@ int SoundModule::init()
 {
     FMOD_RESULT			result;
     unsigned int		version;
-    int					nbDrivers;
-    FMOD_SPEAKERMODE	speakerMode;
-    char 				name[256];
-
 
     result = FMOD::System_Create(&soundSystem);
     if (result != FMOD_OK) {
@@ -39,30 +35,8 @@ int SoundModule::init()
     result = soundSystem->set3DListenerAttributes(0, &listenerpos, NULL, &forward, &up);
     FMODErrorCheck(result);
 
-
-    /*
-    //create test sound
-    result = soundSystem->createSound("ressources/drumloop.wav", FMOD_3D, 0, &soundTest);
-    FMODErrorCheck(result);
-    result = soundTest->set3DMinMaxDistance(5.0f * DISTANCEFACTOR, 500.0f * DISTANCEFACTOR);
-    FMODErrorCheck(result);
-    result = soundTest->setMode(FMOD_LOOP_NORMAL);
-    FMODErrorCheck(result);
-
-    //play test sound
-    channelTest = 0;
-    FMOD_VECTOR pos = {camera->getPosition().X, camera->getPosition().Y, camera->getPosition().Z};
-    FMOD_VECTOR vel = {0.0f, 0.0f, 0.0f};
-    result = soundSystem->playSound(soundTest, 0, true, &channelTest);
-    if (result != FMOD_OK) {
-        std::cout << "FMOD ERROR: " << result << std::endl;
-        return 1;
-    }
-    result = channelTest->set3DAttributes(&pos, &vel);
-    FMODErrorCheck(result);
-    result = channelTest->setPaused(false);
-    FMODErrorCheck(result);
-    */
+    _BGChannel = NULL;
+    _BGSound = NULL;
      return 0;
 }
 
@@ -86,4 +60,20 @@ void SoundModule::setListenerPos(int x = 0, int y = 0, int z = 0)
     FMOD_VECTOR listenerNewPos = {x, y, z};
     listenerpos = listenerNewPos;
     soundSystem->set3DListenerAttributes(0, &listenerpos, NULL, NULL, NULL);
+    if (_BGChannel != NULL) {
+        _BGChannel->set3DAttributes(&listenerNewPos, NULL);
+    }
+}
+
+void SoundModule::AddBGMusic(std::string path) {
+    soundSystem->createSound(path.c_str(), FMOD_3D, 0, &_BGSound);
+    _BGSound->set3DMinMaxDistance(5.0f * DISTANCEFACTOR, 500.0f * DISTANCEFACTOR);
+    _BGSound->setMode(FMOD_LOOP_NORMAL);
+    soundSystem->playSound(_BGSound, 0, true, &_BGChannel);
+
+    FMOD_VECTOR pos;
+    soundSystem->get3DListenerAttributes(0, &pos, NULL, NULL, NULL);
+    _BGChannel->set3DAttributes(&pos, NULL);
+    _BGChannel->set3DAttributes(&pos, NULL);
+    _BGChannel->setPaused(false);
 }

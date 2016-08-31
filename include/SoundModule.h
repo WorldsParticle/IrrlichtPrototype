@@ -20,6 +20,7 @@ public:
     virtual int update();
     int FMODErrorCheck(int);
     void setListenerPos(int, int, int);
+    void AddBGMusic(std::string);
 
 public:
     FMOD::System	*soundSystem;
@@ -27,8 +28,7 @@ public:
 private:
     FMOD_VECTOR     listenerpos;
 
-    //test things
-    FMOD::Sound			*soundTest;
-    FMOD::Channel		*channelTest;
+    FMOD::Sound			*_BGSound;
+    FMOD::Channel		*_BGChannel;
 };
 
