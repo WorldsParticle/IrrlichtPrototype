@@ -1,4 +1,3 @@
-
 #include "Core.h"
 
 using namespace irr;
@@ -86,6 +85,8 @@ int Core::initModules()
 	//
 	//MODULES
 	//
+	//Add light so we can see the nice water
+	smgr->setAmbientLight(video::SColorf(0.6,0.6,0.6,1));
 
 	soundModule = new SoundModule(device, camera);
 	soundModule->init();
@@ -96,6 +97,8 @@ int Core::initModules()
 	skyboxModule->init();
 	terrainModule = new TerrainModule(device, camera);
 	terrainModule->init();
+	waterModule = new WaterModule(device, camera, terrainModule);
+	waterModule->init();
     particleModule = new ParticleModule(device, camera);
     particleModule->init();
 

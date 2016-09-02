@@ -6,6 +6,7 @@
 #include "ElementsModule.h"
 #include "SkyboxModule.h"
 #include "TerrainModule.h"
+#include "WaterModule.h"
 #include "SoundModule.h"
 #include "ParticleModule.h"
 
@@ -35,6 +36,7 @@ public:
 	ElementsModule *elementsModule;
 	SkyboxModule *skyboxModule;
 	TerrainModule *terrainModule;
+	WaterModule *waterModule;
 	SoundModule *soundModule;
     ParticleModule *particleModule;
 

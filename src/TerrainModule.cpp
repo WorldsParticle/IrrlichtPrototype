@@ -3,7 +3,7 @@
 int TerrainModule::init(){
 
 	// add terrain scene node
-	scene::ITerrainSceneNode* terrain = smgr->addTerrainSceneNode(
+	_terrain = smgr->addTerrainSceneNode(
 		"./ressources/terrain-heightmap.bmp",
 		0,                  // parent node
 		-1,                 // node id
@@ -16,22 +16,22 @@ int TerrainModule::init(){
 		4                   // smoothFactor
 		);
 
-	terrain->setMaterialFlag(video::EMF_LIGHTING, false);
+	_terrain->setMaterialFlag(video::EMF_LIGHTING, false);
 
-	terrain->setMaterialTexture(0,
+	_terrain->setMaterialTexture(0,
 		driver->getTexture("./ressources/terrain-texture.jpg"));
-	terrain->setMaterialTexture(1,
+	_terrain->setMaterialTexture(1,
 		driver->getTexture("./ressources/detailmap3.jpg"));
 
-	terrain->setMaterialType(video::EMT_DETAIL_MAP);
+	_terrain->setMaterialType(video::EMT_DETAIL_MAP);
 
-	terrain->scaleTexture(1.0f, 20.0f);
+	_terrain->scaleTexture(1.0f, 20.0f);
 
 
 	// create triangle selector for the terrain 
 	scene::ITriangleSelector* selector
-		= smgr->createTerrainTriangleSelector(terrain, 0);
-	terrain->setTriangleSelector(selector);
+		= smgr->createTerrainTriangleSelector(_terrain, 0);
+	_terrain->setTriangleSelector(selector);
 
 	// create collision response animator and attach it to the camera
 	scene::ISceneNodeAnimator* anim = smgr->createCollisionResponseAnimator(
@@ -48,3 +48,7 @@ int TerrainModule::update(){
 	return 0;
 }
 
+f32 TerrainModule::getHeight(f32 x, f32 y) const
+{
+    return _terrain->getHeight(x, y);
+}

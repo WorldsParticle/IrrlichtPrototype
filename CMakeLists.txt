@@ -6,7 +6,7 @@ set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 find_package(OpenGL)
 find_package(Irrlicht)
 
-set(FMOD_LIBRARIES "${PROJECT_SOURCE_DIR}/lib/fmod_x86_64/libfmod.so")
+set(FMOD_LIBRARIES "${PROJECT_SOURCE_DIR}/lib/fmod_x86_64/libfmod.so.8")
 
 include_directories(
         ${IRRLICHT_INCLUDE_DIR}
@@ -15,8 +15,8 @@ include_directories(
         ${PROJECT_SOURCE_DIR}/include/fmod
 )
 
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -o2 -std=c++11 -Wall -pedantic -g")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -o2 -std=c++11 -W")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -o2 -std=c++1y -Wall -pedantic -g")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -o2 -std=c++1y -W")
 
 set(IRRLICHTPROTO_SOURCE_FILES
         src/Core.cpp
@@ -27,7 +27,11 @@ set(IRRLICHTPROTO_SOURCE_FILES
         src/SoundModule.cpp
         src/TerrainModule.cpp
         src/Object.cpp
-	src/ParticleModule.cpp)
+	src/ParticleModule.cpp
+	src/SnowWeather.cpp
+	src/RainWeather.cpp
+	src/WaterModule.cpp
+	lib/RealisticWaterSceneNode/RealisticWater.cpp)
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
