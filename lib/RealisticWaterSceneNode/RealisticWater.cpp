@@ -24,7 +24,7 @@
 
 #include "RealisticWater.h"
 
-RealisticWaterSceneNode::RealisticWaterSceneNode(scene::ISceneManager* sceneManager, f32 width, f32 height, 
+RealisticWaterSceneNode::RealisticWaterSceneNode(scene::ISceneManager* sceneManager, f32 width, f32 height,
 												 const irr::core::stringc& resourcePath, core::dimension2du renderTargetSize,
 												 scene::ISceneNode* parent, s32 id):
 	scene::ISceneNode(parent, sceneManager, id), _time(0),

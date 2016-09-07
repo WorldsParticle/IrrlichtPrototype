@@ -43,7 +43,7 @@ public:
 
 	// renders terrain
 	virtual void render();
-    
+
 	// returns the axis aligned bounding box of terrain
 	virtual const core::aabbox3d<f32>& getBoundingBox() const;
 
@@ -63,7 +63,7 @@ private:
 
 	video::IVideoDriver*			_videoDriver;
 	scene::ISceneManager*			_sceneManager;
-	
+
 	core::dimension2d<f32>			_size;
 
 	s32								_shaderMaterial;

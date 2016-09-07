@@ -7,6 +7,7 @@ using namespace video;
 using namespace io;
 using namespace gui;
 
+
 int Core::initIrrlicht(){
 	// ask user for driver
 	video::E_DRIVER_TYPE driverType = driverChoiceConsole();
@@ -102,8 +103,24 @@ int Core::initModules()
     particleModule = new ParticleModule(device, camera);
     particleModule->init();
 
+	//set GUI
+    	env->addButton(rect<s32>(10,240,110,240 + 32), 0, MyEventReceiver::GUI_ID_QUIT_BUTTON,
+    	    	    L"Quit", L"Exits Program");
+    	//env->addButton(rect<s32>(10,280,110,280 + 32), 0, MyEventReceiver::GUI_ID_NEW_WINDOW_BUTTON,
+    	//		L"New Window", L"Launches a new Window");
+    	env->addButton(rect<s32>(10,320,110,320 + 32), 0, MyEventReceiver::GUI_ID_FILE_OPEN_BUTTON,
+    	    	    L"File Open", L"Opens a file");
+    	env->addStaticText(L"Logging ListBox:", rect<s32>(50,110,250,130), true);
+    	IGUIListBox * listbox = env->addListBox(rect<s32>(50, 140, 250, 210));
+    	env->addEditBox(L"Editable Text", rect<s32>(350, 80, 550, 100));
+
+    	// Store the appropriate data in a context structure.
+    	MyEventReceiver::SAppContext context;
+    	context.device = device;
+    	context.counter = 0;
+    	context.listbox = listbox;
 	// create event receiver
-	receiver = new MyEventReceiver(this);
+	receiver = new MyEventReceiver(this, context);
 	device->setEventReceiver(receiver);
 
 	return 0;
