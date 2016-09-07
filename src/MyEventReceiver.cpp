@@ -27,6 +27,19 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 		case irr::KEY_ESCAPE: // quit
 			_core->close();
 			return true;
+		case irr::KEY_KEY_I: // interface
+			if (!_core->isInterfaceActive)
+			{
+			    _core->device->getCursorControl()->setVisible(true);
+			    _core->camera->setInputReceiverEnabled(false);
+			}
+			else
+			{
+			    _core->device->getCursorControl()->setVisible(false);
+			    _core->camera->setInputReceiverEnabled(true);
+			}
+			_core->isInterfaceActive = !_core->isInterfaceActive;
+			return true;
 		default:
 			break;
 		}

@@ -82,6 +82,7 @@ int Core::initModules()
 
 	// disable mouse cursor
 	device->getCursorControl()->setVisible(false);
+	//camera->setInputReceiverEnabled(false);
 
 	//
 	//MODULES
@@ -147,7 +148,8 @@ int Core::run()
 			driver->beginScene(true, true, 0);
 
 			smgr->drawAll();
-			env->drawAll();
+			if (isInterfaceActive)
+			    env->drawAll();
 
 			driver->endScene();
 

@@ -23,12 +23,10 @@ public:
 
 private:
 
-	IrrlichtDevice* device;
 	video::IVideoDriver* driver;
 	scene::ISceneManager* smgr;
 	gui::IGUIEnvironment* env;
 
-	scene::ICameraSceneNode* camera;
 
 	MyEventReceiver *receiver;
 
@@ -39,6 +37,9 @@ public:
 	WaterModule *waterModule;
 	SoundModule *soundModule;
     ParticleModule *particleModule;
+    bool isInterfaceActive = false;
+	scene::ICameraSceneNode* camera;
+	IrrlichtDevice* device;
 
 };
 
