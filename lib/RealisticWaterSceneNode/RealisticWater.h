@@ -56,6 +56,13 @@ public:
 	void setWaterColor(const video::SColorf& waterColor);
 	void setColorBlendFactor(f32 colorBlendFactor);
 
+	void setPosition (const core::vector3df &newpos) {
+	    _waterSceneNode->setPosition(newpos);
+	}
+	const core::vector3df & getPosition () const {
+	    _waterSceneNode->getPosition();
+	}
+
 private:
 
 	scene::ICameraSceneNode*		_camera;
