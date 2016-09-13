@@ -17,6 +17,7 @@ int WaterModule::init()
 	core::vector3df waterPosition = core::vector3df(y, _terrain->getHeight(x, y) - 580, x) + water->getPosition();
 	water->setPosition(waterPosition);
 	//std::cout << water->getPosition().X << " " << water->getPosition().Y << " " << water->getPosition().Z << std::endl;
+	return 0;
 }
 
 int WaterModule::update()

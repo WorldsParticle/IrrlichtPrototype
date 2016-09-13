@@ -10,8 +10,8 @@ public:
     }
 
 public:
-    auto getEmitter() { return _emitter; }
-    auto getTexture() { return _texture; }
+	irr::scene::IParticleEmitter * getEmitter() { return _emitter; }
+	irr::video::ITexture * getTexture() { return _texture; }
     
 protected:
     irr::scene::IParticleEmitter * _emitter;
