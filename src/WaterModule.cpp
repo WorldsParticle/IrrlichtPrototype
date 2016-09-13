@@ -31,6 +31,7 @@ int WaterModule::init()
 	//sea->setMaterialFlag(EMF_LIGHTING, true);
 	//sea->setMaterialType(video::EMT_REFLECTION_2_LAYER);
 	std::cout << water->getPosition().X << " " << water->getPosition().Y << " " << water->getPosition().Z << std::endl;
+	return 0;
 }
 
 int WaterModule::update()

@@ -1,7 +1,7 @@
 #include "TerrainModule.h"
 
-int TerrainModule::init(){
-
+int TerrainModule::init()
+{
 	// add terrain scene node
 	_terrain = smgr->addTerrainSceneNode(
 		"./ressources/terrain-heightmap.bmp",
@@ -28,7 +28,7 @@ int TerrainModule::init(){
 	_terrain->scaleTexture(1.0f, 20.0f);
 
 
-	// create triangle selector for the terrain 
+	// create triangle selector for the terrain
 	scene::ITriangleSelector* selector
 		= smgr->createTerrainTriangleSelector(_terrain, 0);
 	_terrain->setTriangleSelector(selector);
@@ -43,7 +43,9 @@ int TerrainModule::init(){
 	anim->drop();
 	return 0;
 }
-int TerrainModule::update(){
+
+int TerrainModule::update()
+{
 	//nothing to do
 	return 0;
 }

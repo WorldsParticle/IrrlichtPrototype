@@ -46,7 +46,8 @@ void ParticleModule::activate()
 
 ParticleModule::~ParticleModule()
 {
-    for (auto & weather : _weathers) {
+    for (auto & weather : _weathers)
+    {
         delete weather.second;
     }
     _weathers.clear();

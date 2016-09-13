@@ -1,12 +1,13 @@
 #pragma once
 
-#include <iostream>
+#include <string>
 #include <irrlicht.h>
 #include "SoundModule.h"
 
 using namespace irr;
 
-class Object {
+class Object
+{
 public:
     Object(IrrlichtDevice *);
     ~Object();

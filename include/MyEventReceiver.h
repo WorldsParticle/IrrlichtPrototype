@@ -2,6 +2,7 @@
 
 #include <irrlicht.h>
 #include "driverChoice.h"
+
 using namespace irr;
 
 class Core;
@@ -14,9 +15,9 @@ public:
 	// has it available inside its OnEvent() method.
 	struct SAppContext
 	{
-		irr::IrrlichtDevice *device;
-		irr::s32             counter;
-		irr::gui::IGUIListBox*    listbox;
+		irr::IrrlichtDevice	*device;
+		irr::s32		counter;
+		irr::gui::IGUIListBox*	listbox;
 	};
 	// Define some values that we'll use to identify individual GUI controls.
 	enum
@@ -33,6 +34,6 @@ public:
 
 private:
 
-	Core *_core;
+	Core	    *_core;
 	SAppContext _context;
 };

@@ -56,38 +56,39 @@ public:
 	void setWaterColor(const video::SColorf& waterColor);
 	void setColorBlendFactor(f32 colorBlendFactor);
 
-	void setPosition (const core::vector3df &newpos) {
+	void setPosition (const core::vector3df &newpos)
+	{
 	    _waterSceneNode->setPosition(newpos);
 	}
-	const core::vector3df & getPosition () const {
-	    _waterSceneNode->getPosition();
+	const core::vector3df &getPosition () const
+	{
+	    return _waterSceneNode->getPosition();
 	}
 
 private:
+	u32					_time;
+	core::dimension2d<f32>			_size;
 
-	scene::ICameraSceneNode*		_camera;
-	scene::ISceneNode*				_waterSceneNode;
+	scene::ISceneNode*			_waterSceneNode;
 
 	video::IVideoDriver*			_videoDriver;
 	scene::ISceneManager*			_sceneManager;
 
-	core::dimension2d<f32>			_size;
+	video::ITexture*			_refractionMap;
+	video::ITexture*			_reflectionMap;
 
-	s32								_shaderMaterial;
+	s32					_shaderMaterial;
 
 	scene::IAnimatedMesh*			_waterMesh;
 
-	video::ITexture*				_refractionMap;
-	video::ITexture*				_reflectionMap;
+	f32					_windForce;
+	core::vector2df				_windDirection;
+	f32					_waveHeight;
 
-	f32								_windForce;
-	core::vector2df					_windDirection;
-	f32								_waveHeight;
+	video::SColorf				_waterColor;
+	f32					_colorBlendFactor;
 
-	video::SColorf					_waterColor;
-	f32								_colorBlendFactor;
-
-	u32								_time;
+	scene::ICameraSceneNode*		_camera;
 };
 
 #endif

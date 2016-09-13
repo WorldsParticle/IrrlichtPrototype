@@ -1,5 +1,7 @@
 #include "MyEventReceiver.h"
 #include "Core.h"
+#include "SkyboxModule.h"
+#include "ParticleModule.h"
 
 using namespace irr;
 

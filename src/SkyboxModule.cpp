@@ -1,12 +1,12 @@
 #include "SkyboxModule.h"
 
-int SkyboxModule::init(){
-
+int SkyboxModule::init()
+{
 	// add a nice skybox
 
 	driver->setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS, false);
 
-	skybox = smgr->addSkyBoxSceneNode(
+	_skybox = smgr->addSkyBoxSceneNode(
 		driver->getTexture("./ressources/irrlicht2_up.jpg"),
 		driver->getTexture("./ressources/irrlicht2_dn.jpg"),
 		driver->getTexture("./ressources/irrlicht2_lf.jpg"),
@@ -14,7 +14,7 @@ int SkyboxModule::init(){
 		driver->getTexture("./ressources/irrlicht2_ft.jpg"),
 		driver->getTexture("./ressources/irrlicht2_bk.jpg"));
 
-	skydome = smgr->addSkyDomeSceneNode(driver->getTexture("./ressources/skydome.jpg"), 16, 8, 0.95f, 2.0f);
+	_skydome = smgr->addSkyDomeSceneNode(driver->getTexture("./ressources/skydome.jpg"), 16, 8, 0.95f, 2.0f);
 
 	driver->setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS, true);
 
@@ -22,7 +22,9 @@ int SkyboxModule::init(){
 
 	return 0;
 }
-int SkyboxModule::update(){
+
+int SkyboxModule::update()
+{
 	//nothing to do
 	return 0;
 }
@@ -30,6 +32,6 @@ int SkyboxModule::update(){
 void SkyboxModule::activeNight(bool n)
 {
 	_night = n;
-	skybox->setVisible(!_night);
-	skydome->setVisible(_night);
+	_skybox->setVisible(!_night);
+	_skydome->setVisible(_night);
 }

@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "Object.h"
 
 Object::Object(IrrlichtDevice *dev): _device(dev), _mesh(NULL), _node(NULL)
@@ -11,10 +13,12 @@ Object::Object(IrrlichtDevice *dev): _device(dev), _mesh(NULL), _node(NULL)
 int Object::LoadMesh(std::string meshPath, std::string texturePath)
 {
     _mesh = _smgr->getMesh(meshPath.c_str());
-    if (_mesh) {
+    if (_mesh)
+    {
         _node = _smgr->addAnimatedMeshSceneNode(_mesh);
     }
-    else {
+    else
+    {
         std::cout << "ERROR: couldn't load mesh " << meshPath << std::endl;
         return 1;
     }
@@ -25,7 +29,8 @@ int Object::LoadMesh(std::string meshPath, std::string texturePath)
         _node->setMaterialTexture(0, _smgr->getVideoDriver()->getTexture(texturePath.c_str()));
         _node->setScale(_node->getScale() * 10);
     }
-    else {
+    else
+    {
         std::cout << "ERROR: couldn't create node for mesh " << meshPath << std::endl;
         return 1;
     }
@@ -50,4 +55,5 @@ int Object::SetSound(std::string path, FMOD::System *soundSystem)
     FMOD_VECTOR pos = {_position->X, _position->Y, _position->Z};
     _sndChannel->set3DAttributes(&pos, NULL);
     _sndChannel->setPaused(false);
+    return 0;
 }

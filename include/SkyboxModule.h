@@ -9,9 +9,11 @@ public:
 		scene::ICameraSceneNode* _camera)
 		: AModule(_device,  _camera),
 		_night(false)
-	{}
+	{
+	}
 	~SkyboxModule()
-	{}
+	{
+	}
 
 	virtual int init();
 	virtual int update();
@@ -19,8 +21,8 @@ public:
 	void activeNight(bool n);
 
 private:
-	bool _night;
+	bool		    _night;
 
-	scene::ISceneNode* skybox;
-	scene::ISceneNode* skydome;
+	scene::ISceneNode   *_skybox;
+	scene::ISceneNode   *_skydome;
 };

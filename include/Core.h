@@ -2,13 +2,14 @@
 
 #include <irrlicht.h>
 #include "driverChoice.h"
-#include "MyEventReceiver.h"
-#include "ElementsModule.h"
-#include "SkyboxModule.h"
-#include "TerrainModule.h"
-#include "WaterModule.h"
-#include "SoundModule.h"
-#include "ParticleModule.h"
+
+class MyEventReceiver;
+class ElementsModule;
+class SkyboxModule;
+class TerrainModule;
+class WaterModule;
+class SoundModule;
+class ParticleModule;
 
 class Core
 {
@@ -22,24 +23,22 @@ public:
 	void close();
 
 private:
+	irr::video::IVideoDriver	*_driver;
+	irr::scene::ISceneManager	*_smgr;
+	irr::gui::IGUIEnvironment	*_env;
 
-	video::IVideoDriver* driver;
-	scene::ISceneManager* smgr;
-	gui::IGUIEnvironment* env;
-
-
-	MyEventReceiver *receiver;
+	MyEventReceiver			*_receiver;
 
 public:
-	ElementsModule *elementsModule;
-	SkyboxModule *skyboxModule;
-	TerrainModule *terrainModule;
-	WaterModule *waterModule;
-	SoundModule *soundModule;
-    ParticleModule *particleModule;
-    bool isInterfaceActive = false;
-	scene::ICameraSceneNode* camera;
-	IrrlichtDevice* device;
+	ElementsModule			*elementsModule;
+	SkyboxModule			*skyboxModule;
+	TerrainModule			*terrainModule;
+	WaterModule			*waterModule;
+	SoundModule			*soundModule;
+	ParticleModule			*particleModule;
+	bool				isInterfaceActive = false;
+	irr::scene::ICameraSceneNode	*camera;
+	irr::IrrlichtDevice		*device;
 
 };
 
