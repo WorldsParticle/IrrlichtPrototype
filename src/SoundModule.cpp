@@ -2,6 +2,8 @@
 // Created by neige on 23/08/16.
 //
 
+#include <iostream>
+
 #include "SoundModule.h"
 
 //TODO: better error checking
@@ -11,17 +13,20 @@ int SoundModule::init()
     unsigned int		version;
 
     result = FMOD::System_Create(&soundSystem);
-    if (result != FMOD_OK) {
+    if (result != FMOD_OK)
+    {
         std::cout << "FMOD ERROR: " << result << std::endl;
         return 1;
     }
     soundSystem->getVersion(&version);
-    if (version < FMOD_VERSION) {
+    if (version < FMOD_VERSION)
+    {
         std::cout << "FMOD ERROR: Using an old version of FMOD" << std::endl;
         return 1;
     }
     result = soundSystem->init(100, FMOD_INIT_NORMAL, NULL);
-    if (result != FMOD_OK) {
+    if (result != FMOD_OK)
+    {
         std::cout << "FMOD ERROR: " << result << std::endl;
         return 1;
     }
@@ -29,10 +34,10 @@ int SoundModule::init()
     FMODErrorCheck(result);
 
     //set listener position
-    listenerpos = {camera->getPosition().X, camera->getPosition().Y, camera->getPosition().Z};
+    _listenerPos = {camera->getPosition().X, camera->getPosition().Y, camera->getPosition().Z};
     FMOD_VECTOR forward        = { 0.0f, 0.0f, 1.0f };
     FMOD_VECTOR up             = { 0.0f, 1.0f, 0.0f };
-    result = soundSystem->set3DListenerAttributes(0, &listenerpos, NULL, &forward, &up);
+    result = soundSystem->set3DListenerAttributes(0, &_listenerPos, NULL, &forward, &up);
     FMODErrorCheck(result);
 
     _BGChannel = NULL;
@@ -40,15 +45,17 @@ int SoundModule::init()
      return 0;
 }
 
-int SoundModule::update() {
+int SoundModule::update()
+{
     setListenerPos(camera->getPosition().X, camera->getPosition().Y, camera->getPosition().Z);
     soundSystem->update();
     return 0;
 }
 
-int SoundModule::FMODErrorCheck(int result) {
-
-    if (result != FMOD_OK) {
+int SoundModule::FMODErrorCheck(int result)
+{
+    if (result != FMOD_OK)
+    {
         std::cout << "FMOD ERROR: " << result << std::endl;
         return 1;
     }
@@ -57,15 +64,17 @@ int SoundModule::FMODErrorCheck(int result) {
 
 void SoundModule::setListenerPos(int x = 0, int y = 0, int z = 0)
 {
-    FMOD_VECTOR listenerNewPos = {x, y, z};
-    listenerpos = listenerNewPos;
-    soundSystem->set3DListenerAttributes(0, &listenerpos, NULL, NULL, NULL);
-    if (_BGChannel != NULL) {
+    FMOD_VECTOR listenerNewPos = {static_cast<float>(x), static_cast<float>(y), static_cast<float>(z)};
+    _listenerPos = listenerNewPos;
+    soundSystem->set3DListenerAttributes(0, &_listenerPos, NULL, NULL, NULL);
+    if (_BGChannel != NULL)
+    {
         _BGChannel->set3DAttributes(&listenerNewPos, NULL);
     }
 }
 
-void SoundModule::AddBGMusic(std::string path) {
+void SoundModule::AddBGMusic(std::string path)
+{
     soundSystem->createSound(path.c_str(), FMOD_3D, 0, &_BGSound);
     _BGSound->set3DMinMaxDistance(5.0f * DISTANCEFACTOR, 500.0f * DISTANCEFACTOR);
     _BGSound->setMode(FMOD_LOOP_NORMAL);

@@ -1,7 +1,8 @@
 #include "SnowWeather.h"
 
 SnowWeather::SnowWeather(irr::scene::IParticleSystemSceneNode * particleSystem,
-                         irr::video::IVideoDriver * driver) {
+                         irr::video::IVideoDriver * driver)
+{
     // Create new BoxEmiter
     _emitter = particleSystem->createBoxEmitter(
         irr::core::aabbox3d<irr::f32>(-5000, 1200, -5000, 5000, 1200, 5000),    // Coordinates

@@ -26,10 +26,10 @@ public:
 	virtual int update() = 0;
 
 protected:
-	IrrlichtDevice* device;
-	video::IVideoDriver* driver;
-	scene::ISceneManager* smgr;
-	gui::IGUIEnvironment* env;
+	IrrlichtDevice		*device;
+	video::IVideoDriver	*driver;
+	scene::ISceneManager	*smgr;
+	gui::IGUIEnvironment	*env;
 
-	scene::ICameraSceneNode* camera;
+	scene::ICameraSceneNode	*camera;
 };

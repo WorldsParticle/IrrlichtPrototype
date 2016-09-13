@@ -1,7 +1,7 @@
 #include "ElementsModule.h"
 
-int ElementsModule::init(){
-
+int ElementsModule::init()
+{
 	Object	*testObj = new Object(device);
 	Object	*testObj2 = new Object(device);
 
@@ -14,7 +14,9 @@ int ElementsModule::init(){
 	_elements.push_back(testObj2);
 	return 0;
 }
-int ElementsModule::update(){
+
+int ElementsModule::update()
+{
 	//nothing to do
 	return 0;
 }

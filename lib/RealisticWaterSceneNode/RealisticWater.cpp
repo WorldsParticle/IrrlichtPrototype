@@ -24,7 +24,7 @@
 
 #include "RealisticWater.h"
 
-RealisticWaterSceneNode::RealisticWaterSceneNode(scene::ISceneManager* sceneManager, f32 width, f32 height, 
+RealisticWaterSceneNode::RealisticWaterSceneNode(scene::ISceneManager* sceneManager, f32 width, f32 height,
 												 const irr::core::stringc& resourcePath, core::dimension2du renderTargetSize,
 												 scene::ISceneNode* parent, s32 id):
 	scene::ISceneNode(parent, sceneManager, id), _time(0),
@@ -36,9 +36,13 @@ RealisticWaterSceneNode::RealisticWaterSceneNode(scene::ISceneManager* sceneMana
 	//create new camera
 	_camera = sceneManager->addCameraSceneNode(0, core::vector3df(0, 0, 0), core::vector3df(0, 0, 0), -1, false);
 
-	_waterMesh = sceneManager->addHillPlaneMesh("RealisticWater", _size, core::dimension2d<u32>(1, 1));
+	//_waterMesh = sceneManager->addHillPlaneMesh("RealisticWater", _size, core::dimension2d<u32>(1, 1));
+	//mesh, waveheight = 0.5f, wave speed = 350.0f, wave length = 80.0f
+	//ISceneNode* sea = smgr->addWaterSurfaceSceneNode(plane->getMesh(0), 5.0f, 300.0f, 40.0f);
+	_waterMesh = sceneManager->addHillPlaneMesh("RealisticWater", core::dimension2d<f32>(10.0f, 10.0f), core::dimension2d<u32>(_size.Width / 10, _size.Height / 10), 0, 0, core::dimension2d<f32>(0,0), _size / 1000);
 
-	_waterSceneNode = sceneManager->addMeshSceneNode(_waterMesh->getMesh(0), this);
+	//_waterSceneNode = sceneManager->addMeshSceneNode(_waterMesh->getMesh(0), this);
+	_waterSceneNode = sceneManager->addWaterSurfaceSceneNode(_waterMesh->getMesh(0), 10.0f, 300.0f, 120.0f);
 
 	video::IGPUProgrammingServices* GPUProgrammingServices = _videoDriver->getGPUProgrammingServices();
 

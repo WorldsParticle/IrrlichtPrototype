@@ -8,9 +8,11 @@ public:
 	TerrainModule(IrrlichtDevice* _device,
 		scene::ICameraSceneNode* _camera)
 		: AModule(_device, _camera), _terrain(nullptr)
-	{}
+	{
+	}
 	~TerrainModule()
-	{}
+	{
+	}
 
 	f32 getHeight (f32 x, f32 y) const;
 

@@ -1,7 +1,5 @@
 #pragma once
 
-#pragma once
-
 #include "AWeather.h"
 
 class RainWeather : public AWeather

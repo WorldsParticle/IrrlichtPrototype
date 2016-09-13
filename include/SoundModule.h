@@ -1,6 +1,5 @@
 #pragma once
 
-#include <iostream>
 #include "AModule.h"
 #include "fmod.hpp"
 #include "fmod_errors.h"
@@ -13,9 +12,11 @@ public:
     SoundModule(IrrlichtDevice* _device,
     scene::ICameraSceneNode* _camera)
     : AModule(_device, _camera)
-    {}
+    {
+    }
     ~SoundModule()
-    {}
+    {
+    }
     virtual int init();
     virtual int update();
     int FMODErrorCheck(int);
@@ -26,9 +27,9 @@ public:
     FMOD::System	*soundSystem;
 
 private:
-    FMOD_VECTOR     listenerpos;
+    FMOD_VECTOR		_listenerPos;
 
-    FMOD::Sound			*_BGSound;
-    FMOD::Channel		*_BGChannel;
+    FMOD::Sound		*_BGSound;
+    FMOD::Channel	*_BGChannel;
 };
 
