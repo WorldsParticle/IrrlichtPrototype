@@ -19,7 +19,7 @@ int Object::LoadMesh(std::string meshPath, std::string texturePath)
     }
     else
     {
-        //std::cout << "ERROR: couldn't load mesh " << meshPath << std::endl;
+        std::cout << "ERROR: couldn't load mesh " << meshPath << std::endl;
         return 1;
     }
     if (_node)
@@ -31,7 +31,7 @@ int Object::LoadMesh(std::string meshPath, std::string texturePath)
     }
     else
     {
-        //std::cout << "ERROR: couldn't create node for mesh " << meshPath << std::endl;
+        std::cout << "ERROR: couldn't create node for mesh " << meshPath << std::endl;
         return 1;
     }
     return 0;

@@ -6,18 +6,13 @@
 
 #include "SoundModule.h"
 
-//TODO: better error checking
 int SoundModule::init()
 {
     FMOD_RESULT			result;
     unsigned int		version;
 
     result = FMOD::System_Create(&soundSystem);
-    if (result != FMOD_OK)
-    {
-        std::cout << "FMOD ERROR: " << result << std::endl;
-        return 1;
-    }
+    FMODErrorCheck(result);
     soundSystem->getVersion(&version);
     if (version < FMOD_VERSION)
     {
@@ -25,11 +20,7 @@ int SoundModule::init()
         return 1;
     }
     result = soundSystem->init(100, FMOD_INIT_NORMAL, NULL);
-    if (result != FMOD_OK)
-    {
-        std::cout << "FMOD ERROR: " << result << std::endl;
-        return 1;
-    }
+    FMODErrorCheck(result);
     result = soundSystem->set3DSettings(1.0, DISTANCEFACTOR, 1.0f);
     FMODErrorCheck(result);
 

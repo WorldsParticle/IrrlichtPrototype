@@ -6,13 +6,17 @@
 
 using namespace irr;
 
+//Element that can be placed on the terrain
 class Object
 {
 public:
     Object(IrrlichtDevice *);
     ~Object();
+    //Loads a mesh, doesn't set its position
     int     LoadMesh(std::string, std::string);
+    //Sets the position of the object
     void    SetPosition(int, int, int);
+    //Adds a 3D sound at the position of the object
     int     SetSound(std::string, FMOD::System *);
 
 private:
