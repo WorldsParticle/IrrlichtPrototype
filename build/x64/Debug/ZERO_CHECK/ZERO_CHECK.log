@@ -1,0 +1,14 @@
+﻿  Checking Build System
+  CMake is re-running because C:/Users/louis/Documents/GitHub/IrrlichtPrototype/build/CMakeFiles/generate.stamp is out-of-date.
+    the file 'C:/Users/louis/Documents/GitHub/IrrlichtPrototype/CMakeLists.txt'
+    is newer than 'C:/Users/louis/Documents/GitHub/IrrlichtPrototype/build/CMakeFiles/generate.stamp.depend'
+    result='-1'
+  C:/Users/louis/Documents/GitHub/IrrlichtPrototype/cmake
+  C:/Users/louis/Documents/GitHub/IrrlichtPrototype/include/
+  C:/Users/louis/Documents/GitHub/IrrlichtPrototype/src/
+  -- Found Irrlicht: C:/Libraries/Binaries/Release/x64/Irrlicht.lib
+  C:/Users/louis/Documents/GitHub/IrrlichtPrototype/src//Core.cppC:/Users/louis/Documents/GitHub/IrrlichtPrototype/src//ElementsModule.cppC:/Users/louis/Documents/GitHub/IrrlichtPrototype/src//MyEventReceiver.cppC:/Users/louis/Documents/GitHub/IrrlichtPrototype/src//Object.cppC:/Users/louis/Documents/GitHub/IrrlichtPrototype/src//ParticleModule.cppC:/Users/louis/Documents/GitHub/IrrlichtPrototype/src//RainWeather.cppC:/Users/louis/Documents/GitHub/IrrlichtPrototype/src//SkyboxModule.cppC:/Users/louis/Documents/GitHub/IrrlichtPrototype/src//SnowWeather.cppC:/Users/louis/Documents/GitHub/IrrlichtPrototype/src//SoundModule.cppC:/Users/louis/Documents/GitHub/IrrlichtPrototype/src//TerrainModule.cppC:/Users/louis/Documents/GitHub/IrrlichtPrototype/src//WaterModule.cppC:/Users/louis/Documents/GitHub/IrrlichtPrototype/src//main.cpp
+  C:/Users/louis/Documents/GitHub/IrrlichtPrototype/include//AModule.hC:/Users/louis/Documents/GitHub/IrrlichtPrototype/include//AWeather.hC:/Users/louis/Documents/GitHub/IrrlichtPrototype/include//Core.hC:/Users/louis/Documents/GitHub/IrrlichtPrototype/include//ElementsModule.hC:/Users/louis/Documents/GitHub/IrrlichtPrototype/include//MyEventReceiver.hC:/Users/louis/Documents/GitHub/IrrlichtPrototype/include//Object.hC:/Users/louis/Documents/GitHub/IrrlichtPrototype/include//ParticleModule.hC:/Users/louis/Documents/GitHub/IrrlichtPrototype/include//RainWeather.hC:/Users/louis/Documents/GitHub/IrrlichtPrototype/include//SkyboxModule.hC:/Users/louis/Documents/GitHub/IrrlichtPrototype/include//SnowWeather.hC:/Users/louis/Documents/GitHub/IrrlichtPrototype/include//SoundModule.hC:/Users/louis/Documents/GitHub/IrrlichtPrototype/include//TerrainModule.hC:/Users/louis/Documents/GitHub/IrrlichtPrototype/include//WaterModule.h
+  -- Configuring done
+  -- Generating done
+  -- Build files have been written to: C:/Users/louis/Documents/GitHub/IrrlichtPrototype/build

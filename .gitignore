@@ -31,5 +31,5 @@
 ./bin/
 ./build/
 ./idea/
-Debug
-irrlicht-1.8.4
+./Debug
+./irrlicht-1.8.4

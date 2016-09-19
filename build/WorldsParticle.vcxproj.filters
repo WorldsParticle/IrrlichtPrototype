@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\src\Core.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\src\ElementsModule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\src\MyEventReceiver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\src\Object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\src\ParticleModule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\src\RainWeather.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\src\RealisticWater.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\src\SkyboxModule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\src\SnowWeather.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\src\SoundModule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\src\TerrainModule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\src\WaterModule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\include\AModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\include\AWeather.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\include\Core.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\include\ElementsModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\include\MyEventReceiver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\include\Object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\include\ParticleModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\include\RainWeather.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\include\RealisticWater.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\include\SkyboxModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\include\SnowWeather.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\include\SoundModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\include\TerrainModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\include\WaterModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\louis\Documents\GitHub\IrrlichtPrototype\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{BD5D4662-153B-3BF2-92DD-AED92B2CBC66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{3923488B-4A4B-3D89-A9A1-B4F6CEF0F449}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

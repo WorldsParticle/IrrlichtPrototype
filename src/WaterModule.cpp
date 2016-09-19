@@ -1,6 +1,6 @@
 #include "WaterModule.h"
 #include "TerrainModule.h"
-#include "../lib/RealisticWaterSceneNode/RealisticWater.h"
+#include "RealisticWater.h"
 #include <iostream>
 
 int WaterModule::init()

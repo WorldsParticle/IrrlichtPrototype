@@ -1,0 +1,23 @@
+﻿  Building Custom Rule C:/Users/louis/Documents/GitHub/IrrlichtPrototype/CMakeLists.txt
+  CMake does not need to re-run because C:\Users\louis\Documents\GitHub\IrrlichtPrototype\build\CMakeFiles\generate.stamp is up-to-date.
+  Core.cpp
+C:\Users\louis\Documents\GitHub\IrrlichtPrototype\src\Core.cpp(92): warning C4305: 'argument': truncation from 'double' to 'irr::f32'
+  ElementsModule.cpp
+  MyEventReceiver.cpp
+  Object.cpp
+C:\Users\louis\Documents\GitHub\IrrlichtPrototype\src\Object.cpp(42): warning C4244: '=': conversion from 'int' to 'irr::f32', possible loss of data
+C:\Users\louis\Documents\GitHub\IrrlichtPrototype\src\Object.cpp(43): warning C4244: '=': conversion from 'int' to 'irr::f32', possible loss of data
+C:\Users\louis\Documents\GitHub\IrrlichtPrototype\src\Object.cpp(44): warning C4244: '=': conversion from 'int' to 'irr::f32', possible loss of data
+  ParticleModule.cpp
+  RainWeather.cpp
+  RealisticWater.cpp
+C:\Users\louis\Documents\GitHub\IrrlichtPrototype\src\RealisticWater.cpp(42): warning C4244: 'argument': conversion from 'irr::f32' to 'const irr::u32', possible loss of data
+  SkyboxModule.cpp
+  SnowWeather.cpp
+  SoundModule.cpp
+C:\Users\louis\Documents\GitHub\IrrlichtPrototype\src\SoundModule.cpp(41): warning C4244: 'argument': conversion from 'const irr::f32' to 'int', possible loss of data
+  TerrainModule.cpp
+  WaterModule.cpp
+  main.cpp
+  Generating Code...
+  WorldsParticle.vcxproj -> C:\Users\louis\Documents\GitHub\IrrlichtPrototype\build\Release\WorldsParticle.exe
