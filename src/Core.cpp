@@ -63,20 +63,28 @@ int Core::initModules()
 	//
 	// CAMERA
 	//
-	irr::SKeyMap keyMap[6];
-	keyMap[0].Action = irr::EKA_MOVE_FORWARD;
-	keyMap[0].KeyCode = irr::KEY_KEY_Z;
-	keyMap[1].Action = irr::EKA_MOVE_BACKWARD;
-	keyMap[1].KeyCode = irr::KEY_KEY_S;
-	keyMap[2].Action = irr::EKA_STRAFE_LEFT;
-	keyMap[2].KeyCode = irr::KEY_KEY_Q;
-	keyMap[3].Action = irr::EKA_STRAFE_RIGHT;
-	keyMap[3].KeyCode = irr::KEY_KEY_D;
-	keyMap[4].Action = irr::EKA_JUMP_UP;
-	keyMap[4].KeyCode = irr::KEY_SPACE;
-	keyMap[5].Action = irr::EKA_MOVE_FORWARD;
-	keyMap[5].KeyCode = irr::KEY_KEY_W;
-	camera = _smgr->addCameraSceneNodeFPS(0, 100.0f, 1.2f, -1, keyMap, 5);
+    SKeyMap keyMap[8];
+    keyMap[0].Action = EKA_MOVE_FORWARD;
+    keyMap[0].KeyCode = KEY_UP;
+    keyMap[1].Action = EKA_MOVE_FORWARD;
+    keyMap[1].KeyCode = KEY_KEY_W;
+
+    keyMap[2].Action = EKA_MOVE_BACKWARD;
+    keyMap[2].KeyCode = KEY_DOWN;
+    keyMap[3].Action = EKA_MOVE_BACKWARD;
+    keyMap[3].KeyCode = KEY_KEY_S;
+
+    keyMap[4].Action = EKA_STRAFE_LEFT;
+    keyMap[4].KeyCode = KEY_LEFT;
+    keyMap[5].Action = EKA_STRAFE_LEFT;
+    keyMap[5].KeyCode = KEY_KEY_A;
+
+    keyMap[6].Action = EKA_STRAFE_RIGHT;
+    keyMap[6].KeyCode = KEY_RIGHT;
+    keyMap[7].Action = EKA_STRAFE_RIGHT;
+    keyMap[7].KeyCode = KEY_KEY_D;
+
+	camera = _smgr->addCameraSceneNodeFPS(0, 100.0f, 1.2f, -1, keyMap, 8);
 	//_smgr->addCameraSceneNode(0, vector3df(0, 30, -40), vector3df(0, 5, 0));
 
 	camera->setPosition(core::vector3df(2700 * 2, 255 * 2, 2600 * 2));
