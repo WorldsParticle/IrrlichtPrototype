@@ -1,8 +1,8 @@
 #pragma once
 
 #include "AModule.h"
-#include "fmod.hpp"
-#include "fmod_errors.h"
+#include "fmod/fmod.hpp"
+#include "fmod/fmod_errors.h"
 
 const float DISTANCEFACTOR = 100.0f;          // Units per meter.  I.e feet would = 3.28.  centimeters would = 100.
 
