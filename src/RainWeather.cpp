@@ -1,4 +1,5 @@
 #include "RainWeather.h"
+#include "Configuration.h"
 
 RainWeather::RainWeather(irr::scene::IParticleSystemSceneNode * particleSystem,
                          irr::video::IVideoDriver * driver)
@@ -15,5 +16,5 @@ RainWeather::RainWeather(irr::scene::IParticleSystemSceneNode * particleSystem,
         irr::core::dimension2df(10.0f, 10.0f),                                  // Size min
         irr::core::dimension2df(15.0f, 15.0f));                                 // Size max
 
-    _texture = driver->getTexture("./ressources/one_drop.png");
+    _texture = driver->getTexture(RESOURCES_PATH "/one_drop.png");
 }

@@ -6,6 +6,7 @@
 #include "WaterModule.h"
 #include "SoundModule.h"
 #include "ParticleModule.h"
+#include "Configuration.h"
 
 using namespace irr;
 using namespace core;
@@ -48,11 +49,11 @@ int Core::initModules()
 	_driver->setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
 
 	// add irrlicht logo
-	_env->addImage(_driver->getTexture("./ressources/irrlichtlogo2.png"),
+	_env->addImage(_driver->getTexture(RESOURCES_PATH "/irrlichtlogo2.png"),
 		core::position2d<s32>(10, 10));
 
 	//set other font
-	_env->getSkin()->setFont(_env->getFont("./ressources/fontlucida.png"));
+	_env->getSkin()->setFont(_env->getFont(RESOURCES_PATH "/fontlucida.png"));
 
 	// add some help text
 	//_env->addStaticText(
@@ -93,7 +94,7 @@ int Core::initModules()
 
 	soundModule = new SoundModule(device, camera);
 	soundModule->init();
-	soundModule->AddBGMusic("ressources/river_bg.ogg");
+	soundModule->AddBGMusic(RESOURCES_PATH "/river_bg.ogg");
 	elementsModule = new ElementsModule(device, camera, soundModule->soundSystem);
 	elementsModule->init();
 	skyboxModule = new SkyboxModule(device, camera);

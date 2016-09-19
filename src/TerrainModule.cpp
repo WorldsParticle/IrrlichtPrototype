@@ -1,10 +1,11 @@
 #include "TerrainModule.h"
+#include "Configuration.h"
 
 int TerrainModule::init()
 {
 	// add terrain scene node
 	_terrain = smgr->addTerrainSceneNode(
-		"./ressources/terrain-heightmap.bmp",
+        RESOURCES_PATH "/terrain-heightmap.bmp",
 		0,                  // parent node
 		-1,                 // node id
 		core::vector3df(0.f, 0.f, 0.f),     // position
@@ -19,9 +20,9 @@ int TerrainModule::init()
 	_terrain->setMaterialFlag(video::EMF_LIGHTING, false);
 
 	_terrain->setMaterialTexture(0,
-		driver->getTexture("./ressources/terrain-texture.jpg"));
+		driver->getTexture(RESOURCES_PATH "/terrain-texture.jpg"));
 	_terrain->setMaterialTexture(1,
-		driver->getTexture("./ressources/detailmap3.jpg"));
+		driver->getTexture(RESOURCES_PATH "/detailmap3.jpg"));
 
 	_terrain->setMaterialType(video::EMT_DETAIL_MAP);
 

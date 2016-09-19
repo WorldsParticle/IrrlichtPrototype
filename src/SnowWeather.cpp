@@ -1,4 +1,5 @@
 #include "SnowWeather.h"
+#include "Configuration.h"
 
 SnowWeather::SnowWeather(irr::scene::IParticleSystemSceneNode * particleSystem,
                          irr::video::IVideoDriver * driver)
@@ -15,5 +16,5 @@ SnowWeather::SnowWeather(irr::scene::IParticleSystemSceneNode * particleSystem,
         irr::core::dimension2df(5.0f, 5.0f),                                    // Size min
         irr::core::dimension2df(15.0f, 15.0f));                                 // Size max
 
-    _texture = driver->getTexture("./ressources/snow.bmp");
+    _texture = driver->getTexture(RESOURCES_PATH "/snow.bmp");
 }

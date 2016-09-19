@@ -1,4 +1,5 @@
 #include "SkyboxModule.h"
+#include "Configuration.h"
 
 int SkyboxModule::init()
 {
@@ -7,14 +8,14 @@ int SkyboxModule::init()
 	driver->setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS, false);
 
 	_skybox = smgr->addSkyBoxSceneNode(
-		driver->getTexture("./ressources/irrlicht2_up.jpg"),
-		driver->getTexture("./ressources/irrlicht2_dn.jpg"),
-		driver->getTexture("./ressources/irrlicht2_lf.jpg"),
-		driver->getTexture("./ressources/irrlicht2_rt.jpg"),
-		driver->getTexture("./ressources/irrlicht2_ft.jpg"),
-		driver->getTexture("./ressources/irrlicht2_bk.jpg"));
+		driver->getTexture(RESOURCES_PATH "/irrlicht2_up.jpg"),
+		driver->getTexture(RESOURCES_PATH "/irrlicht2_dn.jpg"),
+		driver->getTexture(RESOURCES_PATH "/irrlicht2_lf.jpg"),
+		driver->getTexture(RESOURCES_PATH "/irrlicht2_rt.jpg"),
+		driver->getTexture(RESOURCES_PATH "/irrlicht2_ft.jpg"),
+		driver->getTexture(RESOURCES_PATH "/irrlicht2_bk.jpg"));
 
-	_skydome = smgr->addSkyDomeSceneNode(driver->getTexture("./ressources/skydome.jpg"), 16, 8, 0.95f, 2.0f);
+	_skydome = smgr->addSkyDomeSceneNode(driver->getTexture(RESOURCES_PATH "/skydome.jpg"), 16, 8, 0.95f, 2.0f);
 
 	driver->setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS, true);
 

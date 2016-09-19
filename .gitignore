@@ -34,3 +34,4 @@
 ./irrlicht-1.8.4
 .vs
 build
+./include/Configuration.h
