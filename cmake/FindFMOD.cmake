@@ -8,7 +8,7 @@
 #
 
 FIND_PATH(FMOD_INCLUDE_DIR
-    NAMES fmod.h
+    NAMES fmod/fmod.h
    HINTS
       ENV FMOD_DIR
     PATHS
