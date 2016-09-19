@@ -29,7 +29,8 @@
 *.app
 
 ./bin/
-./build/
 ./idea/
 ./Debug
 ./irrlicht-1.8.4
+.vs
+build
