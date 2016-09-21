@@ -25,7 +25,7 @@ public:
     //FMOD Error checks
     int FMODErrorCheck(int);
     //Sets the listener position
-    void setListenerPos(int, int, int);
+    void setListenerPos(float x = 0.0f, float y = 0.0f, float z = 0.0f);
     //Adds a background music
     void AddBGMusic(std::string);
 
