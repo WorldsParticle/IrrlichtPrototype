@@ -98,7 +98,7 @@ int Core::initModules()
 	//MODULES
 	//
 	//Add light
-	_smgr->setAmbientLight(video::SColorf(0.6,0.6,0.6,1));
+	_smgr->setAmbientLight(video::SColorf(0.6f, 0.6f, 0.6f, 1.0f));
 
 	soundModule = new SoundModule(device, camera);
 	soundModule->init();

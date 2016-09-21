@@ -15,7 +15,7 @@ public:
     //Loads a mesh, doesn't set its position
     int     LoadMesh(std::string, std::string);
     //Sets the position of the object
-    void    SetPosition(int, int, int);
+    void    SetPosition(float x, float y, float z);
     //Adds a 3D sound at the position of the object
     int     SetSound(std::string, FMOD::System *);
 

@@ -37,7 +37,7 @@ int Object::LoadMesh(std::string meshPath, std::string texturePath)
     return 0;
 }
 
-void Object::SetPosition(int x, int y, int z)
+void Object::SetPosition(float x, float y, float z)
 {
     _position->X = x;
     _position->Y = y;
