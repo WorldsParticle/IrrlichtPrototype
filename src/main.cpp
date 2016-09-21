@@ -1,23 +1,19 @@
-/** Example 012 Terrain Rendering
-
-This tutorial will briefly show how to use the terrain renderer of Irrlicht. It
-will also show the terrain renderer triangle selector to be able to do
-collision detection with terrain.
-
-Note that the Terrain Renderer in Irrlicht is based on Spintz'
-GeoMipMapSceneNode, lots of thanks go to him. DeusXL provided a new elegant
-simple solution for building larger area on small heightmaps -> terrain
-smoothing.
-
-In the beginning there is nothing special. We include the needed header files
-and create an event listener to listen if the user presses a key: The 'W' key
-switches to wireframe mode, the 'P' key to pointcloud mode, and the 'D' key
-toggles between solid and detail mapped material.
-*/
-
-#ifdef _MSC_VER
-#pragma comment(lib, "Irrlicht.lib")
-#endif
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 3 of the License, or
+// any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License along
+// with this program; If not, see <http://www.gnu.org/licenses/>.
+//
+// Copyright (C) WorldsParticle
+//
 
 #include "Core.h"
 
