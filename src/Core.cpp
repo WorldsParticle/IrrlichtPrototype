@@ -25,6 +25,8 @@
 #include "ParticleModule.h"
 #include "Configuration.h"
 
+#include <string>
+
 using namespace irr;
 using namespace core;
 using namespace scene;
@@ -32,54 +34,109 @@ using namespace video;
 using namespace io;
 using namespace gui;
 
-int Core::initIrrlicht()
+Core::Core(int argc, char *argv[]) :
+    _receiver(nullptr),
+    _elementsModule(nullptr),
+    _skyboxModule(nullptr),
+    _terrainModule(nullptr),
+    _waterModule(nullptr),
+    _soundModule(nullptr),
+    _particleModule(nullptr),
+    _isInterfaceActive(false),
+    _device(nullptr),
+    _windowSize(1280, 720),
+    _fullscreen(false)
 {
-	// ask user for driver
-	video::E_DRIVER_TYPE driverType = driverChoiceConsole();
-	if (driverType == video::EDT_COUNT)
-		return 1;
-
-	// create device with full flexibility over creation parameters
-	// you can add more parameters if desired, check irr::SIrrlichtCreationParameters
-	irr::SIrrlichtCreationParameters params;
-	params.DriverType = driverType;
-	params.WindowSize = core::dimension2d<u32>(1280, 720);
-	device = createDeviceEx(params);
-
-	if (device == 0)
-		return 1; // could not create selected driver.
-
-	_driver = device->getVideoDriver();
-	_smgr = device->getSceneManager();
-	_env = device->getGUIEnvironment();
-
-	return 0;
+    if (argc == 2 && std::string(argv[1]) == "fullscreen")
+    {
+        IrrlichtDevice *nulldevice = createDevice(video::EDT_NULL);
+        if (nulldevice != nullptr)
+        {
+            _windowSize = nulldevice->getVideoModeList()->getDesktopResolution();
+            _fullscreen = true;
+            nulldevice->drop();
+        }
+    }
 }
 
-int Core::initModules()
+Core::~Core(void)
 {
-	//
-	// BASIC ENVIRONNEMENT
-	//
-	device->setWindowCaption(L"WorldsParticle prototype");
+    if (_device != nullptr)
+    {
+        _device->drop();
+    }
+}
 
-	_driver->setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
 
-	// add irrlicht logo
-	_env->addImage(_driver->getTexture(RESOURCES_PATH "/irrlichtlogo2.png"),
-		core::position2d<s32>(10, 10));
 
-	//set other font
-	_env->getSkin()->setFont(_env->getFont(RESOURCES_PATH "/fontlucida.png"));
+int Core::run()
+{
+    this->createIrrlichtDevice();
+    this->createFPSCamera();
+    this->initIrrlicht();
+    this->initModules();
+    return this->gameLoop();
+}
 
-	// add some help text
-	//_env->addStaticText(
-	//	L"Press 'W' to change wireframe mode\nPress 'D' to toggle detail map\nPress 'S' to toggle skybox/skydome",
-	//	core::rect<s32>(10, 421, 250, 475), true, true, 0, -1, true);
+void    Core::initIrrlicht(void)
+{
+//    _driver->setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
+//    _env->getSkin()->setFont(_env->getFont(RESOURCES_PATH "/fontlucida.png"));
+    _device->getCursorControl()->setVisible(false);
+//    _smgr->setAmbientLight(video::SColorf(0.6f, 0.6f, 0.6f, 1.0f));
 
-	//
-	// CAMERA
-	//
+    //set GUI
+//    _env->addButton(rect<s32>(10, 240, 110, 240 + 32), 0, MyEventReceiver::GUI_ID_QUIT_BUTTON,
+//        L"Quit", L"Exits Program");
+    //_env->addButton(rect<s32>(10,280,110,280 + 32), 0, MyEventReceiver::GUI_ID_NEW_WINDOW_BUTTON,
+    //		L"New Window", L"Launches a new Window");
+//    _env->addButton(rect<s32>(10, 320, 110, 320 + 32), 0, MyEventReceiver::GUI_ID_FILE_OPEN_BUTTON,
+//        L"File Open", L"Opens a file");
+
+//    auto text = _env->addStaticText(L"FPS:", rect<s32>(50, 110, 250, 130), true);
+
+//    IGUIListBox *listbox = _env->addListBox(rect<s32>(50, 140, 250, 210));
+//    _env->addEditBox(L"Editable Text", rect<s32>(350, 80, 550, 100));
+
+    // Store the appropriate data in a context structure.
+    MyEventReceiver::SAppContext context;
+    context.device = _device;
+    context.counter = 0;
+    // create event receiver
+    _receiver = new MyEventReceiver(this, context);
+    _device->setEventReceiver(_receiver);
+}
+
+void    Core::createIrrlichtDevice(void)
+{
+    irr::SIrrlichtCreationParameters params;
+    params.AntiAlias = true;
+    params.Bits = 16;
+    params.DeviceType = EIDT_BEST;
+    params.Doublebuffer = true;
+    params.DriverMultithreaded = false;
+    //  params.DriverType = irr::IrrlichtDevice::isDriverSupported(EDT_DIRECT3D9) ? EDT_DIRECT3D9 : EDT_OPENGL;
+    params.DriverType = EDT_OPENGL;
+    params.Fullscreen = _fullscreen;
+    params.HandleSRGB = false;
+    params.HighPrecisionFPU = true;
+    params.IgnoreInput = false;
+    params.LoggingLevel = ELL_DEBUG;
+    params.Stencilbuffer = true;
+    params.Stereobuffer = false;
+    params.Vsync = true;
+    params.WindowSize = _windowSize;
+    params.WithAlphaChannel = false; // can be useful later.
+    params.ZBufferBits = 16;
+    if ((_device = createDeviceEx(params)) == nullptr)
+    {
+        throw std::runtime_error("could not create irrlicht driver.");
+    }
+    _device->setWindowCaption(L"WorldsParticle");
+}
+
+void    Core::createFPSCamera(void)
+{
     SKeyMap keyMap[8];
     keyMap[0].Action = EKA_MOVE_FORWARD;
     keyMap[0].KeyCode = KEY_UP;
@@ -101,102 +158,61 @@ int Core::initModules()
     keyMap[7].Action = EKA_STRAFE_RIGHT;
     keyMap[7].KeyCode = KEY_KEY_D;
 
-	camera = _smgr->addCameraSceneNodeFPS(0, 100.0f, 1.2f, -1, keyMap, 8);
-	//_smgr->addCameraSceneNode(0, vector3df(0, 30, -40), vector3df(0, 5, 0));
+    auto camera = _device->getSceneManager()->addCameraSceneNodeFPS(0, 100.0f, 1.2f, -1, keyMap, 8);
+    camera->setPosition(core::vector3df(2700 * 2, 255 * 2, 2600 * 2));
+    camera->setTarget(core::vector3df(2397 * 2, 343 * 2, 2700 * 2));
+    camera->setFarValue(42000.0f);
+}
 
-	camera->setPosition(core::vector3df(2700 * 2, 255 * 2, 2600 * 2));
-	camera->setTarget(core::vector3df(2397 * 2, 343 * 2, 2700 * 2));
-	camera->setFarValue(42000.0f);
+int Core::initModules()
+{
+    auto camera = _device->getSceneManager()->getActiveCamera();
 
-	// disable mouse cursor
-	device->getCursorControl()->setVisible(false);
-
-	//
-	//MODULES
-	//
-	//Add light
-	_smgr->setAmbientLight(video::SColorf(0.6f, 0.6f, 0.6f, 1.0f));
-
-	soundModule = new SoundModule(device, camera);
-	soundModule->init();
-	soundModule->AddBGMusic(RESOURCES_PATH "/river_bg.ogg");
-	elementsModule = new ElementsModule(device, camera, soundModule->soundSystem);
-	elementsModule->init();
-	skyboxModule = new SkyboxModule(device, camera);
-	skyboxModule->init();
-	terrainModule = new TerrainModule(device, camera);
-	terrainModule->init();
-	waterModule = new WaterModule(device, camera, terrainModule);
-	waterModule->init();
-	particleModule = new ParticleModule(device, camera);
-	particleModule->init();
-
-	//set GUI
-    	_env->addButton(rect<s32>(10,240,110,240 + 32), 0, MyEventReceiver::GUI_ID_QUIT_BUTTON,
-    	    	    L"Quit", L"Exits Program");
-    	//_env->addButton(rect<s32>(10,280,110,280 + 32), 0, MyEventReceiver::GUI_ID_NEW_WINDOW_BUTTON,
-    	//		L"New Window", L"Launches a new Window");
-    	_env->addButton(rect<s32>(10,320,110,320 + 32), 0, MyEventReceiver::GUI_ID_FILE_OPEN_BUTTON,
-    	    	    L"File Open", L"Opens a file");
-    	_env->addStaticText(L"Logging ListBox:", rect<s32>(50,110,250,130), true);
-    	IGUIListBox *listbox = _env->addListBox(rect<s32>(50, 140, 250, 210));
-    	_env->addEditBox(L"Editable Text", rect<s32>(350, 80, 550, 100));
-
-    	// Store the appropriate data in a context structure.
-    	MyEventReceiver::SAppContext context;
-    	context.device = device;
-    	context.counter = 0;
-    	context.listbox = listbox;
-	// create event receiver
-	_receiver = new MyEventReceiver(this, context);
-	device->setEventReceiver(_receiver);
-
+    _soundModule = new SoundModule(_device, camera);
+    _soundModule->init();
+    _soundModule->AddBGMusic(RESOURCES_PATH "/river_bg.ogg");
+    _elementsModule = new ElementsModule(_device, camera, _soundModule->soundSystem);
+    _elementsModule->init();
+    _skyboxModule = new SkyboxModule(_device, camera);
+    _skyboxModule->init();
+    _terrainModule = new TerrainModule(_device, camera);
+    _terrainModule->init();
+    _waterModule = new WaterModule(_device, camera, _terrainModule);
+    _waterModule->init();
+    _particleModule = new ParticleModule(_device, camera);
+    _particleModule->init();
 	return 0;
 }
 
-int Core::run()
+
+void    Core::updateModules(void)
 {
-	int lastFPS = -1;
-
-	while (device->run())
-		if (device->isWindowActive())
-		{
-			elementsModule->update();
-			skyboxModule->update();
-			terrainModule->update();
-			particleModule->update();
-			soundModule->update();
-
-			_driver->beginScene(true, true, 0);
-
-			_smgr->drawAll();
-			if (isInterfaceActive)
-			    _env->drawAll();
-
-			_driver->endScene();
-
-			// display frames per second in window title
-			int fps = _driver->getFPS();
-			if (lastFPS != fps)
-			{
-				core::stringw str = L"WorldsParticle prototype [";
-				str += _driver->getName();
-				str += "] FPS:";
-				str += fps;
-				// Also print terrain height of current camera position
-				// We can use camera position because terrain is located at coordinate origin
-				//str += " Height: ";
-				//str += terrain->getHeight(camera->getAbsolutePosition().X,
-				//		camera->getAbsolutePosition().Z);
-
-				device->setWindowCaption(str.c_str());
-				lastFPS = fps;
-			}
-		}
-	return 0;
+    _elementsModule->update();
+    _skyboxModule->update();
+    _terrainModule->update();
+    _particleModule->update();
+    _soundModule->update();
 }
 
-void Core::close()
+int     Core::gameLoop(void)
 {
-	device->closeDevice();
+    auto    driver = _device->getVideoDriver();
+    auto    smgr = _device->getSceneManager();
+    auto    env = _device->getGUIEnvironment();
+
+    while (_device->run() == true)
+    {
+        if (_device->isWindowActive() == true)
+        {
+            updateModules();
+            driver->beginScene(true, true, 0);
+            smgr->drawAll();
+            if (_isInterfaceActive == true)
+            {
+                env->drawAll();
+            }
+            driver->endScene();
+        }
+    }
+    return 0;
 }

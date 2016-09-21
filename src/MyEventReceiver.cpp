@@ -35,29 +35,30 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 		switch (event.KeyInput.Key)
 		{
 		case irr::KEY_KEY_N: // night
-			_core->skyboxModule->activeNight(true);
+			_core->getSkyboxModule()->activeNight(true);
 			return true;
 		case irr::KEY_KEY_B: // day
-			_core->skyboxModule->activeNight(false);
+			_core->getSkyboxModule()->activeNight(false);
 			return true;
         case irr::KEY_KEY_P: // change weather
-            _core->particleModule->activate();
+            _core->getParticleModule()->activate();
             return true;
 		case irr::KEY_ESCAPE: // quit
-			_core->close();
+            _context.device->closeDevice();
 			return true;
 		case irr::KEY_KEY_I: // interface
-			if (!_core->isInterfaceActive)
+			if (_core->isInterfaceActive() == false)
 			{
-			    _core->device->getCursorControl()->setVisible(true);
-			    _core->camera->setInputReceiverEnabled(false);
+			    _core->getIrrlichtDevice()->getCursorControl()->setVisible(true);
+			    _core->getActiveCamera()->setInputReceiverEnabled(false);
+                _core->setInterfaceActive(true);
 			}
 			else
 			{
-			    _core->device->getCursorControl()->setVisible(false);
-			    _core->camera->setInputReceiverEnabled(true);
-			}
-			_core->isInterfaceActive = !_core->isInterfaceActive;
+			    _core->getIrrlichtDevice()->getCursorControl()->setVisible(false);
+			    _core->getActiveCamera()->setInputReceiverEnabled(true);
+                _core->setInterfaceActive(false);
+            }
 			return true;
 		default:
 			break;

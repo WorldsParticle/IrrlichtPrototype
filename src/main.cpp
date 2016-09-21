@@ -17,18 +17,9 @@
 
 #include "Core.h"
 
-int main()
+int main(int argc, char *argv[])
 {
-	Core core;
+	Core    core(argc, argv);
 
-	if (core.initIrrlicht() != 0)
-		return 1;
-
-	if (core.initModules() != 0)
-		return 1;
-
-	if (core.run() != 0)
-		return 1;
-
-	return 0;
+	return core.run();
 }
