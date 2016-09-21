@@ -24,8 +24,8 @@
 
 using namespace irr;
 
-MyEventReceiver::MyEventReceiver(Core *core, SAppContext & context)
-	: _core(core), _context(context)
+MyEventReceiver::MyEventReceiver(Core *core)
+	: _core(core)
 {
 }
 
@@ -37,23 +37,34 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 		switch (event.KeyInput.Key)
 		{
 		case irr::KEY_KEY_N: // night
-			_core->skyboxModule->activeNight(true);
+			_core->getSkyboxModule()->activeNight(true);
 			return true;
 		case irr::KEY_KEY_B: // day
-			_core->skyboxModule->activeNight(false);
+			_core->getSkyboxModule()->activeNight(false);
 			return true;
         case irr::KEY_KEY_P: // change weather
-            _core->particleModule->activate();
+            _core->getParticleModule()->activate();
             return true;
 		case irr::KEY_ESCAPE: // quit
-			_core->close();
-			return true;
+            _core->getIrrlichtDevice()->closeDevice();
+            return true;
 		case irr::KEY_KEY_I: // interface
-			_core->toggleInterface();
+			if (_core->isInterfaceActive() == false)
+			{
+			    _core->getIrrlichtDevice()->getCursorControl()->setVisible(true);
+			    _core->getActiveCamera()->setInputReceiverEnabled(false);
+                _core->setInterfaceActive(true);
+			}
+			else
+			{
+			    _core->getIrrlichtDevice()->getCursorControl()->setVisible(false);
+			    _core->getActiveCamera()->setInputReceiverEnabled(true);
+                _core->setInterfaceActive(false);
+            }
 			return true;
         case irr::KEY_KEY_G:
-            _core->terrainModule->generate(513, rand());
-            _core->terrainModule->setHeightmap();
+            _core->getTerrainModule()->generate(513, rand());
+            _core->getTerrainModule()->setHeightmap();
             return true;
 		default:
 			break;
@@ -69,9 +80,9 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 				switch(id)
 				{
 					case GUI_ID_GENERATE_BUTTON:
-						std::cout << "Environment: " << _context.envRadioBox->getSelected() << std::endl;
-						std::cout << "Time: " << _context.timeRadioBox->getSelected() << std::endl;
-						std::cout << "Climat: " << _context.climatRadioBox->getSelected() << std::endl;
+						//std::cout << "Environment: " << _context.envRadioBox->getSelected() << std::endl;
+						//std::cout << "Time: " << _context.timeRadioBox->getSelected() << std::endl;
+						//std::cout << "Climat: " << _context.climatRadioBox->getSelected() << std::endl;
 						//generatorModule->buildTerrain(_context.envRadioBox->getSelected());
 						//_context.device->closeDevice();
 						return true;
