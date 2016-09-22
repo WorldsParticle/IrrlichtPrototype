@@ -18,10 +18,11 @@ FIND_PATH(FMOD_INCLUDE_DIR
     /opt/local
     /opt/csw
     /opt
+	./lib/fmod_windows/inc
     )
 
 FIND_LIBRARY(FMOD_LIBRARY
-    NAMES fmod
+    NAMES fmodL.lib
     HINTS
       ENV FMOD_DIR
     PATHS
@@ -31,6 +32,7 @@ FIND_LIBRARY(FMOD_LIBRARY
     /opt/local
     /opt/csw
     /opt
+	./lib/fmod_windows/lib
     )
 
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(FMOD

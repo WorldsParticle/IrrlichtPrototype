@@ -29,6 +29,7 @@ else (IRRLICHT_LIBRARIES AND IRRLICHT_INCLUDE_DIRS)
       /usr/local/include/irrlicht
       /opt/local/include
       /sw/include
+	./lib/irrlicht/include
   )
 
   find_library(IRRLICHT_LIBRARY
@@ -39,6 +40,7 @@ else (IRRLICHT_LIBRARIES AND IRRLICHT_INCLUDE_DIRS)
       /usr/local/lib
       /opt/local/lib
       /sw/lib
+	./lib/irrlicht/lib/Win32-visualstudio
   )
 
   if (IRRLICHT_LIBRARY)
