@@ -76,9 +76,13 @@ public:
 
 public:
     ///
-    ///
+    /// \brief Init the module and create a console gui element.
     ///
     virtual int     init(void);
+
+    ///
+    /// \brief Update the text displayed in hte console element.
+    ///
     virtual int     update(void);
 
 private:
@@ -91,10 +95,13 @@ private:
     void        createGenerateButton(const irr::core::vector2d<irr::s32> boxOffset, const irr::core::vector2d<irr::s32> boxSize);
 
 private:
+    ///
+    /// \brief Store the visibility of the module.
+    ///
     bool    _isVisible;
 
     ///
-    /// 
+    ///  \brief Pointer to the console gui element. Usef to update the text every frame.
     ///
     irr::gui::IGUIStaticText    *_console;
     irr::gui::IGUITab		    *_tab;

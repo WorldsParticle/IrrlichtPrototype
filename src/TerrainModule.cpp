@@ -38,6 +38,8 @@ int TerrainModule::init()
 		);
 
 	_terrain->setMaterialFlag(video::EMF_LIGHTING, false);
+
+    //_terrain->setMaterialFlag(video::EMF_WIREFRAME, true);
 	_terrain->setMaterialTexture(0,
 		driver->getTexture(RESOURCES_PATH "/terrain-texture.jpg"));
 	_terrain->setMaterialTexture(1,
