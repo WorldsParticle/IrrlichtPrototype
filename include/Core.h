@@ -62,6 +62,10 @@ public:
         return _device;
     }
 
+    ///
+    /// \brief Getter for the active camera in the scene manager.
+    /// \return A pointer to an active camera.
+    ///
     irr::scene::ICameraSceneNode    *getActiveCamera(void)
     {
         return _device->getSceneManager()->getActiveCamera();
@@ -125,12 +129,13 @@ public:
 
 private:
     ///
-    /// \brief This method is used to initialise the irrlicht device and set some usefull pointer.
-    /// 
-    /// Create an irrlicht device, set the value of device, _driver, _smgr, and _env.
+    /// \brief Set some usefull parameter in irrlicht engine.
     ///
     void    initIrrlicht(void);
 
+    ///
+    /// \brief This method is used to create the irrlicht device and set some usefull pointer.
+    ///
     void    createIrrlichtDevice(void);
 
     ///

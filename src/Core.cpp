@@ -82,12 +82,9 @@ int Core::run()
 
 void    Core::initIrrlicht(void)
 {
-
     _device->getVideoDriver()->setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
     _device->getCursorControl()->setVisible(false);
     _device->getSceneManager()->setAmbientLight(video::SColorf(0.6f, 0.6f, 0.6f, 1.0f));
-
-
 }
 
 void    Core::createIrrlichtDevice(void)
