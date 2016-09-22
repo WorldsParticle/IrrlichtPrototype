@@ -27,6 +27,7 @@ class TerrainModule;
 class WaterModule;
 class SoundModule;
 class ParticleModule;
+class GUIModule;
 
 class Core
 {
@@ -115,18 +116,11 @@ public:
     }
 
     ///
-    /// \brief ...
+    /// \brief Getter for the GUI module.
     ///
-    bool            isInterfaceActive(void) const
+    GUIModule       *getGUIModule(void)
     {
-        return _isInterfaceActive;
-    }
-
-public:
-
-    void            setInterfaceActive(bool active)
-    {
-        _isInterfaceActive = active;
+        return _GUIModule;
     }
 
 private:
@@ -204,7 +198,10 @@ private:
     ///
 	ParticleModule			*_particleModule;
 
-//    GUIModule               *_GUIModule;
+    ///
+    /// \brief The GUI Module.
+    ///
+    GUIModule               *_GUIModule;
 
     ///
     /// \brief Irrlicht device, core module of the irrlicht library.
@@ -220,11 +217,6 @@ private:
     /// \brief Store the value true if the irrlicht window should be in fullscreen or false otherwise.
     ///
     bool    _fullscreen;
-
-    ///
-    /// \brief Store the value if the interface should be displayed or should not.
-    ///
-    bool				    _isInterfaceActive = false;
 
 };
 

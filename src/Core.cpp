@@ -23,6 +23,8 @@
 #include "WaterModule.h"
 #include "SoundModule.h"
 #include "ParticleModule.h"
+#include "GUIModule.h"
+
 #include "Configuration.h"
 
 #include <string>
@@ -42,7 +44,7 @@ Core::Core(int argc, char *argv[]) :
     _waterModule(nullptr),
     _soundModule(nullptr),
     _particleModule(nullptr),
-    _isInterfaceActive(false),
+    _GUIModule(nullptr),
     _device(nullptr),
     _windowSize(1280, 720),
     _fullscreen(false)
@@ -80,31 +82,12 @@ int Core::run()
 
 void    Core::initIrrlicht(void)
 {
-//    _driver->setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
-//    _env->getSkin()->setFont(_env->getFont(RESOURCES_PATH "/fontlucida.png"));
+
+    _device->getVideoDriver()->setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
     _device->getCursorControl()->setVisible(false);
-//    _smgr->setAmbientLight(video::SColorf(0.6f, 0.6f, 0.6f, 1.0f));
+    _device->getSceneManager()->setAmbientLight(video::SColorf(0.6f, 0.6f, 0.6f, 1.0f));
 
-    //set GUI
-//    _env->addButton(rect<s32>(10, 240, 110, 240 + 32), 0, MyEventReceiver::GUI_ID_QUIT_BUTTON,
-//        L"Quit", L"Exits Program");
-    //_env->addButton(rect<s32>(10,280,110,280 + 32), 0, MyEventReceiver::GUI_ID_NEW_WINDOW_BUTTON,
-    //		L"New Window", L"Launches a new Window");
-//    _env->addButton(rect<s32>(10, 320, 110, 320 + 32), 0, MyEventReceiver::GUI_ID_FILE_OPEN_BUTTON,
-//        L"File Open", L"Opens a file");
 
-//    auto text = _env->addStaticText(L"FPS:", rect<s32>(50, 110, 250, 130), true);
-
-//    IGUIListBox *listbox = _env->addListBox(rect<s32>(50, 140, 250, 210));
-//    _env->addEditBox(L"Editable Text", rect<s32>(350, 80, 550, 100));
-
-    // Store the appropriate data in a context structure.
-    MyEventReceiver::SAppContext context;
-    context.device = _device;
-    context.counter = 0;
-    // create event receiver
-    _receiver = new MyEventReceiver(this, context);
-    _device->setEventReceiver(_receiver);
 }
 
 void    Core::createIrrlichtDevice(void)
@@ -181,6 +164,10 @@ int Core::initModules()
     _waterModule->init();
     _particleModule = new ParticleModule(_device, camera);
     _particleModule->init();
+    _GUIModule = new GUIModule(_device, camera);
+    _GUIModule->init();
+    _receiver = new MyEventReceiver(this);
+    _device->setEventReceiver(_receiver);
 	return 0;
 }
 
@@ -192,6 +179,7 @@ void    Core::updateModules(void)
     _terrainModule->update();
     _particleModule->update();
     _soundModule->update();
+    _GUIModule->update();
 }
 
 int     Core::gameLoop(void)
@@ -207,7 +195,7 @@ int     Core::gameLoop(void)
             updateModules();
             driver->beginScene(true, true, 0);
             smgr->drawAll();
-            if (_isInterfaceActive == true)
+            if (_GUIModule->isVisible() == true)
             {
                 env->drawAll();
             }
