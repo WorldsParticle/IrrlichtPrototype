@@ -20,6 +20,7 @@
 #include "SkyboxModule.h"
 #include "ParticleModule.h"
 #include "TerrainModule.h"
+#include "GUIModule.h"
 #include <iostream>
 
 using namespace irr;
@@ -47,21 +48,18 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
             return true;
 		case irr::KEY_ESCAPE: // quit
             _core->getIrrlichtDevice()->closeDevice();
-            return true;
-		case irr::KEY_KEY_I: // interface
-			if (_core->isInterfaceActive() == false)
-			{
-			    _core->getIrrlichtDevice()->getCursorControl()->setVisible(true);
-			    _core->getActiveCamera()->setInputReceiverEnabled(false);
-                _core->setInterfaceActive(true);
-			}
-			else
-			{
-			    _core->getIrrlichtDevice()->getCursorControl()->setVisible(false);
-			    _core->getActiveCamera()->setInputReceiverEnabled(true);
-                _core->setInterfaceActive(false);
-            }
 			return true;
+		case irr::KEY_KEY_I: // interface
+        {
+            bool result = _core->getGUIModule()->isPanelVisible();
+            _core->getIrrlichtDevice()->getCursorControl()->setVisible(!result);
+            _core->getActiveCamera()->setInputReceiverEnabled(result);
+            _core->getGUIModule()->setPanelVisibility(!result);
+            return true;
+        }
+        case irr::KEY_KEY_C:
+            _core->getGUIModule()->setConsoleVisibility(!_core->getGUIModule()->isConsoleVisible());
+            return true;
         case irr::KEY_KEY_G:
             _core->getTerrainModule()->generate(513, rand());
             _core->getTerrainModule()->setHeightmap();
@@ -74,41 +72,31 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 	{
 		s32 id = event.GUIEvent.Caller->getID();
 
-		switch(event.GUIEvent.EventType)
-		{
-			case EGET_BUTTON_CLICKED:
-				switch(id)
-				{
-					case GUI_ID_GENERATE_BUTTON:
-						//std::cout << "Environment: " << _context.envRadioBox->getSelected() << std::endl;
-						//std::cout << "Time: " << _context.timeRadioBox->getSelected() << std::endl;
-						//std::cout << "Climat: " << _context.climatRadioBox->getSelected() << std::endl;
-						//generatorModule->buildTerrain(_context.envRadioBox->getSelected());
-						//_context.device->closeDevice();
-						return true;
-
-					default:
-						return false;
-				}
-				break;
-
-			case EGET_SCROLL_BAR_CHANGED:
-				if (id == GUI_ID_MUSIC_SCROLL_BAR)
-				{
-					s32 pos = ((IGUIScrollBar*)event.GUIEvent.Caller)->getPos();
-					std::cout << "Music volume: " << pos << std::endl;
-				}
-				else if (id == GUI_ID_SOUND_SCROLL_BAR)
-				{
-					s32 pos = ((IGUIScrollBar*)event.GUIEvent.Caller)->getPos();
-					std::cout << "Sound volume: " << pos << std::endl;
-				}
-				break;
-
-			default:
-				break;
-		}
-	}
-
+        switch (event.GUIEvent.EventType)
+        {
+        case EGET_BUTTON_CLICKED:
+            switch (id)
+            {
+            case GUI_ID_GENERATE_BUTTON:
+                //std::cout << "Environment: " << _context.envRadioBox->getSelected() << std::endl;
+                //std::cout << "Time: " << _context.timeRadioBox->getSelected() << std::endl;
+                //std::cout << "Climat: " << _context.climatRadioBox->getSelected() << std::endl;
+                //generatorModule->buildTerrain(_context.envRadioBox->getSelected());
+                return true;
+            case EGET_SCROLL_BAR_CHANGED:
+                if (id == GUI_ID_MUSIC_SCROLL_BAR)
+                {
+                    s32 pos = ((IGUIScrollBar*)event.GUIEvent.Caller)->getPos();
+                    std::cout << "Music volume: " << pos << std::endl;
+                }
+                else if (id == GUI_ID_SOUND_SCROLL_BAR)
+                {
+                    s32 pos = ((IGUIScrollBar*)event.GUIEvent.Caller)->getPos();
+                    std::cout << "Sound volume: " << pos << std::endl;
+                }
+                break;
+            }
+        }
+    }
 	return false;
 }

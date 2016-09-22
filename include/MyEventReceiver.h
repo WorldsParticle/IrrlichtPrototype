@@ -42,6 +42,5 @@ public:
 	bool OnEvent(const irr::SEvent& event);
 
 private:
-
 	Core	    *_core;
 };

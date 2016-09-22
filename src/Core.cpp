@@ -24,6 +24,7 @@
 #include "SoundModule.h"
 #include "ParticleModule.h"
 #include "gui_radiocheckboxgroup.h"
+#include "GUIModule.h"
 
 #include "Configuration.h"
 
@@ -44,7 +45,7 @@ Core::Core(int argc, char *argv[]) :
     _waterModule(nullptr),
     _soundModule(nullptr),
     _particleModule(nullptr),
-    _isInterfaceActive(false),
+    _GUIModule(nullptr),
     _device(nullptr),
     _windowSize(1280, 720),
     _fullscreen(false)
@@ -161,6 +162,8 @@ int Core::initModules()
     _waterModule->init();
     _particleModule = new ParticleModule(_device, camera);
     _particleModule->init();
+    _GUIModule = new GUIModule(_device, camera);
+    _GUIModule->init();
     _receiver = new MyEventReceiver(this);
     _device->setEventReceiver(_receiver);
 	return 0;
@@ -174,6 +177,7 @@ void    Core::updateModules(void)
     _terrainModule->update();
     _particleModule->update();
     _soundModule->update();
+    _GUIModule->update();
 }
 
 int     Core::gameLoop(void)
@@ -189,7 +193,7 @@ int     Core::gameLoop(void)
             updateModules();
             driver->beginScene(true, true, 0);
             smgr->drawAll();
-            if (_isInterfaceActive == true)
+            if (_GUIModule->isVisible() == true)
             {
                 env->drawAll();
             }
@@ -198,97 +202,3 @@ int     Core::gameLoop(void)
     }
     return 0;
 }
-
-//void Core::setGUI()
-//{
-//    //set transparency of everyting in the interface to not transparent at all
-//    int alpha = 255;
-//    irr::gui::IGUISkin * skin = _env->getSkin();
-//    for (s32 i = 0; i < irr::gui::EGDC_COUNT; ++i)
-//    {
-//        video::SColor col = skin->getColor((EGUI_DEFAULT_COLOR)i);
-//        col.setAlpha(alpha);
-//        skin->setColor((EGUI_DEFAULT_COLOR)i, col);
-//    }
-//
-//    //set other font
-//    skin->setFont(_env->getFont(RESOURCES_PATH "/fontlucida.png"));
-//
-//    // add some help text
-//    _env->addStaticText(L"Press 'I' to toggle interface", core::rect<s32>(10, 10, 250, 30), false, true, 0, -1, true);
-//
-//    //set background color
-//    _tab = _env->addTab(core::rect<s32>(0, 0, 400, 720));
-//    _tab->setDrawBackground(true);
-//    _tab->setBackgroundColor(SColor(255, 140, 140, 140));
-//
-//    //add WorldsParticle logo
-//    _env->addImage(_driver->getTexture(RESOURCES_PATH "2017_logo_worldsparticle.png"), core::position2d<s32>(10, 10), true, _tab);
-//
-//    int height = 20; //height of radiobuttons
-//    int width = 100; // width of radiobuttons with their text
-//
-//                     //create enivronment radioButtons
-//    CGUIRadioCheckBoxGroup *envRB = new CGUIRadioCheckBoxGroup(_env, _tab);
-//    IGUICheckBox* mountain = _env->addCheckBox(false, core::rect<s32>(0, 0, width, height), _tab, 0, L"Mountain");
-//    IGUICheckBox* forest = _env->addCheckBox(false, core::rect<s32>(width, 0, 2 * width, height), _tab, 0, L"Forest");
-//    IGUICheckBox* beach = _env->addCheckBox(false, core::rect<s32>(2 * width, 0, 3 * width, height), _tab, 0, L"Beach");
-//    int x = 50;
-//    int y = 50;
-//    envRB->add(mountain);
-//    envRB->add(forest);
-//    envRB->add(beach);
-//
-//    //create time radioButtons
-//    CGUIRadioCheckBoxGroup *timeRB = new CGUIRadioCheckBoxGroup(_env, _tab);
-//    IGUICheckBox* day = _env->addCheckBox(false, core::rect<s32>(0, 0, width, height), _tab, 0, L"Day");
-//    IGUICheckBox* night = _env->addCheckBox(false, core::rect<s32>(width, 0, 2 * width, height), _tab, 0, L"Night");
-//    timeRB->add(day);
-//    timeRB->add(night);
-//
-//    //create climat radioButtons
-//    CGUIRadioCheckBoxGroup *climatRB = new CGUIRadioCheckBoxGroup(_env, _tab);
-//    IGUICheckBox* sun = _env->addCheckBox(false, core::rect<s32>(0, 0, width, height), _tab, 0, L"Sun");
-//    IGUICheckBox* rain = _env->addCheckBox(false, core::rect<s32>(width, 0, 2 * width, height), _tab, 0, L"Rain");
-//    IGUICheckBox* snow = _env->addCheckBox(false, core::rect<s32>(2 * width, 0, 3 * width, height), _tab, 0, L"Snow");
-//    climatRB->add(sun);
-//    climatRB->add(rain);
-//    climatRB->add(snow);
-//
-//    //position of radiobuttons
-//    envRB->setRelativePosition(core::rect<s32>(x, y, x + width * 3, y + height));
-//    y += height + 10;
-//    timeRB->setRelativePosition(core::rect<s32>(x, y, x + width * 2, y + height));
-//    y += height + 10;
-//    climatRB->setRelativePosition(core::rect<s32>(x, y, x + width * 3, y + height));
-//
-//    y += height + 10;
-//    y += height + 10;
-//    _env->addStaticText(L"Music volume", rect<s32>(x, y, x + 100, y + height), false, true, _tab);
-//    IGUIScrollBar* musicScrollbar = _env->addScrollBar(true, rect<s32>(x + 100, y, x + 300, y + height), _tab, MyEventReceiver::GUI_ID_MUSIC_SCROLL_BAR);
-//    musicScrollbar->setMax(255);
-//    musicScrollbar->setPos(255);
-//    //setSkinTransparency(musicScrollbar->getPos(), env->getSkin());
-//
-//    y += height + 10;
-//    _env->addStaticText(L"Sound volume", rect<s32>(x, y, x + 100, y + height), false, true, _tab);
-//    IGUIScrollBar* soundScrollbar = _env->addScrollBar(true, rect<s32>(x + 100, y, x + 300, y + height), _tab, MyEventReceiver::GUI_ID_SOUND_SCROLL_BAR);
-//    soundScrollbar->setMax(255);
-//    soundScrollbar->setPos(255);
-//
-//    y += height + 10;
-//    y += height + 10;
-//    _env->addButton(rect<s32>(150, y, 250, y + 32), _tab, MyEventReceiver::GUI_ID_GENERATE_BUTTON, L"Generate", L"Generate world");
-//    // Store the appropriate data in a context structure.
-//    MyEventReceiver::SAppContext context;
-//    context.envRadioBox = envRB;
-//    context.timeRadioBox = timeRB;
-//    context.climatRadioBox = climatRB;
-//
-//    // create event receiver
-//    _receiver = new MyEventReceiver(this, context);
-//    device->setEventReceiver(_receiver);
-//
-//    //interface set to invisible because camera is active by default
-//    _tab->setVisible(false);
-//}
