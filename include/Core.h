@@ -28,7 +28,9 @@ private:
 	irr::gui::IGUIEnvironment	*_env;
 
 	MyEventReceiver			*_receiver;
+	irr::gui::IGUITab		*_tab = NULL;
 
+	void setGUI();
 public:
 	ElementsModule			*elementsModule;
 	SkyboxModule			*skyboxModule;
@@ -36,9 +38,9 @@ public:
 	WaterModule			*waterModule;
 	SoundModule			*soundModule;
 	ParticleModule			*particleModule;
-	bool				isInterfaceActive = false;
 	irr::scene::ICameraSceneNode	*camera;
 	irr::IrrlichtDevice		*device;
 
+	void toggleInterface();
 };
 

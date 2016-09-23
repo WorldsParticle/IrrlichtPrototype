@@ -15,8 +15,8 @@ include_directories(
         ${PROJECT_SOURCE_DIR}/include/fmod
 )
 
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -o2 -std=c++1y -Wall -pedantic -g")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -o2 -std=c++1y -W")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -o2 -std=c++14 -Wall -pedantic -g")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -o2 -std=c++14 -W")
 
 set(IRRLICHTPROTO_SOURCE_FILES
         src/Core.cpp
@@ -31,6 +31,8 @@ set(IRRLICHTPROTO_SOURCE_FILES
 	src/SnowWeather.cpp
 	src/RainWeather.cpp
 	src/WaterModule.cpp
+	src/gui_radiobuttongroup.cpp
+	src/gui_radiocheckboxgroup.cpp
 	lib/RealisticWaterSceneNode/RealisticWater.cpp)
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)

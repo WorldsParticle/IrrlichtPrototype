@@ -1,6 +1,7 @@
 #pragma once
 
 #include <irrlicht.h>
+#include "gui_radiocheckboxgroup.h"
 #include "driverChoice.h"
 
 using namespace irr;
@@ -15,17 +16,16 @@ public:
 	// has it available inside its OnEvent() method.
 	struct SAppContext
 	{
-		irr::IrrlichtDevice	*device;
-		irr::s32		counter;
-		irr::gui::IGUIListBox*	listbox;
+		irr::gui::CGUIRadioCheckBoxGroup*	envRadioBox;
+		irr::gui::CGUIRadioCheckBoxGroup*	timeRadioBox;
+		irr::gui::CGUIRadioCheckBoxGroup*	climatRadioBox;
 	};
 	// Define some values that we'll use to identify individual GUI controls.
 	enum
 	{
-		GUI_ID_QUIT_BUTTON = 101,
-		//GUI_ID_NEW_WINDOW_BUTTON,
-		GUI_ID_FILE_OPEN_BUTTON
-		//GUI_ID_TRANSPARENCY_SCROLL_BAR
+		GUI_ID_GENERATE_BUTTON = 101,
+		GUI_ID_MUSIC_SCROLL_BAR,
+		GUI_ID_SOUND_SCROLL_BAR
 	};
 
 	MyEventReceiver(Core *core, SAppContext & context);

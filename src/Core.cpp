@@ -6,6 +6,7 @@
 #include "WaterModule.h"
 #include "SoundModule.h"
 #include "ParticleModule.h"
+#include "gui_radiocheckboxgroup.h"
 
 using namespace irr;
 using namespace core;
@@ -46,18 +47,6 @@ int Core::initModules()
 	device->setWindowCaption(L"WorldsParticle prototype");
 
 	_driver->setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
-
-	// add irrlicht logo
-	_env->addImage(_driver->getTexture("./ressources/irrlichtlogo2.png"),
-		core::position2d<s32>(10, 10));
-
-	//set other font
-	_env->getSkin()->setFont(_env->getFont("./ressources/fontlucida.png"));
-
-	// add some help text
-	//_env->addStaticText(
-	//	L"Press 'W' to change wireframe mode\nPress 'D' to toggle detail map\nPress 'S' to toggle skybox/skydome",
-	//	core::rect<s32>(10, 421, 250, 475), true, true, 0, -1, true);
 
 	//
 	// CAMERA
@@ -105,25 +94,7 @@ int Core::initModules()
 	particleModule = new ParticleModule(device, camera);
 	particleModule->init();
 
-	//set GUI
-    	_env->addButton(rect<s32>(10,240,110,240 + 32), 0, MyEventReceiver::GUI_ID_QUIT_BUTTON,
-    	    	    L"Quit", L"Exits Program");
-    	//_env->addButton(rect<s32>(10,280,110,280 + 32), 0, MyEventReceiver::GUI_ID_NEW_WINDOW_BUTTON,
-    	//		L"New Window", L"Launches a new Window");
-    	_env->addButton(rect<s32>(10,320,110,320 + 32), 0, MyEventReceiver::GUI_ID_FILE_OPEN_BUTTON,
-    	    	    L"File Open", L"Opens a file");
-    	_env->addStaticText(L"Logging ListBox:", rect<s32>(50,110,250,130), true);
-    	IGUIListBox *listbox = _env->addListBox(rect<s32>(50, 140, 250, 210));
-    	_env->addEditBox(L"Editable Text", rect<s32>(350, 80, 550, 100));
-
-    	// Store the appropriate data in a context structure.
-    	MyEventReceiver::SAppContext context;
-    	context.device = device;
-    	context.counter = 0;
-    	context.listbox = listbox;
-	// create event receiver
-	_receiver = new MyEventReceiver(this, context);
-	device->setEventReceiver(_receiver);
+	setGUI();
 
 	return 0;
 }
@@ -144,8 +115,7 @@ int Core::run()
 			_driver->beginScene(true, true, 0);
 
 			_smgr->drawAll();
-			if (isInterfaceActive)
-			    _env->drawAll();
+			_env->drawAll();
 
 			_driver->endScene();
 
@@ -173,4 +143,105 @@ int Core::run()
 void Core::close()
 {
 	device->closeDevice();
+}
+
+void Core::setGUI()
+{
+	//set transparency of everyting in the interface to not transparent at all
+	int alpha = 255;
+	irr::gui::IGUISkin * skin = _env->getSkin();
+	for (s32 i=0; i<irr::gui::EGDC_COUNT ; ++i)
+	{
+		video::SColor col = skin->getColor((EGUI_DEFAULT_COLOR)i);
+		col.setAlpha(alpha);
+		skin->setColor((EGUI_DEFAULT_COLOR)i, col);
+	}
+
+	//set other font
+	skin->setFont(_env->getFont("./ressources/fontlucida.png"));
+
+	// add some help text
+	_env->addStaticText( L"Press 'I' to toggle interface", core::rect<s32>(10, 10, 250, 30), false, true, 0, -1, true);
+
+	//set background color
+	_tab = _env->addTab(core::rect<s32>(0, 0, 400, 720));
+	_tab->setDrawBackground(true);
+	_tab->setBackgroundColor(SColor(255, 140, 140, 140));
+
+	//add WorldsParticle logo
+	_env->addImage(_driver->getTexture("./ressources/2017_logo_worldsparticle.png"), core::position2d<s32>(10, 10), true, _tab);
+
+	int height = 20; //height of radiobuttons
+	int width = 100; // width of radiobuttons with their text
+
+	//create enivronment radioButtons
+	CGUIRadioCheckBoxGroup *envRB = new CGUIRadioCheckBoxGroup(_env, _tab);
+	IGUICheckBox* mountain = _env->addCheckBox(false, core::rect<s32>(0, 0, width, height), _tab, 0, L"Mountain");
+	IGUICheckBox* forest = _env->addCheckBox(false, core::rect<s32>(width, 0, 2 * width, height), _tab, 0, L"Forest");
+	IGUICheckBox* beach = _env->addCheckBox(false, core::rect<s32>(2 * width, 0, 3 * width, height), _tab, 0, L"Beach");
+	int x = 50;
+	int y = 50;
+	envRB->add(mountain);
+	envRB->add(forest);
+	envRB->add(beach);
+
+	//create time radioButtons
+	CGUIRadioCheckBoxGroup *timeRB = new CGUIRadioCheckBoxGroup(_env, _tab);
+	IGUICheckBox* day = _env->addCheckBox(false, core::rect<s32>(0, 0, width, height), _tab, 0, L"Day");
+	IGUICheckBox* night = _env->addCheckBox(false, core::rect<s32>(width, 0, 2 * width, height), _tab, 0, L"Night");
+	timeRB->add(day);
+	timeRB->add(night);
+
+	//create climat radioButtons
+	CGUIRadioCheckBoxGroup *climatRB = new CGUIRadioCheckBoxGroup(_env, _tab);
+	IGUICheckBox* sun = _env->addCheckBox(false, core::rect<s32>(0, 0, width, height), _tab, 0, L"Sun");
+	IGUICheckBox* rain = _env->addCheckBox(false, core::rect<s32>(width, 0, 2 * width, height), _tab, 0, L"Rain");
+	IGUICheckBox* snow = _env->addCheckBox(false, core::rect<s32>(2 * width, 0, 3 * width, height), _tab, 0, L"Snow");
+	climatRB->add(sun);
+	climatRB->add(rain);
+	climatRB->add(snow);
+
+	//position of radiobuttons
+	envRB->setRelativePosition(core::rect<s32>(x, y, x + width * 3, y + height));
+	y += height + 10;
+	timeRB->setRelativePosition(core::rect<s32>(x, y, x + width * 2, y + height));
+	y += height + 10;
+	climatRB->setRelativePosition(core::rect<s32>(x, y, x + width * 3, y + height));
+
+	y += height + 10;
+	y += height + 10;
+	_env->addStaticText(L"Music volume", rect<s32>(x, y, x + 100, y + height), false, true, _tab);
+	IGUIScrollBar* musicScrollbar = _env->addScrollBar(true, rect<s32>(x + 100, y, x + 300, y + height), _tab, MyEventReceiver::GUI_ID_MUSIC_SCROLL_BAR);
+	musicScrollbar->setMax(255);
+	musicScrollbar->setPos(255);
+	//setSkinTransparency(musicScrollbar->getPos(), env->getSkin());
+
+	y += height + 10;
+	_env->addStaticText(L"Sound volume", rect<s32>(x, y, x + 100, y + height), false, true, _tab);
+	IGUIScrollBar* soundScrollbar = _env->addScrollBar(true, rect<s32>(x + 100, y, x + 300, y + height), _tab, MyEventReceiver::GUI_ID_SOUND_SCROLL_BAR);
+	soundScrollbar->setMax(255);
+	soundScrollbar->setPos(255);
+
+	y += height + 10;
+	y += height + 10;
+    	_env->addButton(rect<s32>(150, y, 250, y + 32), _tab, MyEventReceiver::GUI_ID_GENERATE_BUTTON, L"Generate", L"Generate world");
+    	// Store the appropriate data in a context structure.
+    	MyEventReceiver::SAppContext context;
+    	context.envRadioBox = envRB;
+    	context.timeRadioBox = timeRB;
+    	context.climatRadioBox = climatRB;
+
+	// create event receiver
+	_receiver = new MyEventReceiver(this, context);
+	device->setEventReceiver(_receiver);
+
+	//interface set to invisible because camera is active by default
+	_tab->setVisible(false);
+}
+
+void Core::toggleInterface()
+{
+	device->getCursorControl()->setVisible(!_tab->isVisible());
+	camera->setInputReceiverEnabled(_tab->isVisible());
+	_tab->setVisible(!_tab->isVisible());
 }

@@ -2,6 +2,7 @@
 #include "Core.h"
 #include "SkyboxModule.h"
 #include "ParticleModule.h"
+#include <iostream>
 
 using namespace irr;
 
@@ -30,17 +31,7 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 			_core->close();
 			return true;
 		case irr::KEY_KEY_I: // interface
-			if (!_core->isInterfaceActive)
-			{
-			    _core->device->getCursorControl()->setVisible(true);
-			    _core->camera->setInputReceiverEnabled(false);
-			}
-			else
-			{
-			    _core->device->getCursorControl()->setVisible(false);
-			    _core->camera->setInputReceiverEnabled(true);
-			}
-			_core->isInterfaceActive = !_core->isInterfaceActive;
+			_core->toggleInterface();
 			return true;
 		default:
 			break;
@@ -49,24 +40,18 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 	if (event.EventType == EET_GUI_EVENT)
 	{
 		s32 id = event.GUIEvent.Caller->getID();
-		IGUIEnvironment* env = _context.device->getGUIEnvironment();
 
 		switch(event.GUIEvent.EventType)
 		{
 			case EGET_BUTTON_CLICKED:
 				switch(id)
 				{
-					case GUI_ID_QUIT_BUTTON:
-						_context.device->closeDevice();
-						return true;
-
-					case GUI_ID_FILE_OPEN_BUTTON:
-						_context.listbox->addItem(L"File open");
-						// There are some options for the file open dialog
-						// We set the title, make it a modal window, and make sure
-						// that the working directory is restored after the dialog
-						// is finished.
-						env->addFileOpenDialog(L"Please choose a file.", true, 0, -1, true);
+					case GUI_ID_GENERATE_BUTTON:
+						std::cout << "Environment: " << _context.envRadioBox->getSelected() << std::endl;
+						std::cout << "Time: " << _context.timeRadioBox->getSelected() << std::endl;
+						std::cout << "Climat: " << _context.climatRadioBox->getSelected() << std::endl;
+						//generatorModule->buildTerrain(_context.envRadioBox->getSelected());
+						//_context.device->closeDevice();
 						return true;
 
 					default:
@@ -74,12 +59,16 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 				}
 				break;
 
-			case EGET_FILE_SELECTED:
+			case EGET_SCROLL_BAR_CHANGED:
+				if (id == GUI_ID_MUSIC_SCROLL_BAR)
 				{
-					// show the model filename, selected in the file dialog
-					IGUIFileOpenDialog* dialog =
-						(IGUIFileOpenDialog*)event.GUIEvent.Caller;
-					_context.listbox->addItem(dialog->getFileName());
+					s32 pos = ((IGUIScrollBar*)event.GUIEvent.Caller)->getPos();
+					std::cout << "Music volume: " << pos << std::endl;
+				}
+				else if (id == GUI_ID_SOUND_SCROLL_BAR)
+				{
+					s32 pos = ((IGUIScrollBar*)event.GUIEvent.Caller)->getPos();
+					std::cout << "Sound volume: " << pos << std::endl;
 				}
 				break;
 
