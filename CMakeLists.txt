@@ -31,7 +31,8 @@ set(IRRLICHTPROTO_SOURCE_FILES
 	src/SnowWeather.cpp
 	src/RainWeather.cpp
 	src/WaterModule.cpp
-	lib/RealisticWaterSceneNode/RealisticWater.cpp)
+        src/noise/simplexnoise.cpp
+        lib/RealisticWaterSceneNode/RealisticWater.cpp)
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 

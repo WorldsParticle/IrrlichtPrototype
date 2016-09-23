@@ -75,13 +75,12 @@ int Core::initModules()
 	keyMap[4].KeyCode = irr::KEY_SPACE;
 	keyMap[5].Action = irr::EKA_MOVE_FORWARD;
 	keyMap[5].KeyCode = irr::KEY_KEY_W;
-	camera = _smgr->addCameraSceneNodeFPS(0, 100.0f, 1.2f, -1, keyMap, 5);
+    camera = _smgr->addCameraSceneNodeFPS(0, 100.0f, 3.0f, -1, keyMap, 5);
 	//_smgr->addCameraSceneNode(0, vector3df(0, 30, -40), vector3df(0, 5, 0));
 
 	camera->setPosition(core::vector3df(2700 * 2, 255 * 2, 2600 * 2));
 	camera->setTarget(core::vector3df(2397 * 2, 343 * 2, 2700 * 2));
-	camera->setFarValue(42000.0f);
-
+    camera->setFarValue(420000.0f);
 	// disable mouse cursor
 	device->getCursorControl()->setVisible(false);
 
@@ -100,6 +99,7 @@ int Core::initModules()
 	skyboxModule->init();
 	terrainModule = new TerrainModule(device, camera);
 	terrainModule->init();
+    camera->setPosition(core::vector3df(0.0, terrainModule->getHeight(0.0, 0.0), 0.0));
 	waterModule = new WaterModule(device, camera, terrainModule);
 	waterModule->init();
 	particleModule = new ParticleModule(device, camera);

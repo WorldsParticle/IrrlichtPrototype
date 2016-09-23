@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include "AModule.h"
 
 class TerrainModule : public AModule
@@ -18,7 +19,12 @@ public:
 
 	virtual int init();
 	virtual int update();
+        int generate(int size = 513, int seed = 0);
+        int setHeightmap();
 
 private:
-    scene::ITerrainSceneNode *_terrain;
+    scene::ITerrainSceneNode    *_terrain;
+    scene::ISceneNodeAnimator   *_anim;
+    std::string                 _path;
+
 };
