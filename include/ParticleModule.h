@@ -8,7 +8,9 @@ class ParticleModule : public AModule
 {
 public:
     ParticleModule(IrrlichtDevice* _device, scene::ICameraSceneNode* _camera)
-        : AModule{ _device, _camera }
+        : AModule{ _device, _camera },
+        _weather(AWeather::E_WEATHER::NONE),
+        _particleSystem(nullptr)
     {
     }
     ~ParticleModule();
@@ -18,11 +20,9 @@ public:
     virtual int update();
     void activate();
 
-public:
-    enum E_WEATHER { NONE, SNOW, RAIN };
 
 private:
-    irr::scene::IParticleSystemSceneNode    *_particleSystem;
-    std::map<int, AWeather *>		    _weathers;
-    int					    _weather = NONE;
+    int     _weather;
+    irr::scene::IParticleSystemSceneNode * _particleSystem;
+    std::map<int, AWeather *>		       _weathers;
 };

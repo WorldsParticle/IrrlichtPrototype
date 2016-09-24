@@ -12,16 +12,17 @@ public:
     }
 
 public:
-	irr::scene::IParticleEmitter * getEmitter() const
+    void setWeather(irr::scene::IParticleSystemSceneNode * ps)
     {
-	    return _emitter;
-    }
-	irr::video::ITexture * getTexture() const
-    {
-	    return _texture;
+        ps->setEmitter(_emitter);
+        ps->setMaterialTexture(0, _texture);
     }
 
+public:
+    enum E_WEATHER { NONE, SNOW, RAIN };
+
+
 protected:
-    irr::scene::IParticleEmitter    *_emitter;
-    irr::video::ITexture	    *_texture;
+    irr::scene::IParticleEmitter * _emitter;
+    irr::video::ITexture	     * _texture;
 };
