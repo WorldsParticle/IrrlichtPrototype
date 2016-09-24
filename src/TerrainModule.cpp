@@ -71,9 +71,9 @@ void TerrainModule::setHeightmap()
     _terrain->setMaterialFlag(video::EMF_LIGHTING, false);
 
     _terrain->setMaterialTexture(0,
-        driver->getTexture("./ressources/terrain-texture.jpg"));
+		driver->getTexture(RESOURCES_PATH "/terrain-texture.jpg"));
     _terrain->setMaterialTexture(1,
-        driver->getTexture("./ressources/detailmap3.jpg"));
+		driver->getTexture(RESOURCES_PATH "/detailmap3.jpg"));
 
     _terrain->setMaterialType(video::EMT_DETAIL_MAP);
 
@@ -141,7 +141,7 @@ void TerrainModule::generate(int size, int seed){
 			_heightmapImage->set_pixel(j, i, color, color, color);
         }
 
-        _path = "tmp.bmp";
+		_path = RESOURCES_PATH "tmp.bmp";
 		_heightmapImage->save_image(_path);
 		_heightmapImage->clear();
 		//delete(_heightmapImage);
