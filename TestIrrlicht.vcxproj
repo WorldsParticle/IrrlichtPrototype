@@ -32,6 +32,7 @@
     <ClCompile Include="src\ElementsModule.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MyEventReceiver.cpp" />
+    <ClCompile Include="src\noise\simplexnoise.cpp" />
     <ClCompile Include="src\Object.cpp" />
     <ClCompile Include="src\ParticleModule.cpp" />
     <ClCompile Include="src\RainWeather.cpp" />
@@ -84,7 +85,8 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)\include\fmod;$(ProjectDir)\include;$(ProjectDir)\lib\irrlicht-1.8.4\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\include\bitmap;$(ProjectDir)\include\noise;$(ProjectDir)\include\fmod;$(ProjectDir)\include;$(ProjectDir)\lib\irrlicht-1.8.4\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

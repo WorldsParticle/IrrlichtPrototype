@@ -58,10 +58,10 @@ f32 TerrainModule::getHeight(f32 x, f32 y) const
     return _terrain->getHeight(x, y);
 }
 
-int TerrainModule::setHeightmap()
+void TerrainModule::setHeightmap()
 {
     io::path p(_path.c_str());
-    IReadFile * f = irr::io::createReadFile(p);
+	IReadFile * f = device->getFileSystem()->createAndOpenFile(p);
     _terrain->setScale(core::vector3df(750.0f, 125.4f, 750.0f));
     _terrain->loadHeightMap(f);
     camera->removeAnimator(_anim);
@@ -95,8 +95,8 @@ int TerrainModule::setHeightmap()
 
 }
 
-int TerrainModule::generate(int size, int seed){
-    bitmap_image * image = new bitmap_image(size, size);
+void TerrainModule::generate(int size, int seed){
+	_heightmapImage = new bitmap_image(size, size);
     float *tab = new float[size * size];
     float min = 1.0f, max = -1.0f;
     float fseed = static_cast<float>(seed) / 100000.0f;
@@ -121,8 +121,8 @@ int TerrainModule::generate(int size, int seed){
                 for (int j = 0; j < size; ++j)
         {
                     tab[i * size + j] = (tab[i * size + j] - min) / diff;
-                    if (i == 0)
-                        std::cout << tab[i * size + j];
+                    //if (i == 0)
+                    //    std::cout << tab[i * size + j];
 
          //clamp for floor.
             if (tab[i * size + j] < 0.38f)
@@ -136,11 +136,12 @@ int TerrainModule::generate(int size, int seed){
             float point = tab[i * size + j];
             int color = (int)(point * 255.0);
 
-            image->set_pixel(j, i, color, color, color);
+			_heightmapImage->set_pixel(j, i, color, color, color);
         }
 
         _path = "tmp.bmp";
-        image->save_image(_path);
-        delete(image);
+		_heightmapImage->save_image(_path);
+		_heightmapImage->clear();
+		//delete(_heightmapImage);
         delete(tab);
 }
