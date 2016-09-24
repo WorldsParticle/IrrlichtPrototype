@@ -8,6 +8,8 @@
 #include "ParticleModule.h"
 #include "gui_radiocheckboxgroup.h"
 
+#include "Configuration.h"
+
 using namespace irr;
 using namespace core;
 using namespace scene;
@@ -51,20 +53,28 @@ int Core::initModules()
 	//
 	// CAMERA
 	//
-	irr::SKeyMap keyMap[6];
-	keyMap[0].Action = irr::EKA_MOVE_FORWARD;
-	keyMap[0].KeyCode = irr::KEY_KEY_Z;
-	keyMap[1].Action = irr::EKA_MOVE_BACKWARD;
-	keyMap[1].KeyCode = irr::KEY_KEY_S;
-	keyMap[2].Action = irr::EKA_STRAFE_LEFT;
-	keyMap[2].KeyCode = irr::KEY_KEY_Q;
-	keyMap[3].Action = irr::EKA_STRAFE_RIGHT;
-	keyMap[3].KeyCode = irr::KEY_KEY_D;
-	keyMap[4].Action = irr::EKA_JUMP_UP;
-	keyMap[4].KeyCode = irr::KEY_SPACE;
-	keyMap[5].Action = irr::EKA_MOVE_FORWARD;
-	keyMap[5].KeyCode = irr::KEY_KEY_W;
-	camera = _smgr->addCameraSceneNodeFPS(0, 100.0f, 1.2f, -1, keyMap, 5);
+    SKeyMap keyMap[8];
+    keyMap[0].Action = EKA_MOVE_FORWARD;
+    keyMap[0].KeyCode = KEY_UP;
+    keyMap[1].Action = EKA_MOVE_FORWARD;
+    keyMap[1].KeyCode = KEY_KEY_W;
+
+    keyMap[2].Action = EKA_MOVE_BACKWARD;
+    keyMap[2].KeyCode = KEY_DOWN;
+    keyMap[3].Action = EKA_MOVE_BACKWARD;
+    keyMap[3].KeyCode = KEY_KEY_S;
+
+    keyMap[4].Action = EKA_STRAFE_LEFT;
+    keyMap[4].KeyCode = KEY_LEFT;
+    keyMap[5].Action = EKA_STRAFE_LEFT;
+    keyMap[5].KeyCode = KEY_KEY_A;
+
+    keyMap[6].Action = EKA_STRAFE_RIGHT;
+    keyMap[6].KeyCode = KEY_RIGHT;
+    keyMap[7].Action = EKA_STRAFE_RIGHT;
+    keyMap[7].KeyCode = KEY_KEY_D;
+
+	camera = _smgr->addCameraSceneNodeFPS(0, 100.0f, 1.2f, -1, keyMap, 8);
 	//_smgr->addCameraSceneNode(0, vector3df(0, 30, -40), vector3df(0, 5, 0));
 
 	camera->setPosition(core::vector3df(2700 * 2, 255 * 2, 2600 * 2));
@@ -82,7 +92,7 @@ int Core::initModules()
 
 	soundModule = new SoundModule(device, camera);
 	soundModule->init();
-	soundModule->AddBGMusic("ressources/river_bg.ogg");
+	soundModule->AddBGMusic(RESOURCES_PATH "/river_bg.ogg");
 	elementsModule = new ElementsModule(device, camera, soundModule->soundSystem);
 	elementsModule->init();
 	skyboxModule = new SkyboxModule(device, camera);
@@ -158,7 +168,7 @@ void Core::setGUI()
 	}
 
 	//set other font
-	skin->setFont(_env->getFont("./ressources/fontlucida.png"));
+	skin->setFont(_env->getFont(RESOURCES_PATH "/fontlucida.png"));
 
 	// add some help text
 	_env->addStaticText( L"Press 'I' to toggle interface", core::rect<s32>(10, 10, 250, 30), false, true, 0, -1, true);
@@ -169,7 +179,7 @@ void Core::setGUI()
 	_tab->setBackgroundColor(SColor(255, 140, 140, 140));
 
 	//add WorldsParticle logo
-	_env->addImage(_driver->getTexture("./ressources/2017_logo_worldsparticle.png"), core::position2d<s32>(10, 10), true, _tab);
+	_env->addImage(_driver->getTexture(RESOURCES_PATH "2017_logo_worldsparticle.png"), core::position2d<s32>(10, 10), true, _tab);
 
 	int height = 20; //height of radiobuttons
 	int width = 100; // width of radiobuttons with their text

@@ -1,13 +1,14 @@
 #include "WaterModule.h"
 #include "TerrainModule.h"
-#include "../lib/RealisticWaterSceneNode/RealisticWater.h"
+#include "RealisticWater.h"
+#include "Configuration.h"
 #include <iostream>
 
 int WaterModule::init()
 {
 	const f32 width = 2100.0f;
 	const f32 height = 2100.0f;
-	irr::core::stringc resourcePath = "./lib/RealisticWaterSceneNode";
+	irr::core::stringc resourcePath = RESOURCES_PATH;
 
 	RealisticWaterSceneNode* water = new RealisticWaterSceneNode(smgr, width, height, resourcePath);
 	smgr->getRootSceneNode()->addChild(water);

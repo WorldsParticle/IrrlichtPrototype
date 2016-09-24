@@ -1,47 +1,136 @@
-cmake_minimum_required(VERSION 2.6)
-PROJECT(IrrlichtProto)
+##
+## This program is free software; you can redistribute it and/or modify
+## it under the terms of the GNU General Public License as published by
+## the Free Software Foundation; either version 3 of the License, or
+## any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU General Public License for more details.
+##
+## You should have received a copy of the GNU General Public License along
+## with this program; If not, see <http://www.gnu.org/licenses/>.
+##
+## Copyright (C) 2016 Martin-Pierrat Louis (louismartinpierrat@gmail.com)
+##
 
-set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
-find_package(OpenGL)
-find_package(Irrlicht)
 
-set(FMOD_LIBRARIES "${PROJECT_SOURCE_DIR}/lib/fmod_x86_64/libfmod.so.8")
+## INITIALISATION
 
-include_directories(
-        ${IRRLICHT_INCLUDE_DIR}
-        ${OPENGL_INCLUDE_DIR}
-        ${PROJECT_SOURCE_DIR}/include
-        ${PROJECT_SOURCE_DIR}/include/fmod
+PROJECT(WorldsParticle)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.11)
+SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
+
+## !INITIALISATION
+
+
+## PROJECT CONFIGURATION
+
+SET(WORLDSPARTICLE_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include/)
+SET(WORLDSPARTICLE_SOURCE_DIR ${CMAKE_SOURCE_DIR}/src/)
+
+SET(RESOURCES_PATH ${CMAKE_SOURCE_DIR}/resources)
+
+CONFIGURE_FILE(
+    ${WORLDSPARTICLE_INCLUDE_DIR}/Configuration.h.in
+    ${WORLDSPARTICLE_INCLUDE_DIR}/Configuration.h
+    )
+
+## !PROJECT CONFIGURATION
+
+
+
+## PROJECT LANGUAGE
+
+ENABLE_LANGUAGE(CXX)
+
+## !PROJECT LANGUAGE
+
+
+
+## FIND LIBRARY DEPENDENCY
+
+FIND_PACKAGE(OpenGL REQUIRED)
+FIND_PACKAGE(Irrlicht REQUIRED)
+FIND_PACKAGE(FMOD REQUIRED)
+
+##
+
+
+
+## WORLDSPARTICLE SOURCES FILES
+
+FILE(GLOB_RECURSE WORLDSPARTICLE_SOURCES_FILES ${WORLDSPARTICLE_SOURCE_DIR}/*.cpp)
+##	missing file : lib/RealisticWaterSceneNode/RealisticWater.cpp)
+
+## !WORLDSPARTICLE SOURCES FILES
+
+
+
+## WORLDSPARTICLE HEADERS FILES
+
+FILE(GLOB_RECURSE WORLDSPARTICLE_HEADERS_FILES ${WORLDSPARTICLE_INCLUDE_DIR}/*.h ${WORLDSPARTICLE_INCLUDE_DIR}/*.h.in)
+
+## !WORLDSPARTICLE INCLUDE FILES
+
+
+
+## PROJECT INCLUDES DIRECTORIES
+
+INCLUDE_DIRECTORIES(
+    ${WORLDSPARTICLE_INCLUDE_DIR}
 )
 
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -o2 -std=c++14 -Wall -pedantic -g")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -o2 -std=c++14 -W")
-
-set(IRRLICHTPROTO_SOURCE_FILES
-        src/Core.cpp
-        src/ElementsModule.cpp
-        src/main.cpp
-        src/MyEventReceiver.cpp
-        src/SkyboxModule.cpp
-        src/SoundModule.cpp
-        src/TerrainModule.cpp
-        src/Object.cpp
-	src/ParticleModule.cpp
-	src/SnowWeather.cpp
-	src/RainWeather.cpp
-	src/WaterModule.cpp
-	src/gui_radiobuttongroup.cpp
-	src/gui_radiocheckboxgroup.cpp
-	lib/RealisticWaterSceneNode/RealisticWater.cpp)
-
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
-
-add_executable(IrrlichtProto WIN32 ${IRRLICHTPROTO_SOURCE_FILES})
-
-target_link_libraries(IrrlichtProto
-        ${IRRLICHT_LIBRARY}
-        ${OPENGL_LIBRARIES}
-        ${FMOD_LIBRARIES}
+INCLUDE_DIRECTORIES(SYSTEM
+    ${IRRLICHT_INCLUDE_DIRS}
+    ${FMOD_INCLUDE_DIR}
 )
 
+## !PROJECT INCLUDES DIRECTORIES
+
+
+
+## BINARY SETTINGS
+
+ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} ${WORLDSPARTICLE_SOURCES_FILES} ${WORLDSPARTICLE_HEADERS_FILES})
+
+## !BINARY SETTINGS
+
+
+
+## COMPILATION SETTINGS
+
+IF (CMAKE_COMPILER_IS_GNUCXX)
+
+    TARGET_COMPILE_OPTIONS(${CMAKE_PROJECT_NAME} PRIVATE -std=c++14)
+    TARGET_COMPILE_OPTIONS(${CMAKE_PROJECT_NAME} PRIVATE -Wextra)
+    TARGET_COMPILE_OPTIONS(${CMAKE_PROJECT_NAME} PRIVATE -Wall)
+
+    TARGET_COMPILE_OPTIONS(${CMAKE_PROJECT_NAME} PRIVATE $<$<CONFIG:Debug>:-g3>)
+    TARGET_COMPILE_OPTIONS(${CMAKE_PROJECT_NAME} PRIVATE $<$<CONFIG:Debug>:-ggdb3>)
+    TARGET_COMPILE_OPTIONS(${CMAKE_PROJECT_NAME} PRIVATE $<$<CONFIG:Debug>:-Og>)
+
+    TARGET_COMPILE_OPTIONS(${CMAKE_PROJECT_NAME} PRIVATE $<$<CONFIG:RelWithDebInfo>:-g3>)
+    TARGET_COMPILE_OPTIONS(${CMAKE_PROJECT_NAME} PRIVATE $<$<CONFIG:RelWithDebInfo>:-ggdb3>)
+    TARGET_COMPILE_OPTIONS(${CMAKE_PROJECT_NAME} PRIVATE $<$<CONFIG:RelWithDebInfo>:-Ofast>)
+
+    TARGET_COMPILE_OPTIONS(${CMAKE_PROJECT_NAME} PRIVATE $<$<CONFIG:Release>:-Ofast>)
+
+ELSEIF (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
+
+ENDIF()
+
+## !COMPILATION SETTINGS
+
+
+
+## LIBRARY SETTINGS
+
+TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME}
+        ${IRRLICHT_LIBRARIES}
+        ${FMOD_LIBRARY}
+)
+
+## !LIBRARY SETTINGS

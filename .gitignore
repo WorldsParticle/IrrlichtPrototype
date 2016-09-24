@@ -2,16 +2,13 @@
 *.slo
 *.lo
 *.o
-*.obj
 
 # Precompiled Headers
 *.gch
 *.pch
 
 # Compiled Dynamic libraries
-*.so
 *.dylib
-*.dll
 
 # Fortran module files
 *.mod
@@ -20,16 +17,17 @@
 # Compiled Static libraries
 *.lai
 *.la
-*.a
-*.lib
 
 # Executables
 *.exe
 *.out
 *.app
 
+./lib/irrlicht/*
 ./bin/
-./build/
 ./idea/
-Debug
-irrlicht-1.8.4
+./Debug
+.vs
+build
+include/Configuration.h
+irrlicht
