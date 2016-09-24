@@ -1,0 +1,1 @@
+Put here irrlicht headers in a "include" folder and sources in "source" folder.
