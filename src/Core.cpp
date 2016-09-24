@@ -79,8 +79,7 @@ int Core::initModules()
 
 	camera->setPosition(core::vector3df(2700 * 2, 255 * 2, 2600 * 2));
 	camera->setTarget(core::vector3df(2397 * 2, 343 * 2, 2700 * 2));
-	camera->setFarValue(42000.0f);
-
+    camera->setFarValue(420000.0f);
 	// disable mouse cursor
 	device->getCursorControl()->setVisible(false);
 
@@ -99,6 +98,7 @@ int Core::initModules()
 	skyboxModule->init();
 	terrainModule = new TerrainModule(device, camera);
 	terrainModule->init();
+    camera->setPosition(core::vector3df(0.0, terrainModule->getHeight(0.0, 0.0), 0.0));
 	waterModule = new WaterModule(device, camera, terrainModule);
 	waterModule->init();
 	particleModule = new ParticleModule(device, camera);

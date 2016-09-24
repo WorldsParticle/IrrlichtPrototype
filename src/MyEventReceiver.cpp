@@ -2,6 +2,7 @@
 #include "Core.h"
 #include "SkyboxModule.h"
 #include "ParticleModule.h"
+#include "TerrainModule.h"
 #include <iostream>
 
 using namespace irr;
@@ -33,6 +34,10 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 		case irr::KEY_KEY_I: // interface
 			_core->toggleInterface();
 			return true;
+        case irr::KEY_KEY_G:
+            _core->terrainModule->generate(513, rand());
+            _core->terrainModule->setHeightmap();
+            return true;
 		default:
 			break;
 		}
