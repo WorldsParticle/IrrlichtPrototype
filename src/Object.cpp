@@ -74,3 +74,11 @@ int Object::SetSound(std::string path, FMOD::System *soundSystem)
     _sndChannel->setPaused(false);
     return 0;
 }
+
+void Object::SetVolume(float vol)
+{
+    if (_sndChannel != 0)
+    {
+        _sndChannel->setVolume(vol);
+    }
+}

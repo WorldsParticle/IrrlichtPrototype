@@ -77,3 +77,8 @@ void SoundModule::AddBGMusic(std::string path)
     _BGChannel->set3DAttributes(&pos, NULL);
     _BGChannel->setPaused(false);
 }
+
+void SoundModule::SetVolume(float vol)
+{
+    _BGChannel->setVolume(vol);
+}

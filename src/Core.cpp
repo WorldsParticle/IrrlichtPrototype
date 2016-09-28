@@ -222,15 +222,15 @@ void Core::setGUI()
 	y += height + 10;
 	_env->addStaticText(L"Music volume", rect<s32>(x, y, x + 100, y + height), false, true, _tab);
 	IGUIScrollBar* musicScrollbar = _env->addScrollBar(true, rect<s32>(x + 100, y, x + 300, y + height), _tab, MyEventReceiver::GUI_ID_MUSIC_SCROLL_BAR);
-	musicScrollbar->setMax(255);
-	musicScrollbar->setPos(255);
+	musicScrollbar->setMax(100);
+	musicScrollbar->setPos(100);
 	//setSkinTransparency(musicScrollbar->getPos(), env->getSkin());
 
 	y += height + 10;
 	_env->addStaticText(L"Sound volume", rect<s32>(x, y, x + 100, y + height), false, true, _tab);
 	IGUIScrollBar* soundScrollbar = _env->addScrollBar(true, rect<s32>(x + 100, y, x + 300, y + height), _tab, MyEventReceiver::GUI_ID_SOUND_SCROLL_BAR);
-	soundScrollbar->setMax(255);
-	soundScrollbar->setPos(255);
+	soundScrollbar->setMax(100);
+	soundScrollbar->setPos(100);
 
 	y += height + 10;
 	y += height + 10;

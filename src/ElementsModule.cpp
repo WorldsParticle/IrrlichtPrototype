@@ -29,3 +29,10 @@ int ElementsModule::update()
 	return 0;
 }
 
+void ElementsModule::SetVolume(float vol)
+{
+	for (Object *elem : _elements)
+	{
+		elem->SetVolume(vol);
+	}
+}

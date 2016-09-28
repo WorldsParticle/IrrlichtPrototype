@@ -28,7 +28,8 @@ public:
     void setListenerPos(int, int, int);
     //Adds a background music
     void AddBGMusic(std::string);
-
+    //Changes the volume. 1.0 is default, >1 is louder, < 0 "inverts the signal"
+    void SetVolume (float);
 public:
     FMOD::System	*soundSystem;
 
