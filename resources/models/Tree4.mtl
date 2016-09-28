@@ -1,0 +1,16 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 14.07.2016 01:51:59
+
+newmtl _Tree4Bark___S
+	Ns 51.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.0431 0.0196 0.0314
+	Ks 0.2976 0.2753 0.2106
+	Ke 0.0000 0.0000 0.0000
+	map_Ka Bark___S.jpg
+	map_Kd Bark___S.jpg

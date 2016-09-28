@@ -5,7 +5,8 @@
 Object::Object(IrrlichtDevice *dev): _device(dev), _mesh(NULL), _node(NULL)
 {
     _smgr = _device->getSceneManager();
-    _position = new vector3d<float>(0, 0, 0);
+	_position = new vector3d<float>(0, 0, 0);
+	_rotation = new vector3d<float>(0, 0, 0);
 
     _sndChannel = 0;
 }
@@ -25,8 +26,9 @@ int Object::LoadMesh(std::string meshPath, std::string texturePath)
     if (_node)
     {
         _node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
-        _node->setMD2Animation(scene::EMAT_STAND);
-        _node->setMaterialTexture(0, _smgr->getVideoDriver()->getTexture(texturePath.c_str()));
+        //_node->setMD2Animation(scene::EMAT_STAND);
+		//if (!texturePath.empty())
+	 //       _node->setMaterialTexture(0, _smgr->getVideoDriver()->getTexture(texturePath.c_str()));
         _node->setScale(_node->getScale() * 10);
     }
     else
@@ -37,13 +39,28 @@ int Object::LoadMesh(std::string meshPath, std::string texturePath)
     return 0;
 }
 
-void Object::SetPosition(int x, int y, int z)
+void Object::SetPosition(float x, float y, float z)
 {
-    _position->X = x;
-    _position->Y = y;
-    _position->Z = z;
-    _node->setPosition(core::vector3df(_position->X, _position->Y, _position->Z));
+	_position->X = x;
+	_position->Y = y;
+	_position->Z = z;
+	_node->setPosition(core::vector3df(_position->X, _position->Y, _position->Z));
 }
+void Object::SetRotation(float x, float y, float z)
+{
+	_rotation->X = x;
+	_rotation->Y = y;
+	_rotation->Z = z;
+	_node->setRotation(core::vector3df(_rotation->X, _rotation->Y, _rotation->Z));
+}
+//void Object::SetScale(float x, float y, float z)
+//{
+//	//TODO
+//	//_scale->X = x;
+//	//_scale->Y = y;
+//	//_scale->Z = z;
+//	//_node->setScale(core::vector3df(_scale->X, _scale->Y, _scale->Z));
+//}
 
 int Object::SetSound(std::string path, FMOD::System *soundSystem)
 {
