@@ -59,6 +59,9 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 						std::cout << "Climat: " << _context.climatRadioBox->getSelected() << std::endl;
 						//generatorModule->buildTerrain(_context.envRadioBox->getSelected());
 						//_context.device->closeDevice();
+						_core->soundModule->SetEnvironmentalSound(_context.envRadioBox->getSelected(),
+																	_context.timeRadioBox->getSelected(),
+																	_context.climatRadioBox->getSelected());
 						return true;
 
 					default:

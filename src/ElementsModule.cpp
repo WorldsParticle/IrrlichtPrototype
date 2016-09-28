@@ -12,7 +12,7 @@ int ElementsModule::init()
     _elements.push_back(testObj);
 	testObj2->LoadMesh(RESOURCES_PATH "/models/tree.3ds", RESOURCES_PATH "/models/treeTexture.jpg");
 	testObj2->SetPosition(1847 * 2, 303 * 2, 2180 * 2);
-	testObj2->SetSound(RESOURCES_PATH "/drumloop.wav", _soundSystem);
+	testObj2->SetSound(RESOURCES_PATH "/sound/drumloop.wav", _soundSystem);
 	_elements.push_back(testObj2);
 
 	testObj3->LoadMesh(RESOURCES_PATH "/models/Rock1.obj", "");
