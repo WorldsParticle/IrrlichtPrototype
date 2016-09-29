@@ -12,7 +12,7 @@
 ## You should have received a copy of the GNU General Public License along
 ## with this program; If not, see <http://www.gnu.org/licenses/>.
 ##
-## Copyright (C) 2016 Martin-Pierrat Louis (louismartinpierrat@gmail.com)
+## Copyright (C) WorldsParticle
 ##
 
 
@@ -31,7 +31,7 @@ SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake)
 SET(WORLDSPARTICLE_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include/)
 SET(WORLDSPARTICLE_SOURCE_DIR ${CMAKE_SOURCE_DIR}/src/)
 
-SET(RESOURCES_PATH ${CMAKE_SOURCE_DIR}/resources)
+SET(RESOURCES_PATH ${CMAKE_SOURCE_DIR}/resources/)
 
 CONFIGURE_FILE(
     ${WORLDSPARTICLE_INCLUDE_DIR}/Configuration.h.in
