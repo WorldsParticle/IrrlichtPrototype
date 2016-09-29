@@ -47,8 +47,6 @@ GUIModule::init(void)
     env->getSkin()->setFont(env->getFont(RESOURCES_PATH "/fontlucida.png"));
     _console = env->addStaticText(L"FPS   :   0", rect<s32>(20, 20, 250, 120), false, true, 0, -1, true);
     env->addStaticText(L"Press 'I' to toggle interface, 'C' to toggle console", core::rect<s32>(driver->getScreenSize().Width / 2 - 160, 20, driver->getScreenSize().Width / 2 + 160, 40), false, true, 0, -1, false);
-    
-
     this->createPanel();
     irr::core::vector2d<irr::s32> boxSize(driver->getScreenSize().Width / 5 - 20, driver->getScreenSize().Height / 10 - 20);
     this->createEnvironmentRadioButton(irr::core::vector2d<irr::s32>(10, driver->getScreenSize().Height / 10 * 2 + 10), boxSize);
@@ -70,7 +68,6 @@ GUIModule::createPanel(void)
     auto img = env->addImage(irr::core::rect<irr::s32>(10, 10, driver->getScreenSize().Width / 5 - 20, driver->getScreenSize().Height / 5 - 10), _tab);
     img->setImage(device->getVideoDriver()->getTexture(RESOURCES_PATH "/2017_logo_worldsparticle.png"));
     img->setScaleImage(true);
-    //env->addImage(, core::position2d<s32>(10, 10), true, _tab);
 }
 
 void

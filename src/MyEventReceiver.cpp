@@ -71,7 +71,6 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 	if (event.EventType == EET_GUI_EVENT)
 	{
 		s32 id = event.GUIEvent.Caller->getID();
-
         switch (event.GUIEvent.EventType)
         {
         case EGET_BUTTON_CLICKED:

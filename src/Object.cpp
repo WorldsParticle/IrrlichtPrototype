@@ -63,6 +63,7 @@ void Object::SetPosition(float x, float y, float z)
 	_position->Z = z;
 	_node->setPosition(core::vector3df(_position->X, _position->Y, _position->Z));
 }
+
 void Object::SetRotation(float x, float y, float z)
 {
 	_rotation->X = x;
