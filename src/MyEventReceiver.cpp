@@ -29,7 +29,25 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
             _core->particleModule->activate();
             return true;
 		case irr::KEY_ESCAPE: // quit
-			_core->close();
+			if (confirmQuit == nullptr) {
+				if (!_core->isInterfaceVisible())
+					_core->toggleInterface();
+				confirmQuit = _context.env->addWindow(
+						rect<s32>(100, 100, 250, 200),
+							false, // modal?
+							L"Confirm quit");
+
+						_context.env->addStaticText(L"Do you want to quit ?",
+							rect<s32>(10,35,170,50),
+							false, // border?
+							true, // wordwrap?
+							confirmQuit);
+						_context.env->addButton(rect<s32>(30, 60, 60, 80), confirmQuit, MyEventReceiver::GUI_ID_QUIT, L"Yes", L"Quit");
+						_context.env->addButton(rect<s32>(70, 60, 100, 80), confirmQuit, MyEventReceiver::GUI_ID_BACK, L"No", L"Cancel");
+			} else {
+			    confirmQuit->remove();
+			    confirmQuit = nullptr;
+			}
 			return true;
 		case irr::KEY_KEY_I: // interface
 			_core->toggleInterface();
@@ -58,6 +76,13 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 						//generatorModule->buildTerrain(_context.envRadioBox->getSelected());
 						//_context.device->closeDevice();
 						return true;
+
+					case GUI_ID_QUIT:
+						_core->close();
+
+					case GUI_ID_BACK:
+						confirmQuit->remove();
+						confirmQuit = nullptr;
 
 					default:
 						return false;

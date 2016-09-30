@@ -240,6 +240,7 @@ void Core::setGUI()
     	context.envRadioBox = envRB;
     	context.timeRadioBox = timeRB;
     	context.climatRadioBox = climatRB;
+	context.env = _env;
 
 	// create event receiver
 	_receiver = new MyEventReceiver(this, context);
@@ -247,6 +248,11 @@ void Core::setGUI()
 
 	//interface set to invisible because camera is active by default
 	_tab->setVisible(false);
+}
+
+bool Core::isInterfaceVisible() const
+{
+	return _tab->isVisible();
 }
 
 void Core::toggleInterface()

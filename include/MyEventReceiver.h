@@ -19,13 +19,16 @@ public:
 		irr::gui::CGUIRadioCheckBoxGroup*	envRadioBox;
 		irr::gui::CGUIRadioCheckBoxGroup*	timeRadioBox;
 		irr::gui::CGUIRadioCheckBoxGroup*	climatRadioBox;
+		irr::gui::IGUIEnvironment*		env;
 	};
 	// Define some values that we'll use to identify individual GUI controls.
 	enum
 	{
 		GUI_ID_GENERATE_BUTTON = 101,
 		GUI_ID_MUSIC_SCROLL_BAR,
-		GUI_ID_SOUND_SCROLL_BAR
+		GUI_ID_SOUND_SCROLL_BAR,
+		GUI_ID_QUIT,
+		GUI_ID_BACK
 	};
 
 	MyEventReceiver(Core *core, SAppContext & context);
@@ -36,4 +39,6 @@ private:
 
 	Core	    *_core;
 	SAppContext _context;
+	irr::gui::IGUIWindow *confirmQuit = nullptr;
+
 };

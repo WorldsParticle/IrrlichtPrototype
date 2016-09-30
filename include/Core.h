@@ -41,6 +41,7 @@ public:
 	irr::scene::ICameraSceneNode	*camera;
 	irr::IrrlichtDevice		*device;
 
+	bool isInterfaceVisible() const;
 	void toggleInterface();
 };
 
