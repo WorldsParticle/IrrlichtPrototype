@@ -54,9 +54,6 @@ public:
     int     run(void);
 
 public:
-    ///
-    /// \brief Getter for the irrlicht module.
-    ///
     irr::IrrlichtDevice     *getIrrlichtDevice(void)
     {
         return _device;
@@ -71,57 +68,36 @@ public:
         return _device->getSceneManager()->getActiveCamera();
     }
 
-    ///
-    /// \brief Getter for the Element module.
-    ///
     ElementsModule  *getElementsModule(void)
     {
         return _elementsModule;
     }
 
-    ///
-    /// \brief Getter for the skybox module.
-    ///
     SkyboxModule    *getSkyboxModule(void)
     {
         return _skyboxModule;
     }
 
-    ///
-    /// \brief Getter for the terrain module.
-    ///
     TerrainModule   *getTerrainModule(void)
     {
         return _terrainModule;
     }
 
-    ///
-    /// \brief Getter for the water module.
-    ///
     WaterModule     *getWaterModule(void)
     {
         return _waterModule;
     }
 
-    ///
-    /// \brief Getter for the sound module.
-    ///
     SoundModule     *getSoundModule(void)
     {
         return _soundModule;
     }
 
-    ///
-    /// \\brief Getter for the particle module.
-    ///
     ParticleModule  *getParticleModule(void)
     {
         return _particleModule;
     }
 
-    ///
-    /// \brief Getter for the GUI module.
-    ///
     GUIModule       *getGUIModule(void)
     {
         return _GUIModule;
@@ -173,39 +149,12 @@ private:
     ///
 	MyEventReceiver			*_receiver;
 
-    ///
-    /// \brief Elements module
-    ///
 	ElementsModule			*_elementsModule;
-
-    ///
-    /// \brief Skybox module
-    ///
 	SkyboxModule			*_skyboxModule;
-
-    ///
-    /// \brief Terrain module
-    ///
     TerrainModule			*_terrainModule;
-
-    ///
-    /// \brief Water module.
-    ///
 	WaterModule			    *_waterModule;
-
-    ///
-    /// \brief Sound module
-    ///
 	SoundModule			    *_soundModule;
-
-    ///
-    /// \brief Particle module
-    ///
 	ParticleModule			*_particleModule;
-
-    ///
-    /// \brief The GUI Module.
-    ///
     GUIModule               *_GUIModule;
 
     ///
