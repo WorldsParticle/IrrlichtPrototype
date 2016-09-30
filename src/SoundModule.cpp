@@ -91,28 +91,28 @@ void SoundModule::SetEnvironmentalSound(int env, int time, int weather)
     {
         if (env == 0 && time == 0) //mountain/day
         {
-            AddBGMusic(RESOURCES_PATH "/sound/mountain.wav");
+            AddBGMusic(RESOURCES_PATH "/sound/mountain.mp3");
         }
         else if (env == 1 && time == 0) //forest/day
         {
-            AddBGMusic(RESOURCES_PATH "/sound/forest.flac");
+            AddBGMusic(RESOURCES_PATH "/sound/forest.mp3");
         }
         else if ((env == 0 || env == 1) && time == 1) //mountain|forest/night
         {
-            AddBGMusic(RESOURCES_PATH "/sound/cicadas.wav");
+            AddBGMusic(RESOURCES_PATH "/sound/cicadas.mp3");
         }
         else if (env == 2) //beach/day|night
         {
-            AddBGMusic(RESOURCES_PATH "/sound/beach.wav");
+            AddBGMusic(RESOURCES_PATH "/sound/beach.mp3");
         }
     }
     else if (weather == 1)  //rain
     {
-        AddBGMusic(RESOURCES_PATH "/sound/rain.wav");
+        AddBGMusic(RESOURCES_PATH "/sound/rain.mp3");
     }
     else  //snow
     {
-        AddBGMusic(RESOURCES_PATH "/sound/wind.wav");
+        AddBGMusic(RESOURCES_PATH "/sound/wind.mp3");
     }
 }
 
