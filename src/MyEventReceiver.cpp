@@ -3,6 +3,8 @@
 #include "SkyboxModule.h"
 #include "ParticleModule.h"
 #include "TerrainModule.h"
+#include "SoundModule.h"
+#include "ElementsModule.h"
 #include <iostream>
 
 using namespace irr;
@@ -75,6 +77,9 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 						std::cout << "Climat: " << _context.climatRadioBox->getSelected() << std::endl;
 						//generatorModule->buildTerrain(_context.envRadioBox->getSelected());
 						//_context.device->closeDevice();
+						_core->soundModule->SetEnvironmentalSound(_context.envRadioBox->getSelected(),
+																	_context.timeRadioBox->getSelected(),
+																	_context.climatRadioBox->getSelected());
 						return true;
 
 					case GUI_ID_QUIT:
@@ -93,11 +98,13 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 				if (id == GUI_ID_MUSIC_SCROLL_BAR)
 				{
 					s32 pos = ((IGUIScrollBar*)event.GUIEvent.Caller)->getPos();
+					_core->soundModule->SetVolume((float)pos / 100.0);
 					std::cout << "Music volume: " << pos << std::endl;
 				}
 				else if (id == GUI_ID_SOUND_SCROLL_BAR)
 				{
 					s32 pos = ((IGUIScrollBar*)event.GUIEvent.Caller)->getPos();
+					_core->elementsModule->SetVolume((float)pos / 100.0);
 					std::cout << "Sound volume: " << pos << std::endl;
 				}
 				break;

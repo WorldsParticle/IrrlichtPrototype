@@ -28,7 +28,10 @@ public:
     void setListenerPos(int, int, int);
     //Adds a background music
     void AddBGMusic(std::string);
-
+    //Changes the volume. 1.0 is default, >1 is louder, < 0 "inverts the signal"
+    void SetVolume (float);
+    //Changes background music according to environment, time, and weather. Used when generating a new scene.
+    void SetEnvironmentalSound(int, int, int);
 public:
     FMOD::System	*soundSystem;
 

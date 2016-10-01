@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "SoundModule.h"
+#include "Configuration.h"
 
 int SoundModule::init()
 {
@@ -66,6 +67,7 @@ void SoundModule::setListenerPos(int x = 0, int y = 0, int z = 0)
 
 void SoundModule::AddBGMusic(std::string path)
 {
+    _BGSound->release();
     soundSystem->createSound(path.c_str(), FMOD_3D, 0, &_BGSound);
     _BGSound->set3DMinMaxDistance(5.0f * DISTANCEFACTOR, 500.0f * DISTANCEFACTOR);
     _BGSound->setMode(FMOD_LOOP_NORMAL);
@@ -76,4 +78,45 @@ void SoundModule::AddBGMusic(std::string path)
     _BGChannel->set3DAttributes(&pos, NULL);
     _BGChannel->set3DAttributes(&pos, NULL);
     _BGChannel->setPaused(false);
+}
+
+void SoundModule::SetEnvironmentalSound(int env, int time, int weather)
+{
+    /*
+     * env: 0-mountain, 1-forest, 2-beach
+     * time: 0-day, 1-night,
+     * weather: 0-sun, 1-rain, 2-snow
+     */
+    if (weather == 0)   //sun
+    {
+        if (env == 0 && time == 0) //mountain/day
+        {
+            AddBGMusic(RESOURCES_PATH "/sound/mountain.mp3");
+        }
+        else if (env == 1 && time == 0) //forest/day
+        {
+            AddBGMusic(RESOURCES_PATH "/sound/forest.mp3");
+        }
+        else if ((env == 0 || env == 1) && time == 1) //mountain|forest/night
+        {
+            AddBGMusic(RESOURCES_PATH "/sound/cicadas.mp3");
+        }
+        else if (env == 2) //beach/day|night
+        {
+            AddBGMusic(RESOURCES_PATH "/sound/beach.mp3");
+        }
+    }
+    else if (weather == 1)  //rain
+    {
+        AddBGMusic(RESOURCES_PATH "/sound/rain.mp3");
+    }
+    else  //snow
+    {
+        AddBGMusic(RESOURCES_PATH "/sound/wind.mp3");
+    }
+}
+
+void SoundModule::SetVolume(float vol)
+{
+    _BGChannel->setVolume(vol);
 }

@@ -22,6 +22,8 @@ public:
 	//void    SetScale(float, float, float);
 	//Adds a 3D sound at the position of the object
     int     SetSound(std::string, FMOD::System *);
+	//Sets the volume. 1 is the default, >1 is louder, < 0 "inverts the signal"
+	void	SetVolume(float);
 
 private:
     Object();
