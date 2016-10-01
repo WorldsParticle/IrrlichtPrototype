@@ -16,9 +16,9 @@ int ParticleModule::init()
     _particleSystem->setMaterialType(irr::video::EMT_TRANSPARENT_ADD_COLOR);
 
     // Init all weathers
-    _weathers[NONE] = nullptr;
-    _weathers[SNOW] = new SnowWeather(_particleSystem, driver);
-    _weathers[RAIN] = new RainWeather(_particleSystem, driver);
+    _weathers[AWeather::E_WEATHER::NONE] = nullptr;
+    _weathers[AWeather::E_WEATHER::SNOW] = new SnowWeather(_particleSystem, driver);
+    _weathers[AWeather::E_WEATHER::RAIN] = new RainWeather(_particleSystem, driver);
 
     return 0;
 }
@@ -35,10 +35,7 @@ void ParticleModule::activate()
     ++_weather %= _weathers.size();
     auto weather = _weathers[_weather];
     if (weather)
-    {
-        _particleSystem->setEmitter(weather->getEmitter());
-        _particleSystem->setMaterialTexture(0, weather->getTexture());
-    }
+        weather->setWeather(_particleSystem);
     else
         _particleSystem->setEmitter(nullptr);
 }
