@@ -121,6 +121,7 @@ int Core::run()
 			terrainModule->update();
 			particleModule->update();
 			soundModule->update();
+			waterModule->update();
 
 			_driver->beginScene(true, true, 0);
 
