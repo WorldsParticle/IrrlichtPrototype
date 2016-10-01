@@ -35,6 +35,8 @@ public:
 
 	bool OnEvent(const irr::SEvent& event);
 
+	void switchCameraMode();
+
 private:
 
 	Core	    *_core;

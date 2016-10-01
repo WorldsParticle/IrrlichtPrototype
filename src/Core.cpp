@@ -113,6 +113,8 @@ int Core::run()
 {
 	int lastFPS = -1;
 
+	camera->setPosition(core::vector3df(2700, 255 * 2, 2600));
+
 	while (device->run())
 		if (device->isWindowActive())
 		{
@@ -121,6 +123,7 @@ int Core::run()
 			terrainModule->update();
 			particleModule->update();
 			soundModule->update();
+			waterModule->update();
 
 			_driver->beginScene(true, true, 0);
 
