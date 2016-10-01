@@ -19,6 +19,9 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 	{
 		switch (event.KeyInput.Key)
 		{
+	  case irr::KEY_KEY_C: // switch camera
+			switchCameraMode();
+			return true;
 		case irr::KEY_KEY_N: // night
 			_core->skyboxModule->activeNight(true);
 			return true;
@@ -108,4 +111,20 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 	}
 
 	return false;
+}
+
+void MyEventReceiver::switchCameraMode()
+{
+	// clunky, waiting for better archi to make better code
+	static bool freeCam = true;
+
+	freeCam = !freeCam;
+
+	for (ISceneNodeAnimator *anim : _core->camera->getAnimators())
+	{
+		if (anim->getType() == ESNAT_COLLISION_RESPONSE)
+			reinterpret_cast<ISceneNodeAnimatorCollisionResponse *> (anim)->setGravity(core::vector3df(0, freeCam ? 0 : -30, 0));
+		else if (anim->getType() == ESNAT_CAMERA_FPS)
+			reinterpret_cast<ISceneNodeAnimatorCameraFPS *> (anim)->setVerticalMovement(freeCam);
+	}
 }
