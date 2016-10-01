@@ -113,6 +113,8 @@ int Core::run()
 {
 	int lastFPS = -1;
 
+	camera->setPosition(core::vector3df(2700, 255 * 2, 2600));
+
 	while (device->run())
 		if (device->isWindowActive())
 		{
