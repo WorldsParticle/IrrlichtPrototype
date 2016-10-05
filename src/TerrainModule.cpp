@@ -98,6 +98,7 @@ void TerrainModule::setHeightmap()
 }
 
 void TerrainModule::generate(int size, int seed){
+    generateRadial(size, seed);
 	_heightmapImage = new bitmap_image(size, size);
     float *tab = new float[size * size];
     float min = 1.0f, max = -1.0f;
@@ -144,6 +145,58 @@ void TerrainModule::generate(int size, int seed){
 		_path = RESOURCES_PATH "tmp.bmp";
 		_heightmapImage->save_image(_path);
 		_heightmapImage->clear();
-		//delete(_heightmapImage);
+        //delete(_heightmapImage);
+        delete(tab);
+}
+
+
+void TerrainModule::generateRadial(int size, int seed){
+    _heightmapImage = new bitmap_image(size, size);
+    float *tab = new float[size * size];
+    float min = 1.0f, max = -1.0f;
+    float fseed = static_cast<float>(seed) / 100000.0f;
+
+    // generate noise values
+    for (int i = 0; i < size; ++i)
+    for (int j = 0; j < size; ++j)
+    {
+
+        float noise = octave_noise_3d(12, 1.0f, 0.00075f, static_cast<float>(j) / 100.0f, static_cast<float>(i) / 100.0f, fseed);
+
+        if (noise < min)
+            min = noise;
+        if (noise > max)
+            max = noise;
+        tab[i * size + j] = noise;
+    }
+
+    // normalize to range [0, 1];
+    float diff = max - min;
+            for (int i = 0; i < size; ++i)
+                for (int j = 0; j < size; ++j)
+        {
+                    tab[i * size + j] = (tab[i * size + j] - min) / diff;
+        }
+
+    for (int i = 0; i < size; ++i)
+        for (int j = 0; j < size; ++j)
+        {
+            float point = tab[i * size + j];
+            float dx = (2 * (float)j) / (float)size - 1;
+            float dy = (2 * (float)i) / (float)size - 1;
+            float d = sqrt(dx * dx + dy * dy);
+            int color;
+            if (point > (0.75 * 0.89 * d * d))
+                color = 255.0;
+            else
+                color = 0;
+
+            _heightmapImage->set_pixel(j, i, color, color, color);
+        }
+
+        _path = RESOURCES_PATH "radialtmp.bmp";
+        _heightmapImage->save_image(_path);
+        _heightmapImage->clear();
+        delete(_heightmapImage);
         delete(tab);
 }
