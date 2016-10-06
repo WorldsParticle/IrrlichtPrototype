@@ -42,12 +42,12 @@ int SkyboxModule::update()
 	return 0;
 }
 
-void SkyboxModule::activate(bool night)
+void SkyboxModule::setSkybox(bool night, int weather)
 {
-    // Will ultimately be activate(night, weather)
     _active->setVisible(false);
 
     _night = night;
+    _weather = static_cast<AWeather::E_WEATHER>(weather);
     if (!_night)
         _active = _skyboxes[_weather].first;
     else

@@ -24,18 +24,6 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 	  case irr::KEY_KEY_C: // switch camera
 			switchCameraMode();
 			return true;
-		case irr::KEY_KEY_N: // night
-			_core->skyboxModule->activate(true);
-			return true;
-		case irr::KEY_KEY_B: // day
-			_core->skyboxModule->activate(false);
-			return true;
-        case irr::KEY_KEY_P: // change weather
-            _core->particleModule->activate();
-            return true;
-        case irr::KEY_KEY_M: // Test weather change for Skyboxes
-            _core->skyboxModule->setWeather(AWeather::E_WEATHER::SNOW);
-            return true;
 		case irr::KEY_ESCAPE: // quit
 			if (confirmQuit == nullptr) {
 				if (!_core->isInterfaceVisible())
@@ -83,6 +71,9 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 						std::cout << "Climat: " << _context.climatRadioBox->getSelected() << std::endl;
 						//generatorModule->buildTerrain(_context.envRadioBox->getSelected());
 						//_context.device->closeDevice();
+                        _core->skyboxModule->setSkybox(_context.timeRadioBox->getSelected(), 
+                                                       _context.climatRadioBox->getSelected());
+                        _core->particleModule->setWeather(_context.climatRadioBox->getSelected());
 						_core->soundModule->SetEnvironmentalSound(_context.envRadioBox->getSelected(),
 																	_context.timeRadioBox->getSelected(),
 																	_context.climatRadioBox->getSelected());

@@ -19,7 +19,7 @@ public:
     }
 
 public:
-    enum E_WEATHER { NONE, SNOW, RAIN };
+    enum E_WEATHER { NONE, RAIN, SNOW };
 
 
 protected:
