@@ -23,10 +23,7 @@ public:
 	virtual int init();
 	virtual int update();
 
-    void activate(bool night);
-    // Temporary setter for testing purpose (Cf MyEventReceiver.cpp)
-    void setWeather(AWeather::E_WEATHER weather) { _weather = weather; }
-
+    void setSkybox(bool night, int weather);
 
 private:
     scene::ISceneNode * SkyboxModule::createSkybox(const std::string & path);

@@ -18,11 +18,11 @@ public:
 public:
     virtual int init();
     virtual int update();
-    void activate();
+    void setWeather(int w);
 
 
 private:
-    int     _weather;
     irr::scene::IParticleSystemSceneNode * _particleSystem;
     std::map<int, AWeather *>		       _weathers;
+    AWeather::E_WEATHER                    _weather;
 };
