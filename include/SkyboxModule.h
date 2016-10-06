@@ -26,7 +26,7 @@ public:
     void setSkybox(bool night, int weather);
 
 private:
-    scene::ISceneNode * SkyboxModule::createSkybox(const std::string & path);
+    scene::ISceneNode * createSkybox(const std::string & path);
 
 private:
     // Current active skybox
