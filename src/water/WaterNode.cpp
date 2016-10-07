@@ -97,7 +97,7 @@ void WaterNode::applyReflection()
   _reflectionCamera->setFOV(currentCamera->getFOV());
 
   core::vector3df position = currentCamera->getAbsolutePosition();
-  position.Y = -position.Y + 2 * RelativeTranslation.Y;
+  position.Y = position.Y - 2 * RelativeTranslation.Y;
   _reflectionCamera->setPosition(position);
 
   core::vector3df target = currentCamera->getTarget();
@@ -114,6 +114,7 @@ void WaterNode::applyReflection()
   _smgr->getVideoDriver()->enableClipPlane(0, false);
   _smgr->getVideoDriver()->setRenderTarget(0);
   _smgr->setActiveCamera(currentCamera);
+
 }
 
 void WaterNode::applyRefraction()

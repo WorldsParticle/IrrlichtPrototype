@@ -15,7 +15,7 @@ int WaterModule::init()
 {
 	_water = new WaterNode (smgr->getRootSceneNode(), smgr,
 													core::vector3df(4000, 500, 4000),
-													core::vector2df(5000, 5000));
+													core::vector2df(10000, 10000));
 
   smgr->getRootSceneNode()->addChild(_water);
 	return true;
