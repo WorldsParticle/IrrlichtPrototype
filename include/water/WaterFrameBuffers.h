@@ -3,6 +3,7 @@
 
 using namespace irr;
 
+// SHOULD BECOME A UNIQUE INSTANCE !!!!
 class WaterFrameBuffers
 {
 public:
@@ -18,11 +19,16 @@ public:
 	{ return _refractionTexture; }
 	inline video::ITexture	*dudvMap()
 	{ return _dudvMap; }
+	inline video::ITexture	*normalMap()
+	{ return _normalMap; }
+	inline video::ITexture	*refractionDepth()
+	{ return _refractionDepth; }
 
 private:
 
 	const static core::stringc	DUDV_FILE;
-	
+	const static core::stringc  NORMAL_FILE;
+
 	const static int	REFLECTION_WIDTH = 1280;
 	const static int	REFLECTION_HEIGHT = 720;
 	const static int	REFRACTION_WIDTH = 320;

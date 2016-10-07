@@ -43,6 +43,7 @@ void WaterNode::init()
   _waterNode->setMaterialTexture(0, _waterBuffers->reflectionTexture());
   _waterNode->setMaterialTexture(1, _waterBuffers->refractionTexture());
   _waterNode->setMaterialTexture(2, _waterBuffers->dudvMap());
+  _waterNode->setMaterialTexture(3, _waterBuffers->normalMap());
 
 }
 

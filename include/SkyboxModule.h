@@ -27,6 +27,8 @@ public:
     // Temporary setter for testing purpose (Cf MyEventReceiver.cpp)
     void setWeather(AWeather::E_WEATHER weather) { _weather = weather; }
 
+    inline bool  night() const
+    { return _night; }
 
 private:
     scene::ISceneNode *createSkybox(const std::string & path);

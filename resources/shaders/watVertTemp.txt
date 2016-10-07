@@ -5,10 +5,12 @@ in vec2 position;
 out vec4 clipSpace;
 out vec2 textureCoords;
 out vec3 toCamVector;
+out vec3 fromLightVector;
 
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
+uniform vec3 lightPosition;
 uniform vec3 camPos;
 
 const float tiling = 4.0;
@@ -20,5 +22,6 @@ void main(void)
 	gl_Position = clipSpace;
 	textureCoords = gl_MultiTexCoord0.xy * tiling;
 	toCamVector = camPos - worldPosition.xyz;
+	fromLightVector = worldPosition.xyz - lightPosition;
 }
 
