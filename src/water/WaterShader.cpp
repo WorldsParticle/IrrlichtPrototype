@@ -43,11 +43,12 @@ void WaterShader::OnSetConstants(video::IMaterialRendererServices *services, s32
   core::matrix4 projection = driver->getTransform(video::ETS_PROJECTION);
 	core::matrix4 view = driver->getTransform(video::ETS_VIEW);
 	core::matrix4 world = driver->getTransform(video::ETS_WORLD); // use as model ?
-
+  core::vector3df camPos = _smgr->getActiveCamera()->getAbsolutePosition();
 
   services->setVertexShaderConstant("projectionMatrix", projection.pointer(), 16);
 	services->setVertexShaderConstant("viewMatrix", view.pointer(), 16);
 	services->setVertexShaderConstant("modelMatrix", world.pointer(), 16);
+  services->setVertexShaderConstant("camPos", &camPos.X, 3);
   services->setPixelShaderConstant("moveFactor", &moveFactor, 1);
 
   int var0 = 0; // refraction
