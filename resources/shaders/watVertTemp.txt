@@ -1,0 +1,16 @@
+#version 130
+
+in vec2 position;
+
+out vec4 clipSpace;
+
+uniform mat4 projectionMatrix;
+uniform mat4 viewMatrix;
+uniform mat4 modelMatrix;
+
+void main(void)
+{
+	clipSpace = projectionMatrix * viewMatrix * modelMatrix * gl_Vertex;
+	gl_Position = clipSpace;
+}
+

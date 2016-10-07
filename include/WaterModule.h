@@ -3,17 +3,22 @@
 #include "AModule.h"
 
 class TerrainModule;
+class WaterNode;
+//class IAnimatedMesh;
+//class ISceneNode;
 
 class WaterModule : public AModule
 {
     public:
-	WaterModule(IrrlichtDevice* _device, scene::ICameraSceneNode* _camera, TerrainModule *terrain)
-	    : AModule{ _device, _camera }, _terrain(terrain)
-	{
-	}
+	WaterModule(IrrlichtDevice* _device, scene::ICameraSceneNode* _camera, TerrainModule *terrain);
 	~WaterModule();
 	virtual int init();
 	virtual int update();
+
     private:
+
+
 	TerrainModule *_terrain;
+  WaterNode     *_water;
+
 };
