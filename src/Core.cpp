@@ -77,8 +77,8 @@ int Core::initModules()
 	camera = _smgr->addCameraSceneNodeFPS(0, 100.0f, 1.2f, -1, keyMap, 8);
 	//_smgr->addCameraSceneNode(0, vector3df(0, 30, -40), vector3df(0, 5, 0));
 
-	camera->setPosition(core::vector3df(2700 * 2, 255 * 2, 2600 * 2));
-	camera->setTarget(core::vector3df(2397 * 2, 343 * 2, 2700 * 2));
+	camera->setPosition(core::vector3df(2700 * 2, 3000, -500));
+	camera->setTarget(core::vector3df(2700 * 2, 1000, 2700 * 4));
     camera->setFarValue(420000.0f);
 	// disable mouse cursor
 	device->getCursorControl()->setVisible(false);
@@ -112,8 +112,7 @@ int Core::initModules()
 int Core::run()
 {
 	int lastFPS = -1;
-
-	camera->setPosition(core::vector3df(2700, 255 * 2, 2600));
+	camera->setPosition(core::vector3df(2700 * 2, 3000, -500));
 
 	while (device->run())
 		if (device->isWindowActive())
