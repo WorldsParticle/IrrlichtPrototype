@@ -9,7 +9,7 @@ class WaterShader : public video::IShaderConstantSetCallBack
 {
 public:
 
-  WaterShader(scene::ISceneManager *smgr);
+  WaterShader(scene::ISceneManager *smgr, const u32 *time);
   ~WaterShader();
 
   void init();
@@ -27,5 +27,7 @@ private:
  scene::ISceneManager *_smgr;
 
  s32                  _material;
+
+ const u32                  *_time;
 
 };

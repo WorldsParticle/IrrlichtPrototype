@@ -3,14 +3,19 @@
 in vec2 position;
 
 out vec4 clipSpace;
+out vec2 textureCoords;
 
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform mat4 modelMatrix;
 
+const float tiling = 6.0;
+
 void main(void)
 {
-	clipSpace = projectionMatrix * viewMatrix * modelMatrix * gl_Vertex;
+	vec4 worldPosition = modelMatrix * gl_Vertex;
+	clipSpace = projectionMatrix * viewMatrix * worldPosition;
 	gl_Position = clipSpace;
+	textureCoords = gl_MultiTexCoord0.xy;
 }
 

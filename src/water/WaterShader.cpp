@@ -5,9 +5,10 @@ const core::stringc WaterShader::VERTEX_FILE = RESOURCES_PATH "/shaders/watVertT
 const core::stringc WaterShader::FRAGMENT_FILE = RESOURCES_PATH "/shaders/watFragTemp.txt";
 
 
-WaterShader::WaterShader(scene::ISceneManager *smgr) :
+WaterShader::WaterShader(scene::ISceneManager *smgr, const u32 *time) :
   _smgr(smgr),
-  _material(-1)
+  _material(-1),
+  _time(time)
 {
   init();
 }
@@ -33,6 +34,9 @@ void WaterShader::init()
 
 void WaterShader::OnSetConstants(video::IMaterialRendererServices *services, s32 userData)
 {
+  float moveFactor = 0.02f * (*_time); // arbritary, wave speed, to catch from climat
+  moveFactor = (int)moveFactor % 1000;
+  moveFactor /= 1000.0f;
 
   video::IVideoDriver *driver = services->getVideoDriver();
 
@@ -40,16 +44,17 @@ void WaterShader::OnSetConstants(video::IMaterialRendererServices *services, s32
 	core::matrix4 view = driver->getTransform(video::ETS_VIEW);
 	core::matrix4 world = driver->getTransform(video::ETS_WORLD); // use as model ?
 
+
   services->setVertexShaderConstant("projectionMatrix", projection.pointer(), 16);
 	services->setVertexShaderConstant("viewMatrix", view.pointer(), 16);
 	services->setVertexShaderConstant("modelMatrix", world.pointer(), 16);
-	//services->setVertexShaderConstant("position", &cameraPosition.X, 3);
+  services->setPixelShaderConstant("moveFactor", &moveFactor, 1);
 
   int var0 = 0; // refraction
   int var1 = 1; // reflection
-  //int var2 = 2; // dudvMap
+  int var2 = 2; // dudvMap
 
   services->setPixelShaderConstant("reflectionTexture", &var0, 1);
   services->setPixelShaderConstant("refractionTexture", &var1, 1);
-  //services->setPixelShaderConstant("dudvMap", &var2, 1);
+  services->setPixelShaderConstant("dudvMap", &var2, 1);
 }
