@@ -101,7 +101,7 @@ void WaterNode::applyReflection()
   _reflectionCamera->setPosition(position);
 
   core::vector3df target = currentCamera->getTarget();
-  target.Y = -target.Y + 2 * RelativeTranslation.Y;
+  target.Y = target.Y - 2 * RelativeTranslation.Y;
   _reflectionCamera->setTarget(target);
 
   _smgr->setActiveCamera(_reflectionCamera);

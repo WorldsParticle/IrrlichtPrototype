@@ -26,7 +26,8 @@ void WaterShader::init()
   _material = GPU->addHighLevelShaderMaterialFromFiles(
 		          vertexShader.c_str(), "main", video::EVST_VS_1_1,
 		          fragmentShader.c_str(), "main", video::EPST_PS_1_1,
-		          this);
+		          this,
+              video::EMT_TRANSPARENT_REFLECTION_2_LAYER);
 }
 
 

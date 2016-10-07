@@ -29,14 +29,14 @@ public:
 
 
 private:
-    scene::ISceneNode * SkyboxModule::createSkybox(const std::string & path);
+    scene::ISceneNode *createSkybox(const std::string & path);
 
 private:
     // Current active skybox
     scene::ISceneNode * _active;
     AWeather::E_WEATHER _weather;
 	bool		        _night;
-    
+
     std::map<AWeather::E_WEATHER,
              std::pair<scene::ISceneNode *, scene::ISceneNode *>>   _skyboxes;
 };
