@@ -29,10 +29,9 @@ int ParticleModule::update()
     return 0;
 }
 
-void ParticleModule::activate()
+void ParticleModule::setWeather(int w)
 {
-    // Stuff to switch between weathers. Will be replaced by activate(weather)
-    ++_weather %= _weathers.size();
+    _weather = static_cast<AWeather::E_WEATHER>(w);
     auto weather = _weathers[_weather];
     if (weather)
         weather->setWeather(_particleSystem);
