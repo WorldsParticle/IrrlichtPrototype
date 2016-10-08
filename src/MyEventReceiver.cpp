@@ -135,6 +135,9 @@ void MyEventReceiver::switchCameraMode()
 		if (anim->getType() == ESNAT_COLLISION_RESPONSE)
 			reinterpret_cast<ISceneNodeAnimatorCollisionResponse *> (anim)->setGravity(core::vector3df(0, freeCam ? 0 : -30, 0));
 		else if (anim->getType() == ESNAT_CAMERA_FPS)
+		{
 			reinterpret_cast<ISceneNodeAnimatorCameraFPS *> (anim)->setVerticalMovement(freeCam);
+			reinterpret_cast<ISceneNodeAnimatorCameraFPS *> (anim)->setMoveSpeed(freeCam ? 2.0 : 0.5);
+		}
 	}
 }
