@@ -32,7 +32,8 @@ void WaterNode::init()
   _waterMesh = _smgr->getGeometryCreator()->createPlaneMesh(TILE_SIZE,
                       core::dimension2du(_size.X / TILE_SIZE.X, _size.Y / TILE_SIZE.Y));
 
-  _waterNode = _smgr->addMeshSceneNode(_waterMesh);
+  //_waterNode = _smgr->addMeshSceneNode(_waterMesh);
+  _waterNode = _smgr->addWaterSurfaceSceneNode(_waterMesh, 5.0f, 500.0f, 200.0f);
   _waterNode->setPosition(_pos);
 
   _waterShader = new WaterShader(_smgr, &_time);
