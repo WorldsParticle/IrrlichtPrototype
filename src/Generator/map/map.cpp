@@ -3,12 +3,13 @@
 namespace map
 {
 
-MapGraph::MapGraph(unsigned int xMaxx, unsigned int yMaxx) :
+MapGraph::MapGraph(unsigned int xMaxx, unsigned int yMaxx, unsigned int zoneNumber) :
     m_zones(),
     m_corners(),
     m_edges(),
     m_xMax(xMaxx),
     m_yMax(yMaxx),
+    m_zoneNumber(zoneNumber),
     m_heightMap(xMaxx, yMaxx)
 {
     ::map::Zone::indexMax = 0;

@@ -6,7 +6,7 @@
 #include "water/WaterFrameBuffers.h"
 #include "water/WaterShader.h"
 
-const core::vector2df  WaterNode::TILE_SIZE = core::vector2df(100, 100);
+const core::vector2df  WaterNode::TILE_SIZE = core::vector2df(500, 500);
 
 
 WaterNode::WaterNode(scene::ISceneNode *parent, scene::ISceneManager *smgr, const core::vector3df &pos, const core::vector2df &size) :
@@ -32,8 +32,8 @@ void WaterNode::init()
   _waterMesh = _smgr->getGeometryCreator()->createPlaneMesh(TILE_SIZE,
                       core::dimension2du(_size.X / TILE_SIZE.X, _size.Y / TILE_SIZE.Y));
 
-  //_waterNode = _smgr->addMeshSceneNode(_waterMesh);
-  _waterNode = _smgr->addWaterSurfaceSceneNode(_waterMesh, 5.0f, 500.0f, 200.0f);
+  _waterNode = _smgr->addMeshSceneNode(_waterMesh);
+  //_waterNode = _smgr->addWaterSurfaceSceneNode(_waterMesh, 5.0f, 500.0f, 200.0f);
   _waterNode->setPosition(_pos);
 
   _waterShader = new WaterShader(_smgr, &_time);

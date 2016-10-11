@@ -1,3 +1,5 @@
+#include "Configuration.h"
+
 #include "Generator/steps/heightmapingstep.h"
 #include "Generator/map/heightmap.h"
 #include "Generator/map/heightpoint.h"
@@ -33,7 +35,7 @@ void    HeightMapingStep::paintByMoisture()
             else
                 m_image.set_pixel(j, _height - i - 1, static_cast<unsigned char>(p.zone->moisture * 255.0f), static_cast<unsigned char>(p.zone->moisture * 255.0f), static_cast<unsigned char>(p.zone->moisture * 255.0f));
         }
-    m_image.save_image("mapmoisture.bmp");
+    m_image.save_image((std::string)RESOURCES_PATH + "/mapmoisture.bmp");
 }
 
 // crée une bitmap coloriée en greyscale selon la hauteur des points
@@ -48,12 +50,12 @@ void    HeightMapingStep::paintByHeight()
         for (int j = 0; j < _width; ++j)
         {
             ::map::HeightPoint & p = m_map->heightMap().pointAt(j, i);
-            if (p.zone->ocean)
+            /*if (p.zone->ocean)
                 m_image.set_pixel(j, _height - i - 1, 0, 0, 125);
-            else
+            else*/
                 m_image.set_pixel(j, _height - i - 1, static_cast<unsigned char>(p.z * 255.0), static_cast<unsigned char>(p.z * 255.0), static_cast<unsigned char>(p.z * 255.0));
         }
-    m_image.save_image("mapheight.bmp");
+    m_image.save_image((std::string)RESOURCES_PATH + "/mapheight.bmp");
 }
 
 // crée une bitmap qui assigne différentes couleures selon le land time (bordure, océan, beach/coast et water
@@ -79,7 +81,7 @@ void    HeightMapingStep::paintByLandType()
             else
                 m_image.set_pixel(j, _height - i - 1, 255, 200, 130);
         }
-    m_image.save_image("maptype.bmp");
+    m_image.save_image((std::string)RESOURCES_PATH + "/maptype.bmp");
 }
 
 // crée une bitmap qui colorie les zones selon leur biome
@@ -132,7 +134,7 @@ void    HeightMapingStep::paintByBiome()
                 m_image.set_pixel(j, _height - i - 1, 233, 221, 199);
 
         }
-    m_image.save_image("mapbiome.bmp");
+    m_image.save_image((std::string)RESOURCES_PATH + "/mapbiome.bmp");
 }
 
 void    HeightMapingStep::run()

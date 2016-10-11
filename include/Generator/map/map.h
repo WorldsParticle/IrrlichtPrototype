@@ -7,6 +7,7 @@
 #include "corner.h"
 #include "crossededge.h"
 #include "heightmap.h"
+#include "Generator/param/intvalue.h"
 
 namespace map
 {
@@ -18,7 +19,7 @@ namespace map
 class MapGraph
 {
 public:
-    MapGraph(unsigned int xMaxx = 0, unsigned int yMaxx = 0);
+    MapGraph(unsigned int xMaxx = 0, unsigned int yMaxx = 0, unsigned int zoneNumber = 0);
 
     ///
     /// \brief Copy constructor.
@@ -64,6 +65,9 @@ public:
     inline HeightMap   &heightMap()
     { return m_heightMap; }
 
+    inline int zoneNumber()
+    { return m_zoneNumber; }
+
 private:
 
     ///
@@ -76,7 +80,7 @@ private:
     ///
     std::map<int, Corner *>       m_corners;
 
-    ///
+    ///500
     /// \brief Edges of the map (= edges of the Voronoi polygons)
     ///
     std::map<int, CrossedEdge *>  m_edges;
@@ -90,6 +94,11 @@ private:
     /// \brief Height of the map
     ///
     double    m_yMax;
+
+    ///
+    /// \brief let the user select the zone number
+    ///
+    int        m_zoneNumber;
 
     HeightMap m_heightMap;
 };

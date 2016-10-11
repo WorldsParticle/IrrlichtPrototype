@@ -61,7 +61,7 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 			_core->toggleInterface();
 			return true;
         case irr::KEY_KEY_G:
-            _core->terrainModule->generate(513, rand());
+            _core->terrainModule->generateVoronoi();
             _core->terrainModule->setHeightmap();
             return true;
 		default:

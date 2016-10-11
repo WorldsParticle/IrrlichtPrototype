@@ -30,6 +30,9 @@ ZoningStep::~ZoningStep()
 
 void    ZoningStep::run()
 {
+    // setting zone number when m_map is assigned.
+    m_zoneNumber.setValue(m_map->zoneNumber());
+
     std::vector<Point *>                    sites = generateRandomSites();
     std::cout << "Generating Voronoi edges .." << std::endl;
     const std::vector<vor::Edge *>    *edges = m_voronoi.fortuneAlgo(sites);

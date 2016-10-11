@@ -66,7 +66,7 @@ void TerrainModule::setHeightmap()
 {
     io::path p(_path.c_str());
 	IReadFile * f = device->getFileSystem()->createAndOpenFile(p);
-    _terrain->setScale(core::vector3df(750.0f, 125.4f, 750.0f));
+    _terrain->setScale(core::vector3df(25.0f, 10.0f, 25.0f));
     _terrain->loadHeightMap(f);
     camera->removeAnimator(_anim);
 
@@ -100,8 +100,6 @@ void TerrainModule::setHeightmap()
 }
 
 void TerrainModule::generate(int size, int seed){
-    generateVoronoi();
-    //generateRadial(size, seed);
 	_heightmapImage = new bitmap_image(size, size);
     float *tab = new float[size * size];
     float min = 1.0f, max = -1.0f;
@@ -145,7 +143,7 @@ void TerrainModule::generate(int size, int seed){
 			_heightmapImage->set_pixel(j, i, color, color, color);
         }
 
-		_path = RESOURCES_PATH "tmp.bmp";
+        _path = (std::string)RESOURCES_PATH + "/tmp.bmp";
 		_heightmapImage->save_image(_path);
 		_heightmapImage->clear();
         //delete(_heightmapImage);
@@ -157,9 +155,10 @@ void TerrainModule::generateVoronoi(){
     gen::Generator gen;
 
     ::map::MapGraph  *map = new ::map::MapGraph(512,
-                                            512);
+                                            512, 2048);
 
     gen.run(map);
+    _path = (std::string)RESOURCES_PATH + "/mapheight.bmp";
     std::cout << "Finished generating VORONOI." << std::endl;
 }
 
@@ -207,7 +206,7 @@ void TerrainModule::generateRadial(int size, int seed){
             _heightmapImage->set_pixel(j, i, color, color, color);
         }
 
-        _path = RESOURCES_PATH "radialtmp.bmp";
+        _path = (std::string)RESOURCES_PATH + "/radialtmp.bmp";
         _heightmapImage->save_image(_path);
         _heightmapImage->clear();
         delete(_heightmapImage);
