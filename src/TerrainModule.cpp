@@ -1,8 +1,8 @@
 #include "TerrainModule.h"
 #include "Configuration.h"
 
-#include "bitmap/bitmap_image.hpp"
-#include "noise/simplexnoise.hpp"
+#include "bitmap/bitmap_image.h"
+#include "noise/simplexnoise.h"
 
 int TerrainModule::init()
 {
