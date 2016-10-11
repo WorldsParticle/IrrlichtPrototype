@@ -48,7 +48,7 @@ void        RiverorStep::calculateWatersheds()
             auto corner = c.second;
             if (!corner->ocean && !corner->coast && !corner->watershed->coast)
             {
-        map::Corner *adj = corner->downslope->watershed;
+        ::map::Corner *adj = corner->downslope->watershed;
                 if (!adj->ocean)
                 {
                     corner->watershed = adj;
@@ -61,7 +61,7 @@ void        RiverorStep::calculateWatersheds()
 
     for (auto & corner : m_map->corners())
     {
-    map::Corner *adj = corner.second->watershed;
+    ::map::Corner *adj = corner.second->watershed;
         adj->watershedSize += 1;
     }
 }
@@ -70,14 +70,14 @@ void        RiverorStep::createRivers()
 {
     for (unsigned int i; i < static_cast<unsigned int>(static_cast<float>(m_map->zones().size() / 2) * (static_cast<float>(m_riverFactor.value()) / 100.0f)); ++i)
     {
-    map::Corner *corner = m_map->corners().at(rand() % static_cast<int>(m_map->corners().size()));
+    ::map::Corner *corner = m_map->corners().at(rand() % static_cast<int>(m_map->corners().size()));
         if (corner->ocean || corner->elevation < 0.3f || corner->elevation > 0.9f)
             continue;
         while (!corner->coast)
         {
             if (corner->downslope == corner)
                 break;
-        map::CrossedEdge *edge = lookupEdgeFromCorner(corner, corner->downslope);
+        ::map::CrossedEdge *edge = lookupEdgeFromCorner(corner, corner->downslope);
             edge->river += 1;
             corner->river += 1;
             corner->downslope->river += 1;
@@ -86,9 +86,9 @@ void        RiverorStep::createRivers()
     }
 }
 
-map::CrossedEdge *RiverorStep::lookupEdgeFromCorner(map::Corner *from, map::Corner *to)
+::map::CrossedEdge *RiverorStep::lookupEdgeFromCorner(::map::Corner *from, ::map::Corner *to)
 {
-    for (map::CrossedEdge *edge : from->edges)
+    for (::map::CrossedEdge *edge : from->edges)
     {
         if (edge->c0 == to || edge->c1 == to)
             return (edge);

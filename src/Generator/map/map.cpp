@@ -11,9 +11,9 @@ MapGraph::MapGraph(unsigned int xMaxx, unsigned int yMaxx) :
     m_yMax(yMaxx),
     m_heightMap(xMaxx, yMaxx)
 {
-    map::Zone::indexMax = 0;
-    map::Corner::indexMax = 0;
-    map::CrossedEdge::indexMax = 0;
+    ::map::Zone::indexMax = 0;
+    ::map::Corner::indexMax = 0;
+    ::map::CrossedEdge::indexMax = 0;
 }
 
 MapGraph::~MapGraph()

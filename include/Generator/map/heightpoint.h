@@ -57,7 +57,7 @@ public:
     ///
     /// \brief Zone to which the heightpoint belongs.
     ///
-    map::Zone     *zone;
+    Zone     *zone;
 };
 
 }

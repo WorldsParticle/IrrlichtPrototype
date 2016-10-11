@@ -33,7 +33,7 @@ public:
     ///
     /// \brief Executes the map generation steps.
     ///
-    void run(map::MapGraph *map);
+    void run(::map::MapGraph *map);
 
     ///
     /// \brief steps getter

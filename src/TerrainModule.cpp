@@ -4,6 +4,8 @@
 #include "bitmap/bitmap_image.h"
 #include "noise/simplexnoise.h"
 
+#include "Generator/generator.h"
+
 int TerrainModule::init()
 {
 	// add terrain scene node
@@ -98,7 +100,8 @@ void TerrainModule::setHeightmap()
 }
 
 void TerrainModule::generate(int size, int seed){
-    generateRadial(size, seed);
+    generateVoronoi();
+    //generateRadial(size, seed);
 	_heightmapImage = new bitmap_image(size, size);
     float *tab = new float[size * size];
     float min = 1.0f, max = -1.0f;
@@ -149,6 +152,16 @@ void TerrainModule::generate(int size, int seed){
         delete(tab);
 }
 
+void TerrainModule::generateVoronoi(){
+    std::cout << "Starting generating VORONOI." << std::endl;
+    gen::Generator gen;
+
+    ::map::MapGraph  *map = new ::map::MapGraph(512,
+                                            512);
+
+    gen.run(map);
+    std::cout << "Finished generating VORONOI." << std::endl;
+}
 
 void TerrainModule::generateRadial(int size, int seed){
     _heightmapImage = new bitmap_image(size, size);

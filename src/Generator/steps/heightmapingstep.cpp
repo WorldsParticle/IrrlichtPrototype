@@ -27,7 +27,7 @@ void    HeightMapingStep::paintByMoisture()
     for (int i = 0; i < _height; ++i)
         for (int j = 0; j < _width; ++j)
         {
-            map::HeightPoint & p = m_map->heightMap().pointAt(j, i);
+            ::map::HeightPoint & p = m_map->heightMap().pointAt(j, i);
             if (p.zone->ocean)
                 m_image.set_pixel(j, _height - i - 1, 0, 0, 125);
             else
@@ -47,7 +47,7 @@ void    HeightMapingStep::paintByHeight()
     for (int i = 0; i < _height; ++i)
         for (int j = 0; j < _width; ++j)
         {
-            map::HeightPoint & p = m_map->heightMap().pointAt(j, i);
+            ::map::HeightPoint & p = m_map->heightMap().pointAt(j, i);
             if (p.zone->ocean)
                 m_image.set_pixel(j, _height - i - 1, 0, 0, 125);
             else
@@ -67,7 +67,7 @@ void    HeightMapingStep::paintByLandType()
     for (int i = 0; i < _height; ++i)
         for (int j = 0; j < _width; ++j)
         {
-            map::HeightPoint & p = m_map->heightMap().pointAt(j, i);
+            ::map::HeightPoint & p = m_map->heightMap().pointAt(j, i);
             if (p.zone->border)
                 m_image.set_pixel(j, _height - i - 1, 200, 50, 50);
             else if (p.zone->ocean)
@@ -93,42 +93,42 @@ void    HeightMapingStep::paintByBiome()
     for (int i = 0; i < _height; ++i)
         for (int j = 0; j < _width; ++j)
         {
-            map::HeightPoint & p = m_map->heightMap().pointAt(j, i);
-            if (p.zone->biome == map::BEACH)
+            ::map::HeightPoint & p = m_map->heightMap().pointAt(j, i);
+            if (p.zone->biome == ::map::BEACH)
                 m_image.set_pixel(j, _height - i - 1, 255, 255, 204);
-            else if (p.zone->biome == map::OCEAN)
+            else if (p.zone->biome == ::map::OCEAN)
                 m_image.set_pixel(j, _height - i - 1, 26, 0, 153);
-            else if (p.zone->biome == map::MARSH)
+            else if (p.zone->biome == ::map::MARSH)
                 m_image.set_pixel(j, _height - i - 1, 0, 204, 153);
-            else if (p.zone->biome == map::ICE)
+            else if (p.zone->biome == ::map::ICE)
                 m_image.set_pixel(j, _height - i - 1, 220, 250, 255);
-            else if (p.zone->biome == map::LAKE)
+            else if (p.zone->biome == ::map::LAKE)
                 m_image.set_pixel(j, _height - i - 1, 61, 139, 255);
-            else if (p.zone->biome == map::SNOW)
+            else if (p.zone->biome == ::map::SNOW)
                 m_image.set_pixel(j, _height - i - 1, 248, 248, 248);
-            else if (p.zone->biome == map::TUNDRA)
+            else if (p.zone->biome == ::map::TUNDRA)
                 m_image.set_pixel(j, _height - i - 1, 208, 208, 176);
-            else if (p.zone->biome == map::BARE)
+            else if (p.zone->biome == ::map::BARE)
                 m_image.set_pixel(j, _height - i - 1, 176, 176, 176);
-            else if (p.zone->biome == map::SCORCHED)
+            else if (p.zone->biome == ::map::SCORCHED)
                 m_image.set_pixel(j, _height - i - 1, 144, 144, 144);
-            else if (p.zone->biome == map::TAIGA)
+            else if (p.zone->biome == ::map::TAIGA)
                 m_image.set_pixel(j, _height - i - 1, 204, 212, 187);
-            else if (p.zone->biome == map::SHRUBLAND)
+            else if (p.zone->biome == ::map::SHRUBLAND)
                 m_image.set_pixel(j, _height - i - 1, 196, 204, 187);
-            else if (p.zone->biome == map::TEMPERATE_DESERT)
+            else if (p.zone->biome == ::map::TEMPERATE_DESERT)
                 m_image.set_pixel(j, _height - i - 1, 228, 232, 202);
-            else if (p.zone->biome == map::TEMPERATE_RAIN_FOREST)
+            else if (p.zone->biome == ::map::TEMPERATE_RAIN_FOREST)
                 m_image.set_pixel(j, _height - i - 1, 164, 196, 168);
-            else if (p.zone->biome == map::TEMPERATE_DECIDUOUS_FOREST)
+            else if (p.zone->biome == ::map::TEMPERATE_DECIDUOUS_FOREST)
                 m_image.set_pixel(j, _height - i - 1, 180, 196, 169);
-            else if (p.zone->biome == map::GRASSLAND)
+            else if (p.zone->biome == ::map::GRASSLAND)
                 m_image.set_pixel(j, _height - i - 1, 196, 212, 170);
-            else if (p.zone->biome == map::TROPICAL_SEASONAL_FOREST)
+            else if (p.zone->biome == ::map::TROPICAL_SEASONAL_FOREST)
                 m_image.set_pixel(j, _height - i - 1, 169, 204, 164);
-            else if (p.zone->biome == map::TROPICAL_RAIN_FOREST)
+            else if (p.zone->biome == ::map::TROPICAL_RAIN_FOREST)
                 m_image.set_pixel(j, _height - i - 1, 228, 232, 202);
-            else if (p.zone->biome == map::SUBTROPICAL_DESERT)
+            else if (p.zone->biome == ::map::SUBTROPICAL_DESERT)
                 m_image.set_pixel(j, _height - i - 1, 233, 221, 199);
 
         }
@@ -146,11 +146,11 @@ void    HeightMapingStep::run()
     {
         for (unsigned int j = 0; j < m_map->yMax(); ++j)
         {
-            map::HeightPoint &p = m_map->heightMap().pointAt(i, j);
+            ::map::HeightPoint &p = m_map->heightMap().pointAt(i, j);
             p.x = static_cast<double>(j);
             p.y = static_cast<double>(i);
 
-            map::Zone *z;
+            ::map::Zone *z;
             // trouve la zone à laquelle appartient le pixel en (j, i)
             z = m_zoneLookUp.getNearestZone(static_cast<double>(j), static_cast<double>(i));
             p.zone = z;
@@ -171,7 +171,7 @@ void    HeightMapingStep::run()
                 c.y = static_cast<float>(e->c1->point.y);
                 c.z = e->c1->elevation;
 
-                if (map::HeightMap::pointInsideTrigon(glm::vec3(static_cast<float>(j), static_cast<float>(i), 0.0), a, b, c))
+                if (::map::HeightMap::pointInsideTrigon(glm::vec3(static_cast<float>(j), static_cast<float>(i), 0.0), a, b, c))
                 {
                     glm::vec3 cross;
                     float d;

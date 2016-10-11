@@ -51,13 +51,13 @@ void        MoistorStep::assignPolygonMoisture()
 
 struct sortByMoisture
 {
-  bool operator() (map::Corner *L, map::Corner *R) { return L->moisture < R->moisture; }
+  bool operator() (::map::Corner *L, ::map::Corner *R) { return L->moisture < R->moisture; }
 };
 
 // redistribue l'humidité de 0 à 1.0 uniformément
 void        MoistorStep::redistributeMoisture()
 {
-    std::vector<map::Corner *> corners;
+    std::vector<::map::Corner *> corners;
 
     for (const auto & corner : m_map->corners())
     {
@@ -77,7 +77,7 @@ void        MoistorStep::redistributeMoisture()
 // calcule l'humidité d'un sommet de polygone
 void        MoistorStep::assignCornerMoisture()
 {
-    std::queue<map::Corner *> q;
+    std::queue<::map::Corner *> q;
 
     // si le sommet est lié à un point d'eau, ou si il possède une rivière,
     // on lui assigne un humidité et on le push dans la queue

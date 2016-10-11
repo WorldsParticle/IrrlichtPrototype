@@ -24,7 +24,7 @@ Generator::Generator() :
     m_steps.push_back(new HeightMapingStep());
 }
 
-void    Generator::run(map::MapGraph *map)
+void    Generator::run(::map::MapGraph *map)
 {
     for (const auto &step: m_steps)
     {

@@ -110,7 +110,7 @@ public:
     ///
     /// \brief Zone's biome type.
     ///
-    map::Biome biome;
+    Biome biome;
 
     ///
     /// \brief Neighboring zones.

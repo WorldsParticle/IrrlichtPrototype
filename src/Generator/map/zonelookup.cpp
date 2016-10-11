@@ -14,11 +14,11 @@ ZoneLookUp::~ZoneLookUp()
 {
 }
 
-void    ZoneLookUp::createCloud(map::MapGraph *m)
+void    ZoneLookUp::createCloud(::map::MapGraph *m)
 {
     for (const auto & zone : m->zones())
     {
-        map::PointCloud<double>::LPoint p = {zone.second->point.x, zone.second->point.y, zone.second};
+        ::map::PointCloud<double>::LPoint p = {zone.second->point.x, zone.second->point.y, zone.second};
         _cloud.pts.push_back(p);
     }
     _pc2kd = std::shared_ptr<PC2KD>(new PC2KD(_cloud));

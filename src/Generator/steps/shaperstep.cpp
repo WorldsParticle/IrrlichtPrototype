@@ -79,7 +79,7 @@ void        ShaperStep::assignCornerLandPerlin(int seed)
 
 void        ShaperStep::assignOceanCostAndLand()
 {
-    std::queue<map::Zone *> q;
+    std::queue<::map::Zone *> q;
 
 
     // assigning ocean to border zones,

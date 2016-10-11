@@ -19,7 +19,7 @@ ZoningStep::ZoningStep() :
 {
     m_zoneNumber.setMinValue(1);
     m_zoneNumber.setMaxValue(5000);
-    m_zoneNumber.setValue(50);
+    m_zoneNumber.setValue(500);
     params().push_back(&m_zoneNumber);
 }
 
@@ -82,22 +82,22 @@ void        ZoningStep::computeMap(const std::vector<vor::Edge *> *edges) // à 
 {
     for (const auto &e: *edges)
     {
-        map::CrossedEdge    *edge = new map::CrossedEdge();
-        map::Zone           *left = m_map->findZone(e->left);
-        map::Zone           *right = m_map->findZone(e->right);
-        map::Corner         *c0;
-        map::Corner         *c1;
+        ::map::CrossedEdge    *edge = new ::map::CrossedEdge();
+        ::map::Zone           *left = m_map->findZone(e->left);
+        ::map::Zone           *right = m_map->findZone(e->right);
+        ::map::Corner         *c0;
+        ::map::Corner         *c1;
 
         // Ugly workaround
         if (!left)
         {
-            left = new map::Zone(e->left->x, e->left->y);
-            m_map->zones().insert(std::pair<int, map::Zone *>(left->index, left));
+            left = new ::map::Zone(e->left->x, e->left->y);
+            m_map->zones().insert(std::pair<int, ::map::Zone *>(left->index, left));
         }
         if (!right)
         {
-            right = new map::Zone(e->right->x, e->right->y);
-            m_map->zones().insert(std::pair<int, map::Zone *>(right->index, right));
+            right = new ::map::Zone(e->right->x, e->right->y);
+            m_map->zones().insert(std::pair<int, ::map::Zone *>(right->index, right));
         }
 
         if (!left->haveNeighbor(right))
@@ -114,8 +114,8 @@ void        ZoningStep::computeMap(const std::vector<vor::Edge *> *edges) // à 
         {
             if (!(c0 = checkCorner(right, *e->start)))
             {
-                c0 = new map::Corner();
-                m_map->corners().insert(std::pair<int, map::Corner *>(c0->index, c0));
+                c0 = new ::map::Corner();
+                m_map->corners().insert(std::pair<int, ::map::Corner *>(c0->index, c0));
 
                 c0->point.x = e->start->x;
                 c0->point.y = e->start->y;
@@ -130,8 +130,8 @@ void        ZoningStep::computeMap(const std::vector<vor::Edge *> *edges) // à 
         {
             if (!(c1 = checkCorner(right, *e->end)))
             {
-                c1 = new map::Corner();
-                m_map->corners().insert(std::pair<int, map::Corner *>(c1->index, c1));
+                c1 = new ::map::Corner();
+                m_map->corners().insert(std::pair<int, ::map::Corner *>(c1->index, c1));
 
                 c1->point.x = e->end->x;
                 c1->point.y = e->end->y;
@@ -150,13 +150,13 @@ void        ZoningStep::computeMap(const std::vector<vor::Edge *> *edges) // à 
         c0->adjacent.push_back(c1);
         c1->adjacent.push_back(c0);
 
-        m_map->edges().insert(std::pair<int, map::CrossedEdge *>(edge->index, edge));
+        m_map->edges().insert(std::pair<int, ::map::CrossedEdge *>(edge->index, edge));
     }
 }
 
-map::Corner *ZoningStep::checkCorner(map::Zone *z, Point &p)
+::map::Corner *ZoningStep::checkCorner(::map::Zone *z, Point &p)
 {
-    for (std::vector<map::Corner *>::iterator it = z->corners.begin(); it != z->corners.end(); ++it)
+    for (std::vector<::map::Corner *>::iterator it = z->corners.begin(); it != z->corners.end(); ++it)
         if (std::abs((*it)->point.x - p.x) < std::numeric_limits<double>::epsilon()
                     && (std::abs((*it)->point.y - p.y) < std::numeric_limits<double>::epsilon()))
             return (*it);

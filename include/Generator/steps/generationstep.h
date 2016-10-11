@@ -27,7 +27,7 @@ public:
 
     GenerationStep& operator=(GenerationStep &&other) noexcept { if (other.name() != ""){} /* TODO */ return *this;}
 
-    inline void launch(map::MapGraph *map)
+    inline void launch(::map::MapGraph *map)
     { m_map = map; run(); }
 
     ///
@@ -72,7 +72,7 @@ protected:
     ///
     std::list<Param *>  m_params;
 
-    map::MapGraph       *m_map;
+    ::map::MapGraph       *m_map;
 };
 
 }
