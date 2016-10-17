@@ -22,6 +22,7 @@ public:
 	virtual int init();
 	virtual int update();
     void generate(int size = 513, int seed = 0);
+    void generateRadial(int size = 513, int seed = 0);
 	void setHeightmap();
 
 private:
