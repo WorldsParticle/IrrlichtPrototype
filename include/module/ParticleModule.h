@@ -25,4 +25,8 @@ private:
     irr::scene::IParticleSystemSceneNode * _particleSystem;
     std::map<int, AWeather *>		       _weathers;
     AWeather::E_WEATHER                    _weather;
+
+    irr::ITimer * _timer;
+    irr::u32      _updateSpeed;
+    irr::u32      _nextUpdate;
 };

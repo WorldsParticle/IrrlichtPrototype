@@ -6,7 +6,7 @@ int ParticleModule::init()
 {
     // Create new ParticleSystem and disable the default Emiter
     _particleSystem = smgr->addParticleSystemSceneNode(false);
-    _particleSystem->setPosition(camera->getPosition());
+    _particleSystem->setParent(camera);
 
     // Init Emitter
     _particleSystem->setEmitter(nullptr);
@@ -20,12 +20,26 @@ int ParticleModule::init()
     _weathers[AWeather::E_WEATHER::SNOW] = new SnowWeather(_particleSystem, driver);
     _weathers[AWeather::E_WEATHER::RAIN] = new RainWeather(_particleSystem, driver);
 
+    // Init timer
+    _timer = device->getTimer();
+    _timer->start();
+    // Define the weather update speed (in ms)
+    _updateSpeed = 10 * 1000;
+    // Init the time for the nex weather update
+    _nextUpdate = _timer->getTime() + _updateSpeed;
     return 0;
 }
 
 int ParticleModule::update()
 {
-    // Nothing to do
+    // Manage weather update depending on the _updateSpeed
+    if (_timer->getTime() > _nextUpdate)
+    {
+        auto weather = _weathers[_weather];
+        if (weather)
+            weather->update(_particleSystem);
+        _nextUpdate += _updateSpeed;
+    }
     return 0;
 }
 
