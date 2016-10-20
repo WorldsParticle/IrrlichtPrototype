@@ -6,6 +6,21 @@
 
 #include "Generator/generator.h"
 
+TerrainModule::TerrainModule(IrrlichtDevice* _device, scene::ICameraSceneNode* _camera) :
+	AModule(_device, _camera),
+	_terrain(nullptr),
+	_anim(nullptr),
+	_path(""),
+	_heightmapImage(nullptr)
+{
+
+}
+
+TerrainModule::~TerrainModule()
+{
+
+}
+
 int TerrainModule::init()
 {
 	// add terrain scene node
@@ -22,7 +37,7 @@ int TerrainModule::init()
 		4                   // smoothFactor
 		);
 
-	_terrain->setMaterialFlag(video::EMF_LIGHTING, false);
+	_terrain->setMaterialFlag(video::EMF_LIGHTING, true);
 
 	_terrain->setMaterialTexture(0,
 		driver->getTexture(RESOURCES_PATH "/terrain-texture.jpg"));
@@ -70,7 +85,7 @@ void TerrainModule::setHeightmap()
     _terrain->loadHeightMap(f);
     camera->removeAnimator(_anim);
 
-    _terrain->setMaterialFlag(video::EMF_LIGHTING, false);
+    _terrain->setMaterialFlag(video::EMF_LIGHTING, true);
 
     _terrain->setMaterialTexture(0,
 		driver->getTexture(RESOURCES_PATH "/terrain-texture.jpg"));

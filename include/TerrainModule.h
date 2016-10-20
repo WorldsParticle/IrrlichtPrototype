@@ -8,22 +8,19 @@ class bitmap_image;
 class TerrainModule : public AModule
 {
 public:
-	TerrainModule(IrrlichtDevice* _device,
-		scene::ICameraSceneNode* _camera)
-		: AModule(_device, _camera), _terrain(nullptr), _anim(nullptr), _path(""), _heightmapImage(nullptr)
-	{
-	}
-	~TerrainModule()
-	{
-	}
+	TerrainModule(IrrlichtDevice* _device, scene::ICameraSceneNode* _camera);
+	~TerrainModule();
+
+	inline scene::ITerrainSceneNode	*terrain()
+	{ return _terrain; }
 
 	f32 getHeight (f32 x, f32 y) const;
 
 	virtual int init();
 	virtual int update();
-    void generate(int size = 512, int seed = 0);
-    void generateRadial(int size = 512, int seed = 0);
-    void generateVoronoi();
+  void generate(int size = 512, int seed = 0);
+  void generateRadial(int size = 512, int seed = 0);
+  void generateVoronoi();
 	void setHeightmap();
 
 private:

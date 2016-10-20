@@ -5,6 +5,8 @@
 #include "TerrainModule.h"
 #include "SoundModule.h"
 #include "ElementsModule.h"
+#include "WaterModule.h"
+#include "water/WaterNode.h"
 #include <iostream>
 
 using namespace irr;
@@ -38,6 +40,21 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 	  case irr::KEY_KEY_C: // switch camera
 			switchCameraMode();
 			return true;
+		case irr::KEY_KEY_V: // switch wireframe mode
+			switchWireframe();
+			return true;
+		case irr::KEY_KEY_N: // night
+			_core->skyboxModule->activate(true);
+			return true;
+		case irr::KEY_KEY_B: // day
+			_core->skyboxModule->activate(false);
+			return true;
+        case irr::KEY_KEY_P: // change weather
+            _core->particleModule->activate();
+            return true;
+        case irr::KEY_KEY_M: // Test weather change for Skyboxes
+            _core->skyboxModule->setWeather(AWeather::E_WEATHER::SNOW);
+            return true;
 		case irr::KEY_ESCAPE: // quit
 			_core->close(); //comment this to get the confirmation before quitting back
 			if (confirmQuit == nullptr) {
@@ -123,11 +140,23 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 	return false;
 }
 
+void MyEventReceiver::switchWireframe()
+{
+	static bool wireframe = false;
+	wireframe = !wireframe;
+
+	_core->terrainModule->terrain()->setMaterialFlag(EMF_WIREFRAME, wireframe);
+	for (const auto &node: _core->waterModule->waterNodes())
+	{
+		std::cout << "toto" << std::endl;
+		node->waterNode()->setMaterialFlag(EMF_WIREFRAME, wireframe);
+	}
+}
+
 void MyEventReceiver::switchCameraMode()
 {
 	// clunky, waiting for better archi to make better code
 	static bool freeCam = true;
-
 	freeCam = !freeCam;
 
 	for (ISceneNodeAnimator *anim : _core->camera->getAnimators())

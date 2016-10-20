@@ -11,6 +11,9 @@ public:
   WaterNode(scene::ISceneNode *parent, scene::ISceneManager *smgr, const core::vector3df &pos, const core::vector2df &size);
   ~WaterNode();
 
+  inline ISceneNode *waterNode()
+  { return _waterNode; }
+
   void init();
 
   virtual void                          OnRegisterSceneNode();

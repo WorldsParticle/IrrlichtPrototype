@@ -196,6 +196,10 @@ void Core::setGUI()
 	envRB->add(forest);
 	envRB->add(beach);
 
+	//Check box for switching to wireframe mode
+	IGUICheckBox *wireframe = _env->addCheckBox(false, core::rect<s32>(3 * width, 0, width, height), _tab, 0, L"Wireframe mode");
+	envRB->add(wireframe);
+
 	//create time radioButtons
 	CGUIRadioCheckBoxGroup *timeRB = new CGUIRadioCheckBoxGroup(_env, _tab);
 	IGUICheckBox* day = _env->addCheckBox(false, core::rect<s32>(0, 0, width, height), _tab, 0, L"Day");
