@@ -8,6 +8,7 @@
 #include "generator/step/moistorstep.h"
 #include "generator/step/biomizatorstep.h"
 #include "generator/step/heightmapingstep.h"
+#include "generator/step/texturestep.h"
 
 namespace gen
 {
@@ -15,28 +16,29 @@ namespace gen
 Generator::Generator() :
     m_steps()
 {
-    m_steps.push_back(new ZoningStep());
-    m_steps.push_back(new ShaperStep());
-    m_steps.push_back(new ElevatorStep());
-    m_steps.push_back(new RiverorStep());
-    m_steps.push_back(new MoistorStep());
-    m_steps.push_back(new BiomizatorStep());
-    m_steps.push_back(new HeightMapingStep());
 }
 
-void    Generator::run(::map::MapGraph *map)
+Generator::~Generator()
 {
+  for (GenerationStep *step : m_steps)
+    delete step;
+}
+
+::map::MapGraph    *Generator::run(unsigned int xMax, unsigned int yMax)
+{
+  map::MapGraph *map = new map::MapGraph(xMax, yMax, 100); // gridSize have to move inside a step
     for (const auto &step: m_steps)
     {
         std::cout << step->name() << std::endl;
         step->launch(map);
     }
+  return map;
 }
 
-GenerationStep  *Generator::stepFromName(const std::string &namee)
+GenerationStep  *Generator::step(const std::string &name)
 {
     for (const auto &s: m_steps)
-        if (s->name() == namee)
+        if (s->name() == name)
             return s;
     return (nullptr);
 }

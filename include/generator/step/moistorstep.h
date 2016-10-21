@@ -16,7 +16,7 @@ public:
     ///
     /// \brief Default constructor.
     ///
-    MoistorStep();
+    MoistorStep(const std::string &name);
 
     ///
     /// \brief Default destructor.

@@ -15,7 +15,7 @@ namespace gen
 class HeightMapingStep : public GenerationStep
 {
 public:
-    HeightMapingStep();
+    HeightMapingStep(const std::string &name);
     virtual ~HeightMapingStep();
 
     void    run();
@@ -28,11 +28,13 @@ private:
     void    paintByBiome();
     void    paintByLandType();
 
+    void    paintHeightmapGrid();
+
     ///
     /// \brief Class holding the zone's center kd-tree.
     /// should move it inside MapGraph, and createCould at the end of zoningStep
     ///
-    map::ZoneLookUp m_zoneLookUp;
+    ::map::ZoneLookUp m_zoneLookUp;
 };
 
 }

@@ -8,8 +8,8 @@
 namespace gen
 {
 
-BiomizatorStep::BiomizatorStep() :
-    GenerationStep("Attribution des biomes")
+BiomizatorStep::BiomizatorStep(const std::string &name) :
+    GenerationStep(name)
 {
 }
 

@@ -30,24 +30,27 @@ public:
     ///
     Generator();
 
+    /// destructor
+    virtual ~Generator();
+
     ///
     /// \brief Executes the map generation steps.
     ///
-    void run(::map::MapGraph *map);
+    ::map::MapGraph *run(unsigned int xMax, unsigned int yMax);
 
     ///
     /// \brief steps getter
     /// \return
     ///
-    inline const std::list<GenerationStep *>  &steps()
+    inline std::list<GenerationStep *>  &steps()
     { return m_steps; }
 
     ///
-    /// \brief stepFromName
+    /// \brief getStep
     /// \param name
     /// \return step
     ///
-    GenerationStep  *stepFromName(const std::string &namee);
+    GenerationStep  *step(const std::string &name);
 
 protected:
     ///

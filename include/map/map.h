@@ -18,7 +18,7 @@ namespace map
 class MapGraph
 {
 public:
-    MapGraph(unsigned int xMaxx = 0, unsigned int yMaxx = 0, unsigned int zoneNumber = 0);
+    MapGraph(unsigned int xMax, unsigned int yMax, unsigned int gridSize);
 
     ///
     /// \brief Copy constructor.
@@ -31,41 +31,44 @@ public:
     ///
     Zone    *findZone(const Point *p); // ugly and slow
 
-    ///
-    /// \brief Map's zones getter.
-    ///
     inline std::map<int, Zone *>        &zones()
     { return m_zones; }
 
-    ///
-    /// \brief Map's corners getter.
-    ///
     inline std::map<int, Corner *>      &corners()
     { return m_corners; }
 
-    ///
-    /// \brief Map's edges getter.
-    ///
     inline std::map<int, CrossedEdge *> &edges()
     { return m_edges; }
 
-    ///
-    /// \brief Width getter.
-    ///
     inline double xMax()
     { return m_xMax; }
 
-    ///
-    /// \brief Height getter.
-    ///
     inline double yMax()
     { return m_yMax; }
 
     inline HeightMap   &heightMap()
     { return m_heightMap; }
 
-    inline int zoneNumber()
-    { return m_zoneNumber; }
+    inline unsigned int gridSize()
+    { return m_gridSize; }
+
+    inline unsigned int gridXMax()
+    { return m_gridXMax; }
+
+    inline unsigned int gridYMax()
+    { return m_gridYMax; }
+
+    inline std::vector<std::string> &textureGrid()
+    { return m_textureGrid; }
+
+    inline std::string &textureAt(unsigned int x, unsigned int y)
+    { return m_textureGrid[x * m_yMax + y]; }
+
+    inline std::vector<std::string> &heightmapGrid()
+    { return m_heightmapGrid; }
+
+    inline std::string &heightmapAt(unsigned int x, unsigned int y)
+    { return m_heightmapGrid[x + m_gridXMax * y]; }
 
 private:
 
@@ -94,12 +97,14 @@ private:
     ///
     double    m_yMax;
 
-    ///
-    /// \brief let the user select the zone number
-    ///
-    int        m_zoneNumber;
-
     HeightMap m_heightMap;
+
+    /// gestion de la grille de texture (multi terrain)
+    unsigned int m_gridSize; // longueur du coté d'un carré de la grille. nom à retravailler
+    unsigned int m_gridXMax; // longueur en nombre de carré
+    unsigned int m_gridYMax; // largeur en nombre de carré
+    std::vector<std::string>  m_textureGrid; // path to the image
+    std::vector<std::string>  m_heightmapGrid; // same
 };
 
 }

@@ -16,7 +16,7 @@ public:
     ///
     /// \brief Default constructor.
     ///
-    ElevatorStep();
+    ElevatorStep(const std::string &name);
 
     ///
     /// \brief Default destructor.

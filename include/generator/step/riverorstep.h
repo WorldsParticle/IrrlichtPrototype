@@ -17,7 +17,7 @@ public:
     ///
     /// \brief Default constructor.
     ///
-    RiverorStep();
+    RiverorStep(const std::string &name);
 
     ///
     /// \brief Default destructor.
@@ -46,7 +46,7 @@ private:
     /// \param From corner.
     /// \param To corner.
     ///
-    map::CrossedEdge    *lookupEdgeFromCorner(map::Corner *from, map::Corner *to);
+    ::map::CrossedEdge    *lookupEdgeFromCorner(::map::Corner *from,:: map::Corner *to);
 
     ///
     /// \brief let the user select the number of rivers

@@ -11,8 +11,8 @@
 namespace gen
 {
 
-ElevatorStep::ElevatorStep() :
-    GenerationStep("Elevation"),
+ElevatorStep::ElevatorStep(const std::string &name) :
+    GenerationStep(name),
     m_slopeFactor("Facteur d'aplanissement")
 {
     m_slopeFactor.setMinValue(0);

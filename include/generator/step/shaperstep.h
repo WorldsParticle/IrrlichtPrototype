@@ -16,7 +16,7 @@ public:
     ///
     /// \brief Default constructor.
     ///
-    ShaperStep();
+    ShaperStep(const std::string &name);
 
     ///
     /// \brief Default destructor.

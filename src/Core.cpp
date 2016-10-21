@@ -7,6 +7,19 @@
 #include "module/SoundModule.h"
 #include "module/ParticleModule.h"
 #include "interface/gui_radiocheckboxgroup.h"
+#include "generator/generator.h"
+#include "map/map.h"
+
+// Moche, a sortir quand on allegera le core
+#include "generator/step/zoningstep.h"
+#include "generator/step/shaperstep.h"
+#include "generator/step/elevatorstep.h"
+#include "generator/step/riverorstep.h"
+#include "generator/step/moistorstep.h"
+#include "generator/step/biomizatorstep.h"
+#include "generator/step/heightmapingstep.h"
+#include "generator/step/texturestep.h"
+#include "generator/param/intvalue.h"
 
 #include "Configuration.h"
 
@@ -16,6 +29,7 @@ using namespace scene;
 using namespace video;
 using namespace io;
 using namespace gui;
+using namespace gen;
 
 int Core::initIrrlicht()
 {
@@ -106,6 +120,36 @@ int Core::initModules()
 	setGUI();
 
 	return 0;
+}
+
+int	Core::initGenerator()
+{
+	map = nullptr;
+	generator = new Generator();
+
+	generator->steps().push_back(new ZoningStep("Zones"));
+	generator->steps().push_back(new ShaperStep("Shape"));
+	generator->steps().push_back(new ElevatorStep("Elevation"));
+	generator->steps().push_back(new RiverorStep("Rivers"));
+	generator->steps().push_back(new MoistorStep("Moistor"));
+	generator->steps().push_back(new BiomizatorStep("Bioming"));
+	generator->steps().push_back(new HeightMapingStep("Heightmap"));
+	generator->steps().push_back(new TextureStep("Textures"));
+
+	return 0;
+}
+
+void Core::generate()
+{
+	// apply gui value
+	// todo
+	dynamic_cast<IntValue *>(generator->step("Zones")->param("Nombre"))->setValue(200);
+
+	if (map)
+		delete map;
+
+	map = generator->run(1000, 1000);
+	terrainModule->generateFromMap(map);
 }
 
 int Core::run()

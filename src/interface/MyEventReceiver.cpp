@@ -81,8 +81,7 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 			_core->toggleInterface();
 			return true;
         case irr::KEY_KEY_G:
-            _core->terrainModule->generateVoronoi();
-            _core->terrainModule->setHeightmap();
+						_core->generate();
             return true;
 		default:
 			break;
@@ -145,7 +144,8 @@ void MyEventReceiver::switchWireframe()
 	static bool wireframe = false;
 	wireframe = !wireframe;
 
-	_core->terrainModule->terrain()->setMaterialFlag(EMF_WIREFRAME, wireframe);
+	for (scene::ITerrainSceneNode *node : _core->terrainModule->terrainGridNodes())
+		node->setMaterialFlag(EMF_WIREFRAME, wireframe);
 	for (WaterNode *node: _core->waterModule->waterNodes())
 		node->waterNode()->setMaterialFlag(EMF_WIREFRAME, wireframe);
 }

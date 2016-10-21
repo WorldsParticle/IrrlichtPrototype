@@ -16,7 +16,7 @@ public:
     ///
     /// \brief ZoningStep constructor
     ///
-    ZoningStep();
+    ZoningStep(const std::string &name);
 
     ///
     /// \brief destructor
@@ -53,7 +53,7 @@ private:
     /// \param p
     /// \return corner
     ///
-    map::Corner *checkCorner(map::Zone *z, Point &p);
+    ::map::Corner *checkCorner(::map::Zone *z, Point &p);
 
     ///
     /// \brief object which construct voronoi edges

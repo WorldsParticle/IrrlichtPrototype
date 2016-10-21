@@ -11,6 +11,12 @@ class WaterModule;
 class SoundModule;
 class ParticleModule;
 
+namespace gen
+{ class Generator; }
+
+namespace map
+{ class MapGraph; }
+
 class Core
 {
 public:
@@ -19,6 +25,8 @@ public:
 
 	int initIrrlicht();
 	int initModules();
+	int	initGenerator();
+	void generate();
 	int run();
 	void close();
 
@@ -32,16 +40,17 @@ private:
 
 	void setGUI();
 public:
-	ElementsModule			*elementsModule;
-	SkyboxModule			*skyboxModule;
-	TerrainModule			*terrainModule;
-	WaterModule			*waterModule;
-	SoundModule			*soundModule;
-	ParticleModule			*particleModule;
+	ElementsModule								*elementsModule;
+	SkyboxModule									*skyboxModule;
+	TerrainModule									*terrainModule;
+	WaterModule										*waterModule;
+	SoundModule										*soundModule;
+	ParticleModule								*particleModule;
 	irr::scene::ICameraSceneNode	*camera;
-	irr::IrrlichtDevice		*device;
+	irr::IrrlichtDevice						*device;
+	gen::Generator								*generator;
+	::map::MapGraph									*map;
 
 	bool isInterfaceVisible() const;
 	void toggleInterface();
 };
-

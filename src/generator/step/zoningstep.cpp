@@ -12,10 +12,10 @@
 namespace gen
 {
 
-ZoningStep::ZoningStep() :
-    GenerationStep("Attribution des zones"),
+ZoningStep::ZoningStep(const std::string &name) :
+    GenerationStep(name),
     m_voronoi(),
-    m_zoneNumber("Nombre de zones")
+    m_zoneNumber("Nombre")
 {
     m_zoneNumber.setMinValue(1);
     m_zoneNumber.setMaxValue(5000);
@@ -30,9 +30,6 @@ ZoningStep::~ZoningStep()
 
 void    ZoningStep::run()
 {
-    // setting zone number when m_map is assigned.
-    m_zoneNumber.setValue(m_map->zoneNumber());
-
     std::vector<Point *>                    sites = generateRandomSites();
     std::cout << "Generating Voronoi edges .." << std::endl;
     const std::vector<vor::Edge *>    *edges = m_voronoi.fortuneAlgo(sites);

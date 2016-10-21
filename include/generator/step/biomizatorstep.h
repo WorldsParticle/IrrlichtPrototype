@@ -17,7 +17,7 @@ public:
     ///
     /// \brief Default constructor.
     ///
-    BiomizatorStep();
+    BiomizatorStep(const std::string &name);
 
     ///
     /// \brief Default destructor.
@@ -33,7 +33,7 @@ public:
     /// \brief Returns the biome of a zone.
     /// \param Zone to be inspected.
     ///
-    map::Biome      getBiome(map::Zone *z);
+    ::map::Biome      getBiome(::map::Zone *z);
 
     ///
     /// \brief Assigns the diagram's zones' biomes.

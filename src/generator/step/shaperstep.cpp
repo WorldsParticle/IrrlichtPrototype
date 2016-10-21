@@ -12,8 +12,8 @@
 namespace gen
 {
 
-ShaperStep::ShaperStep() :
-    GenerationStep("Limite terre/mer"),
+ShaperStep::ShaperStep(const std::string &name) :
+    GenerationStep(name),
     m_landRatio("Pourcentage de terre")
 {
     m_landRatio.setMinValue(0);

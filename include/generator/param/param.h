@@ -42,9 +42,9 @@ protected:
     /// \brief Param default constructor
     /// \param name
     ///
-    Param(paramType typee, const std::string &namee = "") :
-        m_type(typee),
-        m_name(namee)
+    Param(paramType type, const std::string &name = "") :
+        m_type(type),
+        m_name(name)
     {}
 
     paramType   m_type;

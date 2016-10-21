@@ -11,8 +11,8 @@
 namespace gen
 {
 
-MoistorStep::MoistorStep() :
-    GenerationStep("Humidité"),
+MoistorStep::MoistorStep(const std::string &name) :
+    GenerationStep(name),
     m_moistureFactor("Facteur humidité (%)")
 {
     m_moistureFactor.setMinValue(0);

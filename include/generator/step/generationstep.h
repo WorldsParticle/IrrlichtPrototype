@@ -50,11 +50,11 @@ public:
     { return m_params; }
 
     ///
-    /// \brief paramFromName
+    /// \brief getParam
     /// \param name
     /// \return param
     ///
-    Param   *paramFromName(const std::string &namee);
+    Param   *param(const std::string &name);
 
 protected:
     ///

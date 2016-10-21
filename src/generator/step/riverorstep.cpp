@@ -8,8 +8,8 @@
 namespace gen
 {
 
-RiverorStep::RiverorStep() :
-    GenerationStep("Assignement des rivières"),
+RiverorStep::RiverorStep(const std::string &name) :
+    GenerationStep(name),
     m_riverFactor("Facteur rivière (%)")
 {
     m_riverFactor.setMinValue(0);

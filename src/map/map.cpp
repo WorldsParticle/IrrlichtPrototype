@@ -3,14 +3,18 @@
 namespace map
 {
 
-MapGraph::MapGraph(unsigned int xMaxx, unsigned int yMaxx, unsigned int zoneNumber) :
+MapGraph::MapGraph(unsigned int xMax, unsigned int yMax, unsigned int gridSize) :
     m_zones(),
     m_corners(),
     m_edges(),
-    m_xMax(xMaxx),
-    m_yMax(yMaxx),
-    m_zoneNumber(zoneNumber),
-    m_heightMap(xMaxx, yMaxx)
+    m_xMax(xMax),
+    m_yMax(yMax),
+    m_heightMap(xMax, yMax),
+    m_gridSize(gridSize),
+    m_gridXMax(xMax / gridSize),
+    m_gridYMax(yMax / gridSize),
+    m_textureGrid(),
+    m_heightmapGrid()
 {
     ::map::Zone::indexMax = 0;
     ::map::Corner::indexMax = 0;

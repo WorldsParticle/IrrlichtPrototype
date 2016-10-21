@@ -5,26 +5,25 @@
 #include "tool/simplexnoise.h"
 
 #include "generator/generator.h"
+#include "map/map.h"
 
 TerrainModule::TerrainModule(IrrlichtDevice* _device, scene::ICameraSceneNode* _camera) :
 	AModule(_device, _camera),
-	_terrain(nullptr),
-	_anim(nullptr),
-	_path(""),
-	_heightmapImage(nullptr)
+	_terrainGridNodes(),
+	_terrainGridAnims()
 {
 
 }
 
 TerrainModule::~TerrainModule()
 {
-
+	clearNodes();
 }
 
 int TerrainModule::init()
 {
 	// add terrain scene node
-	_terrain = smgr->addTerrainSceneNode(
+	/*_terrain = smgr->addTerrainSceneNode(
         RESOURCES_PATH "/terrain-heightmap.bmp",
 		0,                  // parent node
 		-1,                 // node id
@@ -62,58 +61,64 @@ int TerrainModule::init()
 	selector->drop();
 	camera->addAnimator(anim);
     _anim = anim;
-	anim->drop();
+	anim->drop();*/
 	return 0;
 }
 
 int TerrainModule::update()
 {
-	//nothing to do
 	return 0;
 }
 
-f32 TerrainModule::getHeight(f32 x, f32 y) const
+void TerrainModule::generateFromMap(::map::MapGraph *mapGraph)
 {
-    return _terrain->getHeight(x, y);
+	clearNodes();
+	_terrainGridNodes.resize(mapGraph->gridXMax() * mapGraph->gridYMax());
+	_terrainGridAnims.resize(mapGraph->gridXMax() * mapGraph->gridYMax());
+
+	for (unsigned int x = 0; x < mapGraph->gridXMax(); ++x)
+		for (unsigned int y = 0; y < mapGraph->gridYMax(); ++y)
+		{
+			std::cout << "x : " << x << ", y : " << y << std::endl;
+			scene::ITerrainSceneNode *terrain = smgr->addTerrainSceneNode(
+																					mapGraph->heightmapAt(x, y).c_str(),
+																					0,
+																					-1,                 // node id
+																					core::vector3df(x * mapGraph->gridSize() * 40, 0.f, y * mapGraph->gridSize() * 40),     // position
+																					core::vector3df(0.f, 0.f, 0.f),     // rotation
+																			    core::vector3df(40.f, 40.f, 40.f),  // scale
+																					video::SColor(255, 255, 255, 255),   // vertexColor
+																					5,                  // maxLOD
+																					scene::ETPS_17,             // patchSize
+																					4); // smoothFactor
+		  terrain->setMaterialFlag(video::EMF_LIGHTING, true);
+			terrain->setMaterialTexture(0,
+			driver->getTexture(RESOURCES_PATH "/terrain-texture.jpg"));
+			terrain->setMaterialTexture(1,
+			driver->getTexture(RESOURCES_PATH "/detailmap3.jpg"));
+			terrain->setMaterialType(video::EMT_DETAIL_MAP);
+			terrain->scaleTexture(1.0f, 20.0f);
+
+
+			// create triangle selector for the terrain
+			scene::ITriangleSelector* selector
+				= smgr->createTerrainTriangleSelector(terrain, 0);
+			terrain->setTriangleSelector(selector);
+
+			// create collision response animator and attach it to the camera
+			scene::ISceneNodeAnimator* anim = smgr->createCollisionResponseAnimator(
+				selector, camera, core::vector3df(60, 100, 60),
+				core::vector3df(0, 0, 0),
+				core::vector3df(0, 50, 0));
+			selector->drop();
+			camera->addAnimator(anim);
+
+			_terrainGridNodes[x + mapGraph->gridXMax() * y] = terrain;
+			_terrainGridAnims[x + mapGraph->gridXMax() * y] = anim;
+		}
 }
 
-void TerrainModule::setHeightmap()
-{
-    io::path p(_path.c_str());
-	IReadFile * f = device->getFileSystem()->createAndOpenFile(p);
-    _terrain->setScale(core::vector3df(25.0f, 10.0f, 25.0f));
-    _terrain->loadHeightMap(f);
-    camera->removeAnimator(_anim);
-
-    _terrain->setMaterialFlag(video::EMF_LIGHTING, true);
-
-    _terrain->setMaterialTexture(0,
-		driver->getTexture(RESOURCES_PATH "/terrain-texture.jpg"));
-    _terrain->setMaterialTexture(1,
-		driver->getTexture(RESOURCES_PATH "/detailmap3.jpg"));
-
-    _terrain->setMaterialType(video::EMT_DETAIL_MAP);
-
-    _terrain->scaleTexture(1.0f, 20.0f);
-
-
-    // create triangle selector for the terrain
-    scene::ITriangleSelector* selector
-        = smgr->createTerrainTriangleSelector(_terrain, 0);
-    _terrain->setTriangleSelector(selector);
-
-    // create collision response animator and attach it to the camera
-    scene::ISceneNodeAnimator* anim = smgr->createCollisionResponseAnimator(
-        selector, camera, core::vector3df(60, 100, 60),
-        core::vector3df(0, 0, 0),
-        core::vector3df(0, 50, 0));
-    selector->drop();
-    camera->addAnimator(anim);
-    _anim = anim;
-    anim->drop();
-
-}
-
+/*
 void TerrainModule::generate(int size, int seed){
 	_heightmapImage = new bitmap_image(size, size);
     float *tab = new float[size * size];
@@ -226,4 +231,50 @@ void TerrainModule::generateRadial(int size, int seed){
         _heightmapImage->clear();
         delete(_heightmapImage);
         delete(tab);
+}
+
+void TerrainModule::setHeightmap()
+{
+    io::path p(_path.c_str());
+	IReadFile * f = device->getFileSystem()->createAndOpenFile(p);
+    _terrain->setScale(core::vector3df(25.0f, 10.0f, 25.0f));
+    _terrain->loadHeightMap(f);
+    camera->removeAnimator(_anim);
+
+    _terrain->setMaterialFlag(video::EMF_LIGHTING, true);
+
+    _terrain->setMaterialTexture(0,
+		driver->getTexture(RESOURCES_PATH "/terrain-texture.jpg"));
+    _terrain->setMaterialTexture(1,
+		driver->getTexture(RESOURCES_PATH "/detailmap3.jpg"));
+
+    _terrain->setMaterialType(video::EMT_DETAIL_MAP);
+
+    _terrain->scaleTexture(1.0f, 20.0f);
+
+
+    // create triangle selector for the terrain
+    scene::ITriangleSelector* selector
+        = smgr->createTerrainTriangleSelector(_terrain, 0);
+    _terrain->setTriangleSelector(selector);
+
+    // create collision response animator and attach it to the camera
+    scene::ISceneNodeAnimator* anim = smgr->createCollisionResponseAnimator(
+        selector, camera, core::vector3df(60, 100, 60),
+        core::vector3df(0, 0, 0),
+        core::vector3df(0, 50, 0));
+    selector->drop();
+    camera->addAnimator(anim);
+    _anim = anim;
+    anim->drop();
+
+}
+*/
+
+void TerrainModule::clearNodes()
+{
+	for (scene::ITerrainSceneNode *node : _terrainGridNodes)
+		delete node;
+	for (scene::ISceneNodeAnimator *anim : _terrainGridAnims)
+		delete anim;
 }

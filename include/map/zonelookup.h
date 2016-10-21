@@ -21,7 +21,7 @@ struct PointCloud
     struct LPoint
     {
         T  x,y;
-    map::Zone   *zone;
+    Zone   *zone;
     };
 
     std::vector<LPoint>  pts = std::vector<LPoint> ();
@@ -99,7 +99,7 @@ public:
     /// \brief Default destructor.
     /// \param Map from which to build the point cloud.
     ///
-    void    createCloud(map::MapGraph *m);
+    void    createCloud(MapGraph *m);
 
     ///
     /// \brief Default destructor.
