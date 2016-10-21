@@ -100,9 +100,9 @@ private:
     HeightMap m_heightMap;
 
     /// gestion de la grille de texture (multi terrain)
-    unsigned int m_gridSize; // longueur du coté d'un carré de la grille. nom à retravailler
-    unsigned int m_gridXMax; // longueur en nombre de carré
-    unsigned int m_gridYMax; // largeur en nombre de carré
+    unsigned int m_gridSize; // longueur et largeur d'une cellule
+    unsigned int m_gridXMax; // nombre de cellules en x
+    unsigned int m_gridYMax; // nombre de cellules en y
     std::vector<std::string>  m_textureGrid; // path to the image
     std::vector<std::string>  m_heightmapGrid; // same
 };
