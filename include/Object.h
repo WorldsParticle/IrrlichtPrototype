@@ -12,8 +12,10 @@ class Object
 public:
     Object(IrrlichtDevice *);
     ~Object();
-    //Loads a mesh, doesn't set its position
-    int     LoadMesh(std::string const &, std::string const &);
+	//Loads a mesh, doesn't set its position
+	int     LoadMesh(std::string const &, std::string const &);
+	//Loads a mesh with another object
+	int     LoadMesh(Object const&);
 	//Sets the position of the object
 	void    SetPosition(float, float, float);
 	//Sets the rotation of the object

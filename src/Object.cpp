@@ -51,6 +51,19 @@ int Object::LoadMesh(std::string const &meshPath, std::string const &texturePath
     }
     return 0;
 }
+int     Object::LoadMesh(Object const& other)
+{
+	scene::IAnimatedMeshSceneNode* modelNode = other._node;
+	scene::ISceneNode* toto = modelNode->clone();
+	_node = dynamic_cast<scene::IAnimatedMeshSceneNode*>(toto);
+	if (_node == nullptr) {
+		std::cout << "ERROR: couldn't clone node " << std::endl;
+		return 1;
+	}
+	_mesh = _node->getMesh();
+	return 0;
+}
+
 
 void Object::SetPosition(float x, float y, float z)
 {

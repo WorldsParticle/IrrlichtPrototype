@@ -1,6 +1,9 @@
 #include <algorithm>
 #include <iostream>
 #include <ctime>
+#include <glm/glm.hpp>
+#include <glm/gtc/noise.hpp>
+#include <glm/gtc/random.hpp>
 
 #include "ElementsModule.h"
 #include "Configuration.h"
@@ -10,12 +13,12 @@ int ElementsModule::init()
 	_objectsInfoByZone = {
 		{
 			{34, RESOURCES_PATH "/models/Rock1.obj", "", ""},
-			{33, RESOURCES_PATH "/models/Tree1.obj", "", ""},
+			{90, RESOURCES_PATH "/models/Tree1.obj", "", ""},
 			{33, RESOURCES_PATH "/models/tree.3ds", RESOURCES_PATH "/models/treeTexture.jpg", RESOURCES_PATH "/sound/drumloop.wav"}
 		}, //zone 0 : mountain
 		{
 			{33, RESOURCES_PATH "/models/Rock2.obj", "", ""},
-			{33, RESOURCES_PATH "/models/Tree2.obj", "", ""}
+			{90, RESOURCES_PATH "/models/Tree2.obj", "", ""}
 		}, //zone 1 : forest
 		{
 			{33, RESOURCES_PATH "/models/Rock3.obj", "", ""},
@@ -39,7 +42,7 @@ void ElementsModule::putElementsOfZone(int zone)
 		clear();
 	for (auto const &objInfo : _objectsInfoByZone[zone])
 	{
-		createObjectsFromName(30, 10000, 10000, objInfo);
+		createObjectsFromName(100, 10000, 10000, objInfo);
 	}
 }
 
@@ -79,14 +82,28 @@ static float calcPosition(float i, float size, float elemCount)
 
 void ElementsModule::createObjectsFromName(int totalElementInZone, int width, int height, SObjectInfo const &objInfo)
 {
+	std::shared_ptr<Object> firstObj = std::make_shared<Object>(device);
+	if (firstObj->LoadMesh(objInfo.modelPath, objInfo.texturePath) == 1)
+	{
+		firstObj->remove();
+		return;
+	}
 	int elemCount = objInfo.densityInPercent * totalElementInZone / 100;
 	//int elemCountSide = static_cast<int>(std::sqrt(elemCount));
 	while (elemCount > 0)
 	{
-		float x = rand() % width;
-		float y = rand() % height;
+		//float x = rand() % width;
+		//float y = rand() % height;
+		std::cout << "position max : " << width << " " << height << std::endl;
+		glm::vec3 value = glm::gaussRand(
+			glm::vec3(0, 0, 0),
+			glm::vec3(100 / 2, 0, 100 / 2));
+		std::cout << "value : " << value.x << " " << value.z << std::endl;
+
+		float x = value.x;
+		float y = value.z;
 		std::shared_ptr<Object> obj = std::make_shared<Object>(device);
-		if (obj->LoadMesh(objInfo.modelPath, objInfo.texturePath) == 1)
+		if (obj->LoadMesh(*firstObj) == 1)
 		{
 			obj->remove();
 			return;
