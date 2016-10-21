@@ -24,6 +24,7 @@ public:
     int     SetSound(std::string const &, FMOD::System *);
 	//Sets the volume. 1 is the default, >1 is louder, < 0 "inverts the signal"
 	void	SetVolume(float);
+	void remove();
 
 private:
     Object();

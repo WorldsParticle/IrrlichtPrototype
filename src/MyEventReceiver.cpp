@@ -25,6 +25,7 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 			switchCameraMode();
 			return true;
 		case irr::KEY_ESCAPE: // quit
+			_core->close(); //comment this to get the confirmation before quitting back
 			if (confirmQuit == nullptr) {
 				if (!_core->isInterfaceVisible())
 					_core->toggleInterface();
@@ -77,6 +78,7 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 						_core->soundModule->SetEnvironmentalSound(_context.envRadioBox->getSelected(),
 																	_context.timeRadioBox->getSelected(),
 																	_context.climatRadioBox->getSelected());
+						_core->elementsModule->putElementsOfZone(_context.envRadioBox->getSelected());
 						return true;
 
 					case GUI_ID_QUIT:

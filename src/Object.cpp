@@ -13,17 +13,15 @@ Object::Object(IrrlichtDevice *dev): _device(dev), _mesh(NULL), _node(NULL)
 
 Object::~Object()
 {
-	if (_mesh != nullptr)
-		delete _mesh;
-	if (_node != nullptr)
-		delete _node;
-	if (_sound != nullptr)
-		delete _sound;
-	if (_sndChannel != nullptr)
-		delete _sndChannel;
 	delete _position;
 	delete _rotation;
 	//delete _scale;
+}
+
+void Object::remove()
+{
+    _node->removeAll();
+    _node->remove();
 }
 
 int Object::LoadMesh(std::string const &meshPath, std::string const &texturePath)
