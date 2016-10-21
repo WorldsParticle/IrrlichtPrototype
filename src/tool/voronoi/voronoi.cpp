@@ -36,15 +36,14 @@ void    Voronoi::clearData()
         delete (*it);
     m_points.clear();
     m_edges.clear();
-
-    m_root = nullptr;
+    m_root = nullptr; // todo
     Parabola::indexMax = 0;
 }
 
 const std::vector<Edge *> *Voronoi::fortuneAlgo(const std::vector<Point *> &sites)
 {
     clearData();
-
+std::cout << "houray" << std::endl;
     for (std::vector<Point *>::const_iterator it = sites.begin(); it != sites.end(); ++it)
         m_events.push(new Event(new Point((*it)->x, (*it)->y), true));
 
@@ -69,7 +68,6 @@ const std::vector<Edge *> *Voronoi::fortuneAlgo(const std::vector<Point *> &site
     }
 
     finishEdge(m_root.get());
-
     for(std::vector<Edge *>::iterator it = m_edges.begin(); it != m_edges.end(); ++it)
     {
         if( (*it)->neighbour)
@@ -78,7 +76,6 @@ const std::vector<Edge *> *Voronoi::fortuneAlgo(const std::vector<Point *> &site
             delete (*it)->neighbour;
         }
     }
-
     return &m_edges;
 }
 

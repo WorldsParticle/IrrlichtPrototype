@@ -226,8 +226,8 @@ void   HeightMapingStep::paintHeightmapGrid()
                             static_cast<unsigned char>(p.z * 255.0));
         }
       std::string path = (std::string)RESOURCES_PATH + "/generated/" +
-                          std::to_string(gridX) + "_" + std::to_string(gridY) +
-                          "heightmap.bmp";
+                          std::to_string(gridY) + "y_" + std::to_string(gridX) +
+                          "x_heightmap.bmp";
       std::cout << "Heightmap generated : " << path << std::endl;
       heightmap.save_image(path);
       m_map->heightmapGrid()[gridX + m_map->gridXMax() * gridY] = path; // WARNING, preferable to size the grids and use []

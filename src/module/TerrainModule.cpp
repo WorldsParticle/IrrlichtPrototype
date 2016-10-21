@@ -73,6 +73,7 @@ int TerrainModule::update()
 void TerrainModule::generateFromMap(::map::MapGraph *mapGraph)
 {
 	clearNodes();
+	float scale = 40.f; // temp
 	_terrainGridNodes.resize(mapGraph->gridXMax() * mapGraph->gridYMax());
 	_terrainGridAnims.resize(mapGraph->gridXMax() * mapGraph->gridYMax());
 
@@ -81,12 +82,12 @@ void TerrainModule::generateFromMap(::map::MapGraph *mapGraph)
 		{
 			std::cout << "x : " << x << ", y : " << y << std::endl;
 			scene::ITerrainSceneNode *terrain = smgr->addTerrainSceneNode(
-																					mapGraph->heightmapAt(x, y).c_str(),
+																					mapGraph->heightmapAt(mapGraph->gridYMax() - y - 1, x).c_str(),
 																					0,
 																					-1,                 // node id
-																					core::vector3df(x * mapGraph->gridSize() * 40, 0.f, y * mapGraph->gridSize() * 40),     // position
+																					core::vector3df(y * mapGraph->gridSize() * scale, 0.f, x * mapGraph->gridSize() * scale),     // position
 																					core::vector3df(0.f, 0.f, 0.f),     // rotation
-																			    core::vector3df(40.f, 40.f, 40.f),  // scale
+																			    core::vector3df(scale, scale, scale),  // scale
 																					video::SColor(255, 255, 255, 255),   // vertexColor
 																					5,                  // maxLOD
 																					scene::ETPS_17,             // patchSize

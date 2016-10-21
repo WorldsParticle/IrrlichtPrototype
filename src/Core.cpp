@@ -148,7 +148,7 @@ void Core::generate()
 	if (map)
 		delete map;
 
-	map = generator->run(1000, 1000);
+	map = generator->run(2500, 2500);
 	terrainModule->generateFromMap(map);
 }
 
