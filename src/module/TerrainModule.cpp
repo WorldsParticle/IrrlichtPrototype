@@ -73,7 +73,7 @@ int TerrainModule::update()
 void TerrainModule::generateFromMap(::map::MapGraph *mapGraph)
 {
 	clearNodes();
-	float scale = 40.f; // temp
+	float scale = 100.f; // temp
 	_terrainGridNodes.resize(mapGraph->gridXMax() * mapGraph->gridYMax());
 	_terrainGridAnims.resize(mapGraph->gridXMax() * mapGraph->gridYMax());
 
