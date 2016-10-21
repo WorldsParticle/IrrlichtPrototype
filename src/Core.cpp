@@ -92,12 +92,12 @@ int Core::initModules()
 	soundModule = new SoundModule(device, camera);
 	soundModule->init();
 	soundModule->AddBGMusic(RESOURCES_PATH "/sound/river_bg.ogg");
-	elementsModule = new ElementsModule(device, camera, soundModule->soundSystem);
-	elementsModule->init();
 	skyboxModule = new SkyboxModule(device, camera);
 	skyboxModule->init();
 	terrainModule = new TerrainModule(device, camera);
 	terrainModule->init();
+	elementsModule = new ElementsModule(device, camera, soundModule->soundSystem, terrainModule);
+	elementsModule->init();
 	waterModule = new WaterModule(device, camera, terrainModule);
 	waterModule->init();
 	particleModule = new ParticleModule(device, camera);

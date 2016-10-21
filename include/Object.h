@@ -13,7 +13,7 @@ public:
     Object(IrrlichtDevice *);
     ~Object();
     //Loads a mesh, doesn't set its position
-    int     LoadMesh(std::string, std::string);
+    int     LoadMesh(std::string const &, std::string const &);
 	//Sets the position of the object
 	void    SetPosition(float, float, float);
 	//Sets the rotation of the object
@@ -21,7 +21,7 @@ public:
 	//Sets the scale of the object
 	//void    SetScale(float, float, float);
 	//Adds a 3D sound at the position of the object
-    int     SetSound(std::string, FMOD::System *);
+    int     SetSound(std::string const &, FMOD::System *);
 	//Sets the volume. 1 is the default, >1 is louder, < 0 "inverts the signal"
 	void	SetVolume(float);
 
@@ -38,7 +38,7 @@ private:
 
 	vector3d<float>                 *_position;
 	vector3d<float>                 *_rotation;
-	vector3d<float>                 *_scale;
+	//vector3d<float>                 *_scale;
 
     FMOD::Sound                     *_sound;
     FMOD::Channel                   *_sndChannel;

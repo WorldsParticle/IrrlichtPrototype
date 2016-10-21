@@ -11,7 +11,22 @@ Object::Object(IrrlichtDevice *dev): _device(dev), _mesh(NULL), _node(NULL)
     _sndChannel = 0;
 }
 
-int Object::LoadMesh(std::string meshPath, std::string texturePath)
+Object::~Object()
+{
+	if (_mesh != nullptr)
+		delete _mesh;
+	if (_node != nullptr)
+		delete _node;
+	if (_sound != nullptr)
+		delete _sound;
+	if (_sndChannel != nullptr)
+		delete _sndChannel;
+	delete _position;
+	delete _rotation;
+	//delete _scale;
+}
+
+int Object::LoadMesh(std::string const &meshPath, std::string const &texturePath)
 {
     _mesh = _smgr->getMesh(meshPath.c_str());
     if (_mesh)
@@ -62,7 +77,7 @@ void Object::SetRotation(float x, float y, float z)
 //	//_node->setScale(core::vector3df(_scale->X, _scale->Y, _scale->Z));
 //}
 
-int Object::SetSound(std::string path, FMOD::System *soundSystem)
+int Object::SetSound(std::string const &path, FMOD::System *soundSystem)
 {
     soundSystem->createSound(path.c_str(), FMOD_3D, 0, &_sound);
     _sound->set3DMinMaxDistance(5.0f * DISTANCEFACTOR, 500.0f * DISTANCEFACTOR);
