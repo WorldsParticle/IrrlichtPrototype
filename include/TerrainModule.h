@@ -21,8 +21,9 @@ public:
 
 	virtual int init();
 	virtual int update();
-    void generate(int size = 513, int seed = 0);
-    void generateRadial(int size = 513, int seed = 0);
+    void generate(int size = 512, int seed = 0);
+    void generateRadial(int size = 512, int seed = 0);
+    void generateVoronoi();
 	void setHeightmap();
 
 private:

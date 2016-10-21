@@ -14,8 +14,8 @@ WaterModule::WaterModule(IrrlichtDevice* _device, scene::ICameraSceneNode* _came
 int WaterModule::init()
 {
 	_water = new WaterNode (smgr->getRootSceneNode(), smgr,
-													core::vector3df(4900, 300, 4900),
-													core::vector2df(9800, 9800));
+                                                    core::vector3df(4900, 300, 4900),
+                                                    core::vector2df(98000, 98000));
 
   smgr->getRootSceneNode()->addChild(_water);
 
