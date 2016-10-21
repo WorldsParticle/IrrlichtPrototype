@@ -17,7 +17,7 @@ int ElementsModule::init()
 			{33, RESOURCES_PATH "/models/tree.3ds", RESOURCES_PATH "/models/treeTexture.jpg", RESOURCES_PATH "/sound/drumloop.wav"}
 		}, //zone 0 : mountain
 		{
-			{33, RESOURCES_PATH "/models/Rock2.obj", "", ""},
+			{33, RESOURCES_PATH "/models/Rock2.obj" "", ""},
 			{90, RESOURCES_PATH "/models/Tree2.obj", "", ""}
 		}, //zone 1 : forest
 		{

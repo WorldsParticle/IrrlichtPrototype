@@ -20,8 +20,11 @@ Object::~Object()
 
 void Object::remove()
 {
-    _node->removeAll();
-    _node->remove();
+	if (_node)
+	{
+		_node->removeAll();
+		_node->remove();
+	}
 }
 
 int Object::LoadMesh(std::string const &meshPath, std::string const &texturePath)
@@ -54,9 +57,15 @@ int Object::LoadMesh(std::string const &meshPath, std::string const &texturePath
 int     Object::LoadMesh(Object const& other)
 {
 	scene::IAnimatedMeshSceneNode* modelNode = other._node;
-	scene::ISceneNode* toto = modelNode->clone();
-	_node = dynamic_cast<scene::IAnimatedMeshSceneNode*>(toto);
-	if (_node == nullptr) {
+	scene::ISceneNode* nodeClone = modelNode->clone(_smgr->getRootSceneNode(), _smgr);
+	if (nodeClone == nullptr)
+	{
+		std::cout << "ERROR: couldn't clone node " << std::endl;
+		return 1;
+	}
+	_node = dynamic_cast<irr::scene::IAnimatedMeshSceneNode*>(modelNode);
+	if (_node == nullptr)
+	{
 		std::cout << "ERROR: couldn't clone node " << std::endl;
 		return 1;
 	}
