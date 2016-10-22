@@ -3,6 +3,9 @@
 #include <list>
 #include <vector>
 #include <memory>
+#include <glm/glm.hpp>
+#include <glm/gtc/noise.hpp>
+#include <glm/gtc/random.hpp>
 
 #include "AModule.h"
 #include "Object.h"
@@ -35,8 +38,10 @@ public:
 	void clear();
 	void createObjectsFromName(int totalElementInZone, int width, int height, SObjectInfo const &objInfo);
 private:
+	float waterHeight = 300;
     list<std::shared_ptr<Object>>	_elements;
 	FMOD::System	*_soundSystem;
 	TerrainModule	*_terrain;
 	std::vector<std::vector<SObjectInfo>> _objectsInfoByZone;
+	glm::vec3 getXYPos(int width, int height);
 };

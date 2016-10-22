@@ -1,9 +1,6 @@
 #include <algorithm>
 #include <iostream>
 #include <ctime>
-#include <glm/glm.hpp>
-#include <glm/gtc/noise.hpp>
-#include <glm/gtc/random.hpp>
 
 #include "ElementsModule.h"
 #include "Configuration.h"
@@ -17,7 +14,7 @@ int ElementsModule::init()
 			{33, RESOURCES_PATH "/models/tree.3ds", RESOURCES_PATH "/models/treeTexture.jpg", RESOURCES_PATH "/sound/drumloop.wav"}
 		}, //zone 0 : mountain
 		{
-			{33, RESOURCES_PATH "/models/Rock2.obj" "", ""},
+			{33, RESOURCES_PATH "/models/Rock2.obj", "", ""},
 			{90, RESOURCES_PATH "/models/Tree2.obj", "", ""}
 		}, //zone 1 : forest
 		{
@@ -28,11 +25,6 @@ int ElementsModule::init()
 		};
 	srand(time(0));
 	putElementsOfZone(1);
-	//createObjectsFromName(30, 10000, 10000, 34, RESOURCES_PATH "/models/bush.3ds", RESOURCES_PATH "/models/bushTexture.jpg", "");
-	//createObjectsFromName(30, 10000, 10000, 33, RESOURCES_PATH "/models/tree.3ds", RESOURCES_PATH "/models/treeTexture.jpg", RESOURCES_PATH "/sound/drumloop.wav");
-	//createObjectsFromName(30, 10000, 10000, 33, RESOURCES_PATH "/models/Rock1.obj", "", "");
-	//testObj3->LoadMesh(RESOURCES_PATH "/models/Rock1.obj", "");
-	//testObj3->SetScale(10, 10, 10);
 	return 0;
 }
 
@@ -42,7 +34,7 @@ void ElementsModule::putElementsOfZone(int zone)
 		clear();
 	for (auto const &objInfo : _objectsInfoByZone[zone])
 	{
-		createObjectsFromName(100, 10000, 10000, objInfo);
+		createObjectsFromName(100, 10000, 10000, objInfo); //nbTotalElements, width, height
 	}
 }
 
@@ -69,15 +61,19 @@ void ElementsModule::SetVolume(float vol)
 	}
 }
 
-static float calcPosition(float i, float size, float elemCount)
+glm::vec3 ElementsModule::getXYPos(int width, int height)
 {
-    float position = i * size / elemCount;
+	glm::vec3 value = glm::linearRand(
+			glm::vec3(50, 50, 0),
+			glm::vec3(width, height, 360));
 
-    int offsetMax = static_cast<int>(size / 2.0f);//, elemCount);
-    int offset = rand() % offsetMax - (offsetMax / 3);
-    position += static_cast<float>(offset);
-
-    return position;
+	int isThisOnlyWater = 50;
+	while (_terrain->getHeight(value.x, value.y) < waterHeight && isThisOnlyWater > 0)
+	{
+		value = glm::linearRand(glm::vec3(50, 50, 0), glm::vec3(width, height, 0));
+		--isThisOnlyWater;
+	}
+	return value;
 }
 
 void ElementsModule::createObjectsFromName(int totalElementInZone, int width, int height, SObjectInfo const &objInfo)
@@ -89,19 +85,9 @@ void ElementsModule::createObjectsFromName(int totalElementInZone, int width, in
 		return;
 	}
 	int elemCount = objInfo.densityInPercent * totalElementInZone / 100;
-	//int elemCountSide = static_cast<int>(std::sqrt(elemCount));
 	while (elemCount > 0)
 	{
-		//float x = rand() % width;
-		//float y = rand() % height;
-		std::cout << "position max : " << width << " " << height << std::endl;
-		glm::vec3 value = glm::gaussRand(
-			glm::vec3(0, 0, 0),
-			glm::vec3(100 / 2, 0, 100 / 2));
-		std::cout << "value : " << value.x << " " << value.z << std::endl;
-
-		float x = value.x;
-		float y = value.z;
+		glm::vec3 randomValue = getXYPos(width, height);
 		std::shared_ptr<Object> obj = std::make_shared<Object>(device);
 		if (obj->LoadMesh(*firstObj) == 1)
 		{
@@ -109,35 +95,14 @@ void ElementsModule::createObjectsFromName(int totalElementInZone, int width, in
 			return;
 		}
 
-		obj->SetPosition(x, _terrain->getHeight(x, y), y);
-		//TODO: random rotate
-		std::cout << "position: " << x << " " << y << " " << _terrain->getHeight(x, y) << std::endl;
+		obj->SetPosition(randomValue.x, _terrain->getHeight(randomValue.y, randomValue.y), randomValue.y);
+		//obj->SetRotation(0, randomValue.z, 0);
+		//std::cout << "position: " << randomValue.x << " " <<
+		//	randomValue.y << " " <<
+		//	_terrain->getHeight(randomValue.x, randomValue.y) << std::endl;
 		if (objInfo.soundPath != "")
 			obj->SetSound(objInfo.soundPath, _soundSystem);
 		_elements.push_back(obj);
 		--elemCount;
 	}
-	//for (int i = 0; i < height; i++)
-	//{
-	//	float x = calcPosition(i, width, elemCountSide);
-
-	//	for (int j = 0; j < width; j++)
-	//	{
-	//		float y = calcPosition(j, height, elemCountSide);
-
-	//		Object *obj = new Object(device);
-	//		if (obj->LoadMesh(modelPath, texturePath) == 1)
-	//		{
-	//			delete obj;
-	//			return;
-	//		}
-
-	//		obj->SetPosition(x, _terrain->getHeight(x, y), y);
-	//		//TODO: random rotate
-	//		std::cout << "position: " << x << " " << y << " " << _terrain->getHeight(x, y) << std::endl;
-	//		if (soundPath != "")
-	//			obj->SetSound(soundPath, _soundSystem);
-	//		_elements.push_back(obj);
-	//	}
-	//}
 }
