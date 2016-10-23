@@ -44,4 +44,5 @@ private:
 	TerrainModule	*_terrain;
 	std::vector<std::vector<SObjectInfo>> _objectsInfoByZone;
 	glm::vec3 getXYPos(int width, int height);
+	void SetupObject(glm::vec3 const &randomValue, std::shared_ptr<Object> obj, SObjectInfo const &objInfo);
 };

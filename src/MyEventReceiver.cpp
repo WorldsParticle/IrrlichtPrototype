@@ -14,6 +14,20 @@ MyEventReceiver::MyEventReceiver(Core *core, SAppContext & context)
 {
 }
 
+void MyEventReceiver::ApplyGUIParametersToWorld()
+{
+	std::cout << "Environment: " << _context.envRadioBox->getSelected() << std::endl;
+	std::cout << "Time: " << _context.timeRadioBox->getSelected() << std::endl;
+	std::cout << "Climat: " << _context.climatRadioBox->getSelected() << std::endl;
+	_core->skyboxModule->setSkybox(_context.timeRadioBox->getSelected(),
+			_context.climatRadioBox->getSelected());
+	_core->particleModule->setWeather(_context.climatRadioBox->getSelected());
+	_core->soundModule->SetEnvironmentalSound(_context.envRadioBox->getSelected(),
+			_context.timeRadioBox->getSelected(),
+			_context.climatRadioBox->getSelected());
+	_core->elementsModule->putElementsOfZone(_context.envRadioBox->getSelected());
+}
+
 bool MyEventReceiver::OnEvent(const SEvent& event)
 {
 	// check if user presses the key 'W' or 'D'
@@ -67,18 +81,11 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 				switch(id)
 				{
 					case GUI_ID_GENERATE_BUTTON:
-						std::cout << "Environment: " << _context.envRadioBox->getSelected() << std::endl;
-						std::cout << "Time: " << _context.timeRadioBox->getSelected() << std::endl;
-						std::cout << "Climat: " << _context.climatRadioBox->getSelected() << std::endl;
+						ApplyGUIParametersToWorld();
 						//generatorModule->buildTerrain(_context.envRadioBox->getSelected());
-						//_context.device->closeDevice();
-                        _core->skyboxModule->setSkybox(_context.timeRadioBox->getSelected(), 
-                                                       _context.climatRadioBox->getSelected());
-                        _core->particleModule->setWeather(_context.climatRadioBox->getSelected());
-						_core->soundModule->SetEnvironmentalSound(_context.envRadioBox->getSelected(),
-																	_context.timeRadioBox->getSelected(),
-																	_context.climatRadioBox->getSelected());
-						_core->elementsModule->putElementsOfZone(_context.envRadioBox->getSelected());
+						return true;
+					case GUI_ID_APPLY_PARAMS_BUTTON:
+						ApplyGUIParametersToWorld();
 						return true;
 
 					case GUI_ID_QUIT:

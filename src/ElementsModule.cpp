@@ -76,6 +76,18 @@ glm::vec3 ElementsModule::getXYPos(int width, int height)
 	return value;
 }
 
+void ElementsModule::SetupObject(glm::vec3 const &randomValue, std::shared_ptr<Object> obj, SObjectInfo const &objInfo)
+{
+	obj->SetPosition(randomValue.x, _terrain->getHeight(randomValue.y, randomValue.y), randomValue.y);
+	//obj->SetRotation(0, randomValue.z, 0);
+	//std::cout << "position: " << randomValue.x << " " <<
+	//	randomValue.y << " " <<
+	//	_terrain->getHeight(randomValue.x, randomValue.y) << std::endl;
+	if (objInfo.soundPath != "")
+		obj->SetSound(objInfo.soundPath, _soundSystem);
+	_elements.push_back(obj);
+}
+
 void ElementsModule::createObjectsFromName(int totalElementInZone, int width, int height, SObjectInfo const &objInfo)
 {
 	std::shared_ptr<Object> firstObj = std::make_shared<Object>(device);
@@ -88,21 +100,20 @@ void ElementsModule::createObjectsFromName(int totalElementInZone, int width, in
 	while (elemCount > 0)
 	{
 		glm::vec3 randomValue = getXYPos(width, height);
-		std::shared_ptr<Object> obj = std::make_shared<Object>(device);
-		if (obj->LoadMesh(*firstObj) == 1)
+		if (elemCount > 1)
 		{
-			obj->remove();
-			return;
+			std::shared_ptr<Object> obj = std::make_shared<Object>(device);
+			if (obj->LoadMesh(*firstObj) == 1)
+			{
+				return;
+			}
+			SetupObject(randomValue, obj, objInfo);
+		}
+		else
+		{
+			SetupObject(randomValue, firstObj, objInfo);
 		}
 
-		obj->SetPosition(randomValue.x, _terrain->getHeight(randomValue.y, randomValue.y), randomValue.y);
-		//obj->SetRotation(0, randomValue.z, 0);
-		//std::cout << "position: " << randomValue.x << " " <<
-		//	randomValue.y << " " <<
-		//	_terrain->getHeight(randomValue.x, randomValue.y) << std::endl;
-		if (objInfo.soundPath != "")
-			obj->SetSound(objInfo.soundPath, _soundSystem);
-		_elements.push_back(obj);
 		--elemCount;
 	}
 }

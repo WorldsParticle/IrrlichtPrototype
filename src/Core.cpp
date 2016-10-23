@@ -235,7 +235,10 @@ void Core::setGUI()
 
 	y += height + 10;
 	y += height + 10;
-    	_env->addButton(rect<s32>(150, y, 250, y + 32), _tab, MyEventReceiver::GUI_ID_GENERATE_BUTTON, L"Generate", L"Generate world");
+    	_env->addButton(rect<s32>(130, y, 270, y + 32), _tab, MyEventReceiver::GUI_ID_GENERATE_BUTTON, L"Generate", L"Generate world");
+	y += height + 10;
+	y += height + 10;
+    	_env->addButton(rect<s32>(130, y, 270, y + 32), _tab, MyEventReceiver::GUI_ID_APPLY_PARAMS_BUTTON, L"Apply parameters", L"Apply parameters without generating a new world");
     	// Store the appropriate data in a context structure.
     	MyEventReceiver::SAppContext context;
     	context.envRadioBox = envRB;
