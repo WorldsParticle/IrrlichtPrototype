@@ -36,8 +36,7 @@ private:
 
     scene::ISceneManager            *_smgr;
 
-    scene::IAnimatedMesh            *_mesh;
-    scene::IAnimatedMeshSceneNode   *_node;
+    scene::ISceneNode		    *_node;
 
 	vector3d<float>                 *_position;
 	vector3d<float>                 *_rotation;

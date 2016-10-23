@@ -100,11 +100,12 @@ void ElementsModule::createObjectsFromName(int totalElementInZone, int width, in
 	while (elemCount > 0)
 	{
 		glm::vec3 randomValue = getXYPos(width, height);
-		if (elemCount > 1)
+		if (elemCount != objInfo.densityInPercent * totalElementInZone / 100)
 		{
 			std::shared_ptr<Object> obj = std::make_shared<Object>(device);
 			if (obj->LoadMesh(*firstObj) == 1)
 			{
+				obj->remove();
 				return;
 			}
 			SetupObject(randomValue, obj, objInfo);

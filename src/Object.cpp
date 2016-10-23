@@ -2,7 +2,7 @@
 
 #include "Object.h"
 
-Object::Object(IrrlichtDevice *dev): _device(dev), _mesh(NULL), _node(NULL)
+Object::Object(IrrlichtDevice *dev): _device(dev), _node(NULL)
 {
     _smgr = _device->getSceneManager();
 	_position = new vector3d<float>(0, 0, 0);
@@ -29,10 +29,11 @@ void Object::remove()
 
 int Object::LoadMesh(std::string const &meshPath, std::string const &texturePath)
 {
-    _mesh = _smgr->getMesh(meshPath.c_str());
-    if (_mesh)
+    scene::IAnimatedMesh *mesh;
+    mesh = _smgr->getMesh(meshPath.c_str());
+    if (mesh)
     {
-        _node = _smgr->addAnimatedMeshSceneNode(_mesh);
+        _node = _smgr->addAnimatedMeshSceneNode(mesh);
     }
     else
     {
@@ -54,22 +55,15 @@ int Object::LoadMesh(std::string const &meshPath, std::string const &texturePath
     }
     return 0;
 }
+
 int     Object::LoadMesh(Object const& other)
 {
-	scene::IAnimatedMeshSceneNode* modelNode = other._node;
-	scene::ISceneNode* nodeClone = modelNode->clone(_smgr->getRootSceneNode(), _smgr);
-	if (nodeClone == nullptr)
-	{
-		std::cout << "ERROR: couldn't clone node " << std::endl;
-		return 1;
-	}
-	_node = dynamic_cast<irr::scene::IAnimatedMeshSceneNode*>(modelNode);
+	_node = other._node->clone();
 	if (_node == nullptr)
 	{
 		std::cout << "ERROR: couldn't clone node " << std::endl;
 		return 1;
 	}
-	_mesh = _node->getMesh();
 	return 0;
 }
 
