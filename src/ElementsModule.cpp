@@ -78,7 +78,7 @@ glm::vec3 ElementsModule::getXYPos(int width, int height)
 
 void ElementsModule::SetupObject(glm::vec3 const &randomValue, std::shared_ptr<Object> obj, SObjectInfo const &objInfo)
 {
-	obj->SetPosition(randomValue.x, _terrain->getHeight(randomValue.y, randomValue.y), randomValue.y);
+	obj->SetPosition(randomValue.x, _terrain->getHeight(randomValue.x, randomValue.y), randomValue.y);
 	//obj->SetRotation(0, randomValue.z, 0);
 	//std::cout << "position: " << randomValue.x << " " <<
 	//	randomValue.y << " " <<
