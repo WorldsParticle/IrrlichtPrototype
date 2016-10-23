@@ -7,7 +7,7 @@
 
 int ElementsModule::init()
 {
-	_objectsInfoByZone = {
+	_objectsInfoByZone = { //first nirmber is the density of the element in the given environment
 		{
 			{34, RESOURCES_PATH "/models/Rock1.obj", "", ""},
 			{90, RESOURCES_PATH "/models/Tree1.obj", "", ""},
@@ -24,7 +24,7 @@ int ElementsModule::init()
 		} //zone 2 : beach
 		};
 	srand(time(0));
-	putElementsOfZone(1);
+	putElementsOfZone(2);
 	return 0;
 }
 
@@ -66,6 +66,7 @@ glm::vec3 ElementsModule::getXYPos(int width, int height)
 	glm::vec3 value = glm::linearRand(
 			glm::vec3(50, 50, 0),
 			glm::vec3(width, height, 360));
+	//get position in xy between 50 and width/height and rotation angle between 0 and 360
 
 	int isThisOnlyWater = 50;
 	while (_terrain->getHeight(value.x, value.y) < waterHeight && isThisOnlyWater > 0)
@@ -79,10 +80,7 @@ glm::vec3 ElementsModule::getXYPos(int width, int height)
 void ElementsModule::SetupObject(glm::vec3 const &randomValue, std::shared_ptr<Object> obj, SObjectInfo const &objInfo)
 {
 	obj->SetPosition(randomValue.x, _terrain->getHeight(randomValue.x, randomValue.y), randomValue.y);
-	//obj->SetRotation(0, randomValue.z, 0);
-	//std::cout << "position: " << randomValue.x << " " <<
-	//	randomValue.y << " " <<
-	//	_terrain->getHeight(randomValue.x, randomValue.y) << std::endl;
+	obj->SetRotation(0, randomValue.z, 0);
 	if (objInfo.soundPath != "")
 		obj->SetSound(objInfo.soundPath, _soundSystem);
 	_elements.push_back(obj);
