@@ -5,22 +5,33 @@
 #include "ElementsModule.h"
 #include "Configuration.h"
 
+float ElementsModule::getRandom(float &totalPercent, float nbElem)
+{
+	float maxPercent = totalPercent;
+	if (maxPercent > 100.0f - nbElem * 20.0f)
+		maxPercent = 100.0f - nbElem * 20.0f;
+	float percent = static_cast<float>(rand() % (static_cast<int>(maxPercent) - 20)) + 20.0f;
+	totalPercent -= percent;
+	return percent;
+}
+
 int ElementsModule::init()
 {
+	float a = 100.0f, b = 100.0f, c = 100.0f;
 	_objectsInfoByZone = { //first nirmber is the density of the element in the given environment
 		{
-			{34, RESOURCES_PATH "/models/Rock1.obj", "", ""},
-			{90, RESOURCES_PATH "/models/Tree1.obj", "", ""},
-			{33, RESOURCES_PATH "/models/tree.3ds", RESOURCES_PATH "/models/treeTexture.jpg", RESOURCES_PATH "/sound/drumloop.wav"}
+			{ getRandom(a, 3.0f), RESOURCES_PATH "/models/Rock1.obj", "", ""},
+			{ getRandom(a, 3.0f), RESOURCES_PATH "/models/Tree1.obj", "", ""},
+			{ a, RESOURCES_PATH "/models/tree.3ds", RESOURCES_PATH "/models/treeTexture.jpg", RESOURCES_PATH "/sound/drumloop.wav"}
 		}, //zone 0 : mountain
 		{
-			{33, RESOURCES_PATH "/models/Rock2.obj", "", ""},
-			{90, RESOURCES_PATH "/models/Tree2.obj", "", ""}
+			{ getRandom(b, 2.0f), RESOURCES_PATH "/models/Rock2.obj", "", ""},
+			{ b, RESOURCES_PATH "/models/Tree2.obj", "", ""}
 		}, //zone 1 : forest
 		{
-			{33, RESOURCES_PATH "/models/Rock3.obj", "", ""},
-			{33, RESOURCES_PATH "/models/Tree3.obj", "", RESOURCES_PATH "/sound/cicadas.mp3"},
-			{34, RESOURCES_PATH "/models/bush.3ds", RESOURCES_PATH "/models/bushTexture.jpg", ""}
+			{ getRandom(c, 3.0f), RESOURCES_PATH "/models/Rock3.obj", "", ""},
+			{ getRandom(c, 3.0f), RESOURCES_PATH "/models/Tree3.obj", "", RESOURCES_PATH "/sound/cicadas.mp3"},
+			{ c, RESOURCES_PATH "/models/bush.3ds", RESOURCES_PATH "/models/bushTexture.jpg", ""}
 		} //zone 2 : beach
 		};
 	srand(time(0));
