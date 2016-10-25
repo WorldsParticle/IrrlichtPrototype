@@ -47,6 +47,7 @@ void ElementsModule::putElementsOfZone(int zone)
 	{
 		createObjectsFromName(100, 10000, 10000, objInfo); //nbTotalElements, width, height
 	}
+	SetVolume(_soundVolume);
 }
 
 void ElementsModule::clear()
@@ -66,6 +67,7 @@ int ElementsModule::update()
 
 void ElementsModule::SetVolume(float vol)
 {
+	_soundVolume = vol;
 	for (std::shared_ptr<Object> elem : _elements)
 	{
 		elem->SetVolume(vol);

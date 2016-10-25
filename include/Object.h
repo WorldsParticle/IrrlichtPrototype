@@ -36,12 +36,12 @@ private:
 
     scene::ISceneManager            *_smgr;
 
-    scene::ISceneNode		    *_node;
+    scene::ISceneNode		    *_node = nullptr;
 
-	vector3d<float>                 *_position;
-	vector3d<float>                 *_rotation;
-	//vector3d<float>                 *_scale;
+	vector3d<float>                 _position;
+	vector3d<float>                 _rotation;
+	//vector3d<float>                 _scale;
 
-    FMOD::Sound                     *_sound;
-    FMOD::Channel                   *_sndChannel;
+    FMOD::Sound                     *_sound = nullptr;
+    FMOD::Channel                   *_sndChannel = nullptr;
 };

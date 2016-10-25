@@ -2,20 +2,13 @@
 
 #include "Object.h"
 
-Object::Object(IrrlichtDevice *dev): _device(dev), _node(NULL)
+Object::Object(IrrlichtDevice *dev): _device(dev), _smgr(dev->getSceneManager()), _position(0.0f, 0.0f, 0.0f), _rotation(0.0f, 0.0f, 0.0f)
 {
-    _smgr = _device->getSceneManager();
-	_position = new vector3d<float>(0, 0, 0);
-	_rotation = new vector3d<float>(0, 0, 0);
-
-    _sndChannel = 0;
 }
 
 Object::~Object()
 {
-	delete _position;
-	delete _rotation;
-	//delete _scale;
+	remove();
 }
 
 void Object::remove()
@@ -24,7 +17,10 @@ void Object::remove()
 	{
 		_node->removeAll();
 		_node->remove();
+		_node = nullptr;
 	}
+	if (_sound)
+		_sound->release();
 }
 
 int Object::LoadMesh(std::string const &meshPath, std::string const &texturePath)
@@ -70,17 +66,17 @@ int     Object::LoadMesh(Object const& other)
 
 void Object::SetPosition(float x, float y, float z)
 {
-	_position->X = x;
-	_position->Y = y;
-	_position->Z = z;
-	_node->setPosition(core::vector3df(_position->X, _position->Y, _position->Z));
+	_position.X = x;
+	_position.Y = y;
+	_position.Z = z;
+	_node->setPosition(core::vector3df(_position.X, _position.Y, _position.Z));
 }
 void Object::SetRotation(float x, float y, float z)
 {
-	_rotation->X = x;
-	_rotation->Y = y;
-	_rotation->Z = z;
-	_node->setRotation(core::vector3df(_rotation->X, _rotation->Y, _rotation->Z));
+	_rotation.X = x;
+	_rotation.Y = y;
+	_rotation.Z = z;
+	_node->setRotation(core::vector3df(_rotation.X, _rotation.Y, _rotation.Z));
 }
 //void Object::SetScale(float x, float y, float z)
 //{
@@ -98,7 +94,7 @@ int Object::SetSound(std::string const &path, FMOD::System *soundSystem)
     _sound->setMode(FMOD_LOOP_NORMAL);
     soundSystem->playSound(_sound, 0, true, &_sndChannel);
 
-    FMOD_VECTOR pos = {_position->X, _position->Y, _position->Z};
+    FMOD_VECTOR pos = {_position.X, _position.Y, _position.Z};
     _sndChannel->set3DAttributes(&pos, NULL);
     _sndChannel->setPaused(false);
     return 0;
