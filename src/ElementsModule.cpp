@@ -22,7 +22,7 @@ int ElementsModule::init()
 		{
 			{ getRandom(a, 3.0f), RESOURCES_PATH "/models/Rock1.obj", "", ""},
 			{ getRandom(a, 3.0f), RESOURCES_PATH "/models/Tree1.obj", "", ""},
-			{ a, RESOURCES_PATH "/models/tree.3ds", RESOURCES_PATH "/models/treeTexture.jpg", RESOURCES_PATH "/sound/drumloop.wav"}
+			{ a, RESOURCES_PATH "/models/tree.3ds", RESOURCES_PATH "/models/treeTexture.jpg", ""}
 		}, //zone 0 : mountain
 		{
 			{ getRandom(b, 2.0f), RESOURCES_PATH "/models/Rock2.obj", "", ""},
