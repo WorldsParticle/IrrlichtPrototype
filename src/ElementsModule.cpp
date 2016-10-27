@@ -18,7 +18,7 @@ float ElementsModule::getRandom(float &totalPercent, float nbElem)
 int ElementsModule::init()
 {
 	float a = 100.0f, b = 100.0f, c = 100.0f;
-	_objectsInfoByZone = { //first nirmber is the density of the element in the given environment
+	_objectsInfoByZone = { //first number is the density of the element in the given environment
 		{
 			{ getRandom(a, 3.0f), RESOURCES_PATH "/models/Rock1.obj", "", ""},
 			{ getRandom(a, 3.0f), RESOURCES_PATH "/models/Tree1.obj", "", ""},
@@ -29,13 +29,13 @@ int ElementsModule::init()
 			{ b, RESOURCES_PATH "/models/Tree2.obj", "", ""}
 		}, //zone 1 : forest
 		{
+			{ getRandom(c, 3.0f), RESOURCES_PATH "/models/Tree3.obj", "", RESOURCES_PATH "/sound/cicadas.mp3" },
 			{ getRandom(c, 3.0f), RESOURCES_PATH "/models/Rock3.obj", "", ""},
-			{ getRandom(c, 3.0f), RESOURCES_PATH "/models/Tree3.obj", "", RESOURCES_PATH "/sound/cicadas.mp3"},
 			{ c, RESOURCES_PATH "/models/bush.3ds", RESOURCES_PATH "/models/bushTexture.jpg", ""}
 		} //zone 2 : beach
 		};
 	srand(time(0));
-	putElementsOfZone(2);
+	putElementsOfZone(0);
 	return 0;
 }
 
@@ -45,7 +45,7 @@ void ElementsModule::putElementsOfZone(int zone)
 		clear();
 	for (auto const &objInfo : _objectsInfoByZone[zone])
 	{
-		createObjectsFromName(100, 10000, 10000, objInfo); //nbTotalElements, width, height
+		createObjectsFromName(20, 10000, 10000, objInfo); //nbTotalElements, width, height
 	}
 	SetVolume(_soundVolume);
 }
@@ -108,6 +108,7 @@ void ElementsModule::createObjectsFromName(int totalElementInZone, int width, in
 		return;
 	}
 	int elemCount = objInfo.densityInPercent * totalElementInZone / 100;
+	//std::cout << ">> Number of elements " << elemCount << std::endl;
 	while (elemCount > 0)
 	{
 		glm::vec3 randomValue = getXYPos(width, height);
