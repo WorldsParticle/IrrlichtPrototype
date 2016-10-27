@@ -10,6 +10,7 @@ MapGraph::MapGraph(unsigned int xMax, unsigned int yMax, unsigned int gridSize) 
     m_xMax(xMax),
     m_yMax(yMax),
     m_heightMap(xMax, yMax),
+    m_lakes(),
     m_gridSize(gridSize),
     m_gridXMax(xMax / gridSize),
     m_gridYMax(yMax / gridSize),
@@ -33,6 +34,7 @@ MapGraph::~MapGraph()
     m_zones.clear();
     m_corners.clear();
     m_edges.clear();
+    m_lakes.clear();
 }
 
 Zone   *MapGraph::findZone(const Point *p)

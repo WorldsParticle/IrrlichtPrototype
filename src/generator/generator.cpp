@@ -5,6 +5,7 @@
 #include "generator/step/shaperstep.h"
 #include "generator/step/elevatorstep.h"
 #include "generator/step/riverorstep.h"
+#include "generator/step/lakerstep.h"
 #include "generator/step/moistorstep.h"
 #include "generator/step/biomizatorstep.h"
 #include "generator/step/heightmapingstep.h"

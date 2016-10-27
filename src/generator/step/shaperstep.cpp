@@ -67,8 +67,8 @@ void        ShaperStep::assignCornerLandPerlin(int seed)
         p.y = (p.y / yMax - 0.5) * 2;
 
         double magnitude = sqrt(pow(p.x, 2) + pow(p.y, 2));
-        double z = static_cast<double>((octave_noise_2d(8.0f, 0.5f, 0.3f, static_cast<float>(p.x + seed), static_cast<float>(p.y + seed)) + 1) / 2.0f);
-        double threshold = ((1.0 - static_cast<double>(m_landRatio.value()) / 100.0) * 0.78 + 0.3 * magnitude * magnitude);
+        double z = static_cast<double>((octave_noise_2d(8.0f, 0.5f, 0.8f, static_cast<float>(p.x + seed), static_cast<float>(p.y + seed)) + 1) / 2.0f);
+        double threshold = ((1.0 - static_cast<double>(m_landRatio.value()) / 100.0) * 0.58 + 0.28 * magnitude * magnitude);
         if (z > threshold && !corner.second->border)
             corner.second->water = false;
         else
@@ -102,7 +102,7 @@ void        ShaperStep::assignOceanCostAndLand()
                 numWater += 1;
             }
         }
-        zone.second->water = (zone.second->ocean || (numWater >= static_cast<double>(zone.second->corners.size()) * 0.3)); // 0.3 == LAKE_TRESHOLD
+        zone.second->water = (zone.second->ocean || (numWater >= static_cast<double>(zone.second->corners.size()) * 0.01)); // 0.3 == LAKE_TRESHOLD
     }
 
     // propagating ocean zones

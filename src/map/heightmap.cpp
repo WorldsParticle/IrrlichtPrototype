@@ -38,6 +38,7 @@ bool HeightMap::pointInsideTrigon(glm::vec3 s, glm::vec3 a, glm::vec3 b, glm::ve
     return true;
 }
 
+/*
 // génère la mesh du terrain en procédant deux triangles par deux triangles (ou carré par carré)
 void    HeightMap::generateMesh()
 {
@@ -117,5 +118,5 @@ void    HeightMap::generateMesh()
             m_normals.push_back(result.z);
        }
 }
-
+*/
 }

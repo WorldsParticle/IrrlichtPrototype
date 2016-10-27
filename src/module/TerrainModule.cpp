@@ -73,7 +73,7 @@ int TerrainModule::update()
 void TerrainModule::generateFromMap(::map::MapGraph *mapGraph)
 {
 	clearNodes();
-	float scale = 100.f; // temp
+    float scale = 5.0f; // temp
 	_terrainGridNodes.resize(mapGraph->gridXMax() * mapGraph->gridYMax());
 	_terrainGridAnims.resize(mapGraph->gridXMax() * mapGraph->gridYMax());
 
@@ -99,7 +99,6 @@ void TerrainModule::generateFromMap(::map::MapGraph *mapGraph)
 			driver->getTexture(RESOURCES_PATH "/detailmap3.jpg"));
 			terrain->setMaterialType(video::EMT_DETAIL_MAP);
 			terrain->scaleTexture(1.0f, 20.0f);
-
 
 			// create triangle selector for the terrain
 			scene::ITriangleSelector* selector

@@ -7,6 +7,7 @@
 #include "corner.h"
 #include "crossededge.h"
 #include "heightmap.h"
+#include "lake.h"
 
 namespace map
 {
@@ -39,6 +40,9 @@ public:
 
     inline std::map<int, CrossedEdge *> &edges()
     { return m_edges; }
+
+    inline std::list<Lake *> &lakes()
+    { return m_lakes; }
 
     inline double xMax()
     { return m_xMax; }
@@ -98,6 +102,9 @@ private:
     double    m_yMax;
 
     HeightMap m_heightMap;
+
+    // liste des lacs
+    std::list<Lake *> m_lakes;
 
     /// gestion de la grille de texture (multi terrain)
     unsigned int m_gridSize; // longueur et largeur d'une cellule

@@ -1,6 +1,7 @@
 #include "Configuration.h"
 
 #include "generator/step/heightmapingstep.h"
+#include "generator/step/lakerstep.h"
 #include "map/heightmap.h"
 #include "map/heightpoint.h"
 
@@ -61,8 +62,8 @@ void    HeightMapingStep::paintByHeight()
 // crée une bitmap qui assigne différentes couleures selon le land time (bordure, océan, beach/coast et water
 void    HeightMapingStep::paintByLandType()
 {
-    int _height = static_cast<int>(m_map->yMax());
-    int _width = static_cast<int>(m_map->xMax());
+    int _height = static_cast<unsigned int>(m_map->yMax());
+    int _width = static_cast <unsigned int>(m_map->xMax());
     bitmap_image m_image(_width, _height);
     m_image.clear();
 
@@ -199,11 +200,18 @@ void    HeightMapingStep::run()
         }
     }
 
-    m_map->heightMap().generateMesh();
+    //m_map->heightMap().generateMesh();
+
+    // LakerStep needs to be done after setting heights, but before generating the heightmaps.
+    GenerationStep * g = new LakerStep("Laker");
+    g->launch(m_map);
+    delete(g);
+
     paintByBiome();
     paintByHeight();
     paintByLandType();
     paintByMoisture();
+
     paintHeightmapGrid();
 }
 
