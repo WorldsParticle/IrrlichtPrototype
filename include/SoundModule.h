@@ -36,6 +36,7 @@ public:
     FMOD::System	*soundSystem;
 
 private:
+    float		_volume = 1.0f;
     FMOD_VECTOR		_listenerPos;
 
     FMOD::Sound		*_BGSound;

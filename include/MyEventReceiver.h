@@ -25,6 +25,7 @@ public:
 	enum
 	{
 		GUI_ID_GENERATE_BUTTON = 101,
+		GUI_ID_APPLY_PARAMS_BUTTON,
 		GUI_ID_MUSIC_SCROLL_BAR,
 		GUI_ID_SOUND_SCROLL_BAR,
 		GUI_ID_QUIT,
@@ -43,4 +44,5 @@ private:
 	SAppContext _context;
 	irr::gui::IGUIWindow *confirmQuit = nullptr;
 
+	void ApplyGUIParametersToWorld();
 };

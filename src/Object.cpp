@@ -2,21 +2,34 @@
 
 #include "Object.h"
 
-Object::Object(IrrlichtDevice *dev): _device(dev), _mesh(NULL), _node(NULL)
+Object::Object(IrrlichtDevice *dev): _device(dev), _smgr(dev->getSceneManager()), _position(0.0f, 0.0f, 0.0f), _rotation(0.0f, 0.0f, 0.0f)
 {
-    _smgr = _device->getSceneManager();
-	_position = new vector3d<float>(0, 0, 0);
-	_rotation = new vector3d<float>(0, 0, 0);
-
-    _sndChannel = 0;
 }
 
-int Object::LoadMesh(std::string meshPath, std::string texturePath)
+Object::~Object()
 {
-    _mesh = _smgr->getMesh(meshPath.c_str());
-    if (_mesh)
+	remove();
+}
+
+void Object::remove()
+{
+	if (_node)
+	{
+		_node->removeAll();
+		_node->remove();
+		_node = nullptr;
+	}
+	if (_sound)
+		_sound->release();
+}
+
+int Object::LoadMesh(std::string const &meshPath, std::string const &texturePath)
+{
+    scene::IAnimatedMesh *mesh;
+    mesh = _smgr->getMesh(meshPath.c_str());
+    if (mesh)
     {
-        _node = _smgr->addAnimatedMeshSceneNode(_mesh);
+        _node = _smgr->addAnimatedMeshSceneNode(mesh);
     }
     else
     {
@@ -39,19 +52,31 @@ int Object::LoadMesh(std::string meshPath, std::string texturePath)
     return 0;
 }
 
+int     Object::LoadMesh(Object const& other)
+{
+	_node = other._node->clone();
+	if (_node == nullptr)
+	{
+		std::cout << "ERROR: couldn't clone node " << std::endl;
+		return 1;
+	}
+	return 0;
+}
+
+
 void Object::SetPosition(float x, float y, float z)
 {
-	_position->X = x;
-	_position->Y = y;
-	_position->Z = z;
-	_node->setPosition(core::vector3df(_position->X, _position->Y, _position->Z));
+	_position.X = x;
+	_position.Y = y;
+	_position.Z = z;
+	_node->setPosition(core::vector3df(_position.X, _position.Y, _position.Z));
 }
 void Object::SetRotation(float x, float y, float z)
 {
-	_rotation->X = x;
-	_rotation->Y = y;
-	_rotation->Z = z;
-	_node->setRotation(core::vector3df(_rotation->X, _rotation->Y, _rotation->Z));
+	_rotation.X = x;
+	_rotation.Y = y;
+	_rotation.Z = z;
+	_node->setRotation(core::vector3df(_rotation.X, _rotation.Y, _rotation.Z));
 }
 //void Object::SetScale(float x, float y, float z)
 //{
@@ -62,14 +87,14 @@ void Object::SetRotation(float x, float y, float z)
 //	//_node->setScale(core::vector3df(_scale->X, _scale->Y, _scale->Z));
 //}
 
-int Object::SetSound(std::string path, FMOD::System *soundSystem)
+int Object::SetSound(std::string const &path, FMOD::System *soundSystem)
 {
     soundSystem->createSound(path.c_str(), FMOD_3D, 0, &_sound);
     _sound->set3DMinMaxDistance(5.0f * DISTANCEFACTOR, 500.0f * DISTANCEFACTOR);
     _sound->setMode(FMOD_LOOP_NORMAL);
     soundSystem->playSound(_sound, 0, true, &_sndChannel);
 
-    FMOD_VECTOR pos = {_position->X, _position->Y, _position->Z};
+    FMOD_VECTOR pos = {_position.X, _position.Y, _position.Z};
     _sndChannel->set3DAttributes(&pos, NULL);
     _sndChannel->setPaused(false);
     return 0;

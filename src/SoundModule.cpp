@@ -114,9 +114,11 @@ void SoundModule::SetEnvironmentalSound(int env, int time, int weather)
     {
         AddBGMusic(RESOURCES_PATH "/sound/wind.mp3");
     }
+    _BGChannel->setVolume(_volume);
 }
 
 void SoundModule::SetVolume(float vol)
 {
+    _volume = vol;
     _BGChannel->setVolume(vol);
 }
