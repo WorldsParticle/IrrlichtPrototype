@@ -1,12 +1,25 @@
 #include "Core.h"
-#include "MyEventReceiver.h"
-#include "ElementsModule.h"
-#include "SkyboxModule.h"
-#include "TerrainModule.h"
-#include "WaterModule.h"
-#include "SoundModule.h"
-#include "ParticleModule.h"
-#include "gui_radiocheckboxgroup.h"
+#include "interface/MyEventReceiver.h"
+#include "module/ElementsModule.h"
+#include "module/SkyboxModule.h"
+#include "module/TerrainModule.h"
+#include "module/WaterModule.h"
+#include "module/SoundModule.h"
+#include "module/ParticleModule.h"
+#include "interface/gui_radiocheckboxgroup.h"
+#include "generator/generator.h"
+#include "map/map.h"
+
+// Moche, a sortir quand on allegera le core
+#include "generator/step/zoningstep.h"
+#include "generator/step/shaperstep.h"
+#include "generator/step/elevatorstep.h"
+#include "generator/step/riverorstep.h"
+#include "generator/step/moistorstep.h"
+#include "generator/step/biomizatorstep.h"
+#include "generator/step/heightmapingstep.h"
+#include "generator/step/texturestep.h"
+#include "generator/param/intvalue.h"
 
 #include "Configuration.h"
 
@@ -16,6 +29,7 @@ using namespace scene;
 using namespace video;
 using namespace io;
 using namespace gui;
+using namespace gen;
 
 int Core::initIrrlicht()
 {
@@ -79,7 +93,7 @@ int Core::initModules()
 
 	camera->setPosition(core::vector3df(2700 * 2, 3000, -500));
 	camera->setTarget(core::vector3df(2700 * 2, 1000, 2700 * 4));
-    camera->setFarValue(42000.0f);
+    camera->setFarValue(100000.0f);
 	// disable mouse cursor
 	device->getCursorControl()->setVisible(false);
 
@@ -106,6 +120,36 @@ int Core::initModules()
 	setGUI();
 
 	return 0;
+}
+
+int	Core::initGenerator()
+{
+	map = nullptr;
+	generator = new Generator();
+
+	generator->steps().push_back(new ZoningStep("Zones"));
+	generator->steps().push_back(new ShaperStep("Shape"));
+	generator->steps().push_back(new ElevatorStep("Elevation"));
+	generator->steps().push_back(new RiverorStep("Rivers"));
+	generator->steps().push_back(new MoistorStep("Moistor"));
+	generator->steps().push_back(new BiomizatorStep("Bioming"));
+	generator->steps().push_back(new HeightMapingStep("Heightmap"));
+	generator->steps().push_back(new TextureStep("Textures"));
+
+	return 0;
+}
+
+void Core::generate()
+{
+	// apply gui value
+	// todo
+	dynamic_cast<IntValue *>(generator->step("Zones")->param("Nombre"))->setValue(200);
+
+	if (map)
+		delete map;
+
+	map = generator->run(2500, 2500);
+	terrainModule->generateFromMap(map);
 }
 
 int Core::run()
@@ -195,6 +239,10 @@ void Core::setGUI()
 	envRB->add(mountain);
 	envRB->add(forest);
 	envRB->add(beach);
+
+	//Check box for switching to wireframe mode
+	IGUICheckBox *wireframe = _env->addCheckBox(false, core::rect<s32>(3 * width, 0, width, height), _tab, 0, L"Wireframe mode");
+	envRB->add(wireframe);
 
 	//create time radioButtons
 	CGUIRadioCheckBoxGroup *timeRB = new CGUIRadioCheckBoxGroup(_env, _tab);

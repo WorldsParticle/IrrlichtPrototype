@@ -31,6 +31,9 @@ int main()
 	if (core.initModules() != 0)
 		return 1;
 
+	if (core.initGenerator() != 0)
+		return 1;
+
 	if (core.run() != 0)
 		return 1;
 
