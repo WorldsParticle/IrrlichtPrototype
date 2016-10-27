@@ -82,7 +82,8 @@ glm::vec3 ElementsModule::getXYPos(int width, int height)
 	//get position in xy between 50 and width/height and rotation angle between 0 and 360
 
 	int isThisOnlyWater = 50;
-	while (_terrain->getHeight(value.x, value.y) < waterHeight && isThisOnlyWater > 0)
+	//while (_terrain->getHeight(value.x, value.y) < waterHeight && isThisOnlyWater > 0)
+	while (0 < waterHeight && isThisOnlyWater > 0)
 	{
 		value = glm::linearRand(glm::vec3(50, 50, 0), glm::vec3(width, height, 0));
 		--isThisOnlyWater;
@@ -92,7 +93,8 @@ glm::vec3 ElementsModule::getXYPos(int width, int height)
 
 void ElementsModule::SetupObject(glm::vec3 const &randomValue, std::shared_ptr<Object> obj, SObjectInfo const &objInfo)
 {
-	obj->SetPosition(randomValue.x, _terrain->getHeight(randomValue.x, randomValue.y), randomValue.y);
+	//obj->SetPosition(randomValue.x, _terrain->getHeight(randomValue.x, randomValue.y), randomValue.y);
+	obj->SetPosition(randomValue.x, 0, randomValue.y);
 	obj->SetRotation(0, randomValue.z, 0);
 	if (objInfo.soundPath != "")
 		obj->SetSound(objInfo.soundPath, _soundSystem);
