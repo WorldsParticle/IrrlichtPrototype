@@ -11,12 +11,21 @@ namespace map
 {
 
 
-HeightMap::HeightMap(unsigned int width, unsigned int height) : m_width(width), m_height(height), m_points(), m_vertices(), m_indices(), m_normals(), m_uvs()
+HeightMap::HeightMap(unsigned int width, unsigned int height) :
+  m_width(width),
+  m_height(height),
+  m_points(m_width * m_height),
+  m_vertices(m_height * m_width * 3),
+  m_indices(m_height * m_width * 3 / 2),
+  m_normals(m_height * m_width * 3 / 2),
+  m_uvs()
 {
+    /*
     m_points.reserve(m_width * m_height);
     m_vertices.reserve(m_height * m_width * 3);
     m_indices.reserve(m_height * m_width * 3 / 2);
     m_normals.reserve(m_height * m_width * 3 / 2);
+    */
 }
 
 HeightMap::~HeightMap()

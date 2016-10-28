@@ -210,8 +210,8 @@ void    HeightMapingStep::run()
     paintByBiome();
     paintByHeight();
     paintByLandType();
-    paintByMoisture();
 
+    paintByMoisture();
     paintHeightmapGrid();
 }
 
@@ -226,12 +226,26 @@ void   HeightMapingStep::paintHeightmapGrid()
       for (unsigned int x = 0; x < m_map->gridSize(); ++x)
         for (unsigned int y = 0; y < m_map->gridSize(); ++y)
         {
-          ::map::HeightPoint & p = m_map->heightMap().pointAt(gridX * m_map->gridSize() + x,
+          ::map::HeightPoint *p;
+        /*  if (x > (m_map->gridSize() - 50) && gridX < (m_map->gridXMax() - 1))
+          {
+            p = &m_map->heightMap().pointAt(gridX * m_map->gridSize() + m_map->gridSize(),
+          gridY * m_map->gridSize() + y);
+                                                      }
+          else if (x < 50 && gridX != 0)
+          {
+            p = &m_map->heightMap().pointAt(gridX * m_map->gridSize(),
+          gridY * m_map->gridSize() + y);
+                                                            }
+          else
+          {*/
+            p = &m_map->heightMap().pointAt(gridX * m_map->gridSize() + x,
                                                               gridY * m_map->gridSize() + y);
+                                                            //}
           heightmap.set_pixel(x, y,
-                            static_cast<unsigned char>(p.z * 255.0),
-                            static_cast<unsigned char>(p.z * 255.0),
-                            static_cast<unsigned char>(p.z * 255.0));
+                            static_cast<unsigned char>(p->z * 255.0),
+                            static_cast<unsigned char>(p->z * 255.0),
+                            static_cast<unsigned char>(p->z * 255.0));
         }
       std::string path = (std::string)RESOURCES_PATH + "/generated/" +
                           std::to_string(gridY) + "y_" + std::to_string(gridX) +

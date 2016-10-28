@@ -33,7 +33,7 @@ int TerrainModule::update()
 void TerrainModule::generateFromMap(::map::MapGraph *mapGraph)
 {
     clearNodes();
-    float scale = 500.0f; // temp
+    float scale = 50.0f; // temp
     _terrainGridNodes.resize(mapGraph->gridXMax() * mapGraph->gridYMax());
     _terrainGridAnims.resize(mapGraph->gridXMax() * mapGraph->gridYMax());
 
@@ -51,7 +51,7 @@ void TerrainModule::generateFromMap(::map::MapGraph *mapGraph)
                 core::vector3df(scale, scale, scale),  // scale
                 video::SColor(255, 255, 255, 255),   // vertexColor
                 8,                  // maxLOD
-                scene::ETPS_129,             // patchSize
+                scene::ETPS_17,             // patchSize
                 4); // smoothFactor
 
             ///
