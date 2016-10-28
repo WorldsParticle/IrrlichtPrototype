@@ -30,5 +30,5 @@
 .vs
 build
 include/Configuration.h
-irrlicht
+./irrlicht
 resources/generated/*
