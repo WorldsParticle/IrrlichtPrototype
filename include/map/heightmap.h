@@ -42,7 +42,7 @@ public:
     void    generateMesh();
 
     inline HeightPoint  &pointAt(unsigned int x, unsigned int y)
-    { return m_points[x * m_width + y]; }
+    { return m_points.at(x * m_width + y); }
 
     ///
     /// \brief points buffer getter

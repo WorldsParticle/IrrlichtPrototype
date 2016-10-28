@@ -60,7 +60,12 @@ void TerrainModule::generateFromMap(::map::MapGraph *mapGraph)
             ///
 
             const auto &aabb = terrain->getBoundingBox();
-            terrain->setPosition(irr::core::vector3df(x * (aabb.MaxEdge.X - aabb.MinEdge.X), 0.0f, y * (aabb.MaxEdge.Z - aabb.MinEdge.Z)));
+            terrain->setPosition(irr::core::vector3df(y * (aabb.MaxEdge.X - aabb.MinEdge.X), 0.0f, x * (aabb.MaxEdge.Z - aabb.MinEdge.Z)));
+
+            if (x == 0 && y == 0)
+            {
+                terrain->setMaterialFlag(video::EMF_WIREFRAME, true);
+            }
 
             ///
             /// END - LMP - Part of placing the terrain at the good position.
@@ -99,4 +104,16 @@ void TerrainModule::clearNodes()
         delete node;
     for (scene::ISceneNodeAnimator *anim : _terrainGridAnims)
         delete anim;
+}
+
+float
+TerrainModule::getHeight(irr::f32 x, irr::f32 z)
+{
+    for (scene::ITerrainSceneNode *terrainSceneNode : this->_terrainGridNodes)
+    {
+        irr::f32 height = terrainSceneNode->getHeight(x, z);
+        if (height != -FLT_MAX)
+            return height;
+    }
+    return -FLT_MAX;
 }

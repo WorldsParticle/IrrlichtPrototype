@@ -26,7 +26,9 @@ public:
 	virtual int update();
 
 	void generateFromMap(::map::MapGraph *mapGraph);
-	void clearNodes();
+    void clearNodes();
+
+    float   getHeight(irr::f32 x, irr::f32 z);
 
 private:
 
