@@ -104,6 +104,7 @@ void ElementsModule::SetupObject(glm::vec3 const &randomValue, std::shared_ptr<O
 void ElementsModule::createObjectsFromName(int totalElementInZone, int width, int height, SObjectInfo const &objInfo)
 {
 	std::shared_ptr<Object> firstObj = std::make_shared<Object>(device);
+
 	if (firstObj->LoadMesh(objInfo.modelPath, objInfo.texturePath) == 1)
 	{
 		firstObj->remove();

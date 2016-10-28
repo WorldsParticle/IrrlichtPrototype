@@ -37,6 +37,7 @@ public:
 	void putElementsOfZone(int zone);
 	void clear();
 	void createObjectsFromName(int totalElementInZone, int width, int height, SObjectInfo const &objInfo);
+
 private:
 	float waterHeight = 300;
 	float _soundVolume = 1.0f;

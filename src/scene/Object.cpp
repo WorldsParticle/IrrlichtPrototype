@@ -26,6 +26,7 @@ void Object::remove()
 int Object::LoadMesh(std::string const &meshPath, std::string const &texturePath)
 {
     scene::IAnimatedMesh *mesh;
+
     mesh = _smgr->getMesh(meshPath.c_str());
     if (mesh)
     {
@@ -39,6 +40,7 @@ int Object::LoadMesh(std::string const &meshPath, std::string const &texturePath
     if (_node)
     {
         _node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+        _node->setMaterialFlag(irr::video::EMF_WIREFRAME, true);
         //_node->setMD2Animation(scene::EMAT_STAND);
 		//if (!texturePath.empty())
 	 //       _node->setMaterialTexture(0, _smgr->getVideoDriver()->getTexture(texturePath.c_str()));
