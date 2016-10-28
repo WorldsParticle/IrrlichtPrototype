@@ -31,4 +31,4 @@
 build
 include/Configuration.h
 irrlicht
-./resources/generated/
+resources/generated/*
