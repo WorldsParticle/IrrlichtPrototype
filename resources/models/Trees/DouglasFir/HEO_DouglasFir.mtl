@@ -1,0 +1,33 @@
+newmtl lambert2SG
+illum 4
+Kd 0.88 0.21 0.43
+Ka 0.00 0.00 0.00
+Tf 0.32 0.32 0.32
+Ni 1.00
+newmtl lambert3SG
+illum 4
+Kd 0.50 0.50 0.50
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+newmtl phong1SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd DouglasFir_Needles_diffuse.png
+bump DouglasFir_Needles_normals.png -bm 1
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks DouglasFir_Needles_alpha.png
+Ns 18.00
+newmtl phong2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd DouglasFirBark_diffuse.png
+bump DouglasFirBark_normals.png -bm 1
+Ni 1.00
+Ks 0.38 0.38 0.38
+Ns 4.39

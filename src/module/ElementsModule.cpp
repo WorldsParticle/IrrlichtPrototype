@@ -2,6 +2,7 @@
 #include <iostream>
 #include <ctime>
 
+#include "shaders/CustomTreeShader.h"
 #include "module/ElementsModule.h"
 #include "Configuration.h"
 
@@ -34,9 +35,85 @@ int ElementsModule::init()
 			{ c, RESOURCES_PATH "/models/bush.3ds", RESOURCES_PATH "/models/bushTexture.jpg", ""}
 		} //zone 2 : beach
 		};
-	srand(time(0));
-	putElementsOfZone(0);
+	srand(static_cast<unsigned int>(time(nullptr)));
+	//putElementsOfZone(0);
+
+    this->generateDouglasFirTree();
+
 	return 0;
+}
+
+#include <IMeshBuffer.h>
+
+
+//
+// ROOT_NODE
+// |-> DouglasFirNode
+//     |-> DouglasFirBarkNode
+//     |-> DouglasFirNeedlesNode
+//
+// MeshBuffer(0) -> Bark
+// MeshBuffer(1) -> Bark collision
+// MeshBuffer(2) -> Bending proxy
+// MeshBuffer(3) -> Bark low lod
+// MeshBuffer(4) -> Needles LOD 1
+// MeshBuffer(5) -> Bark branch
+// MeshBuffer(6) -> Needles LOD 0
+void
+ElementsModule::generateDouglasFirTree(void)
+{
+    auto raw_mesh = smgr->getMesh(RESOURCES_PATH "/models/Trees/DouglasFir/HEO_DouglasFir.obj");
+    auto mesh = smgr->getMeshManipulator()->createMeshWithTangents(raw_mesh);
+
+    //irr::io::IAttributes &attributes = const_cast<irr::io::IAttributes &>(driver->getDriverAttributes());
+    //std::cout << "ShaderLanguageVersion : " << attributes.getAttributeAsString("ShaderLanguageVersion").c_str() << std::endl;
+
+    // generate a DouglasFir_node
+    {
+
+        auto DouglasFirNode = this->smgr->addEmptySceneNode();
+        DouglasFirNode->setName("DouglasFirNode");
+
+        // generate the DouglasFirBarkNode
+
+        irr::scene::SMesh   *barkMesh = new irr::scene::SMesh();
+        barkMesh->addMeshBuffer(mesh->getMeshBuffer(0));
+        barkMesh->addMeshBuffer(mesh->getMeshBuffer(5));
+        auto DouglasFirBarkNode = this->smgr->addMeshSceneNode(barkMesh, DouglasFirNode);
+        DouglasFirBarkNode->setName("DouglasFirBarkNode");
+        DouglasFirBarkNode->setMaterialType(CustomTreeShader::GetMaterialType());
+        DouglasFirBarkNode->setMaterialTexture(0, driver->getTexture(RESOURCES_PATH "/models/Trees/DouglasFir/DouglasFirBark_diffuse.png"));
+        DouglasFirBarkNode->setMaterialTexture(1, driver->getTexture(RESOURCES_PATH "/models/Trees/DouglasFir/DouglasFirBark_normals.png"));
+
+        // generate the DouglasFirNeedlesNode
+        irr::scene::SMesh   *needlesMesh = new irr::scene::SMesh();
+        needlesMesh->addMeshBuffer(mesh->getMeshBuffer(4));
+        needlesMesh->addMeshBuffer(mesh->getMeshBuffer(6));
+        auto DouglasFirNeedlesNode = this->smgr->addMeshSceneNode(needlesMesh, DouglasFirNode);
+        DouglasFirNeedlesNode->setName("DouglasFirNeedlesNode");
+        DouglasFirNeedlesNode->setMaterialType(CustomTreeShader::GetMaterialType());
+        DouglasFirNeedlesNode->setMaterialTexture(0, driver->getTexture(RESOURCES_PATH "/models/Trees/DouglasFir/DouglasFirNeedles_diffuse.png"));
+        DouglasFirNeedlesNode->setMaterialTexture(1, driver->getTexture(RESOURCES_PATH "/models/Trees/DouglasFir/DouglasFirNeedles_normals.png"));
+        DouglasFirNeedlesNode->setMaterialTexture(2, driver->getTexture(RESOURCES_PATH "/models/Trees/DouglasFir/DouglasFirNeedles_alpha.png"));
+
+        // Settings not needed at the end.
+
+        DouglasFirNode->setPosition(irr::core::vector3df(5000.0f, 300.0f, 5000.0f));
+        DouglasFirNode->setRotation(irr::core::vector3df(-90.0f, 0.0f, 0.0f));
+
+        std::cout << "DouglasFir absolute position : (" << DouglasFirNode->getAbsolutePosition().X << ", " << DouglasFirNode->getAbsolutePosition().Y << ", " << DouglasFirNode->getAbsolutePosition().Z << ")" << std::endl;
+        std::cout << "DouglasFir position : (" << DouglasFirNode->getPosition().X << ", " << DouglasFirNode->getPosition().Y << ", " << DouglasFirNode->getPosition().Z << ")" << std::endl;
+        std::cout << "DouglasFir scale : (" << DouglasFirNode->getScale().X << ", " << DouglasFirNode->getScale().Y << ", " << DouglasFirNode->getScale().Z << ")" << std::endl;
+
+
+        for (int i = 0; i < 200; ++i)
+        {
+            auto node = DouglasFirNode->clone();
+            glm::vec2 new_position = glm::linearRand(glm::vec2(0.0f), glm::vec2(10000.0f));
+            node->setPosition(irr::core::vector3df(new_position.x, 300.0f, new_position.y));
+        }
+
+    }
 }
 
 void ElementsModule::putElementsOfZone(int zone)
@@ -110,7 +187,7 @@ void ElementsModule::createObjectsFromName(int totalElementInZone, int width, in
 		firstObj->remove();
 		return;
 	}
-	int elemCount = objInfo.densityInPercent * totalElementInZone / 100;
+	int elemCount = static_cast<int>(objInfo.densityInPercent * totalElementInZone / 100);
 	//std::cout << ">> Number of elements " << elemCount << std::endl;
 	while (elemCount > 0)
 	{
