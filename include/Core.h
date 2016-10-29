@@ -51,6 +51,13 @@ public:
 	gen::Generator								*generator;
 	::map::MapGraph									*map;
 
+
+    irr::gui::IGUIImage         *_teleportMap = nullptr;
+    irr::core::rect<irr::s32>    _teleportMapRect;
+
 	bool isInterfaceVisible() const;
 	void toggleInterface();
+
+    void teleport(irr::s32 x, irr::s32 y);
+    void toggleTeleportMap();
 };

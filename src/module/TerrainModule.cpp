@@ -105,6 +105,11 @@ void TerrainModule::generateFromMap(::map::MapGraph *mapGraph)
     }
 }
 
+scene::ITerrainSceneNode  *TerrainModule::getNode(irr::u32 x, irr::u32 y, irr::u32 gridXmax)
+{
+    return (_terrainGridNodes[x + gridXmax * y]);
+}
+
 void TerrainModule::clearNodes()
 {
     for (scene::ITerrainSceneNode *node : _terrainGridNodes)

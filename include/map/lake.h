@@ -22,6 +22,7 @@ public:
     void                                                        addPoint(irr::u32 x, irr::u32 y, irr::u32 mapSize);
     void                                                        addPerimeterPoint(irr::u32 x, irr::u32 y, irr::u32 mapSize);
     void                                                        addZone(Zone * z);
+    void                                                        setMesh(irr::scene::SMesh * mesh);
 
     std::map<irr::u64, irr::core::vector2d< irr::u32 >> &       getPoints();
     std::map<irr::u64, irr::core::vector2d< irr::u32 >> &       getPerimeterPoints();
@@ -41,6 +42,8 @@ private:
     std::map<irr::u64, irr::core::vector2d< irr::u32 >> _perimeterPoints;
 
     std::map<Zone *, Zone *>                            _zones;
+
+    irr::scene::SMesh *                                 _mesh;
 };
 
 } // END OF NAMESPACE MAP

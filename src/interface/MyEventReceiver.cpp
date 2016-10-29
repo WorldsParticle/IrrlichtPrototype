@@ -32,6 +32,19 @@ void MyEventReceiver::ApplyGUIParametersToWorld()
 
 bool MyEventReceiver::OnEvent(const SEvent& event)
 {
+    // for teleportation, temporary.
+    if (_core->_teleportMap && _core->_teleportMap->isVisible() && event.EventType == irr::EET_MOUSE_INPUT_EVENT)
+    {
+        switch(event.MouseInput.Event)
+        {
+        case EMIE_LMOUSE_PRESSED_DOWN:
+            _core->teleport(event.MouseInput.X, event.MouseInput.Y);
+            break;
+        default:
+            break;
+        }
+    }
+
 	// check if user presses the key 'W' or 'D'
 	if (event.EventType == irr::EET_KEY_INPUT_EVENT && !event.KeyInput.PressedDown)
 	{
@@ -43,6 +56,12 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 		case irr::KEY_KEY_V: // switch wireframe mode
 			switchWireframe();
 			return true;
+        case irr::KEY_KEY_T: // prepare to teleport
+            _core->toggleTeleportMap();
+            return true;
+        case irr::KEY_KEY_R: // prepare to teleport
+            std::cout << _core->camera->getAbsolutePosition().X << " " << _core->camera->getAbsolutePosition().Y << "  " << _core->camera->getAbsolutePosition().Z << std::endl;
+            return true;
 		case irr::KEY_KEY_N: // night
 			//_core->skyboxModule->activate(true);
 			return true;

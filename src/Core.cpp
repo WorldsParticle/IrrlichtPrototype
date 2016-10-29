@@ -179,6 +179,13 @@ int Core::run()
 			_smgr->drawAll();
 			_env->drawAll();
 
+            // UGLY BETTY GUEST APPEAREANCE
+            if (_teleportMap && _teleportMap->isVisible())
+            {
+                camera->setInputReceiverEnabled(false);
+                device->getCursorControl()->setVisible(true);
+            }
+
 			_driver->endScene();
 
 			// display frames per second in window title
@@ -207,6 +214,65 @@ void Core::close()
 	device->closeDevice();
 }
 
+void Core::teleport(irr::s32 x, irr::s32 y)
+{
+    if (map && _teleportMapRect.isPointInside(irr::core::vector2d<irr::s32>(x, y)))
+    {
+        float rx = (x - _teleportMapRect.UpperLeftCorner.X);
+        float ry = (y - _teleportMapRect.UpperLeftCorner.Y);
+        float imageWidth = _teleportMapRect.LowerRightCorner.X - _teleportMapRect.UpperLeftCorner.X;
+
+        float xRatio = (rx / imageWidth);
+        float yRatio = (ry / imageWidth);
+        float gridUnit = 1.0f / map->gridXMax();
+
+        unsigned int ix = (map->gridXMax()) - xRatio / gridUnit;
+        unsigned int iy = (map->gridYMax()) - yRatio / gridUnit;
+        if (ix >= map->gridXMax() || iy >= map->gridYMax())
+            return ;
+
+
+        const auto node = terrainModule->getNode(iy, ix, map->gridXMax());
+        const auto & bbox = node->getBoundingBox();
+
+        float xpos = ((gridUnit - (xRatio - ((unsigned int)(xRatio / gridUnit) * gridUnit))) / gridUnit) * (bbox.MaxEdge.X - bbox.MinEdge.X);
+        float zpos = ((gridUnit - (yRatio - ((unsigned int)(yRatio / gridUnit) * gridUnit))) / gridUnit) * (bbox.MaxEdge.Z - bbox.MinEdge.Z);
+        float ypos = node->getHeight(xpos + (bbox.MaxEdge.X - bbox.MinEdge.X) * ix, zpos + (bbox.MaxEdge.Z - bbox.MinEdge.Z) * iy) * 1.25f;
+
+        camera->setPosition(core::vector3df(xpos + (bbox.MaxEdge.X - bbox.MinEdge.X) * ix, ypos, zpos + (bbox.MaxEdge.Z - bbox.MinEdge.Z) * iy));
+    }
+}
+
+void Core::toggleTeleportMap()
+{
+    if (_teleportMap == nullptr)
+    {
+        std::string path = (std::string)RESOURCES_PATH + "/mapbiome.bmp";
+        irr::video::ITexture   * teleportTex = _driver->getTexture(path.c_str());
+
+        const irr::core::dimension2du& screenSize = _driver->getScreenSize();
+
+        int ymargin = screenSize.Height * 0.1f;
+        int xmargin = (screenSize.Width - (screenSize.Height - 2 * ymargin)) / 2;
+
+        _teleportMapRect = core::rect<s32>(xmargin,ymargin, screenSize.Width - xmargin, screenSize.Height - ymargin);
+        _teleportMap = _env->addImage(_teleportMapRect);
+        _teleportMap->setImage(teleportTex);
+        _teleportMap->setScaleImage(true);
+        _teleportMap->setVisible(false);
+        teleportTex->drop();
+        _teleportMap->setVisible(true);
+
+        return ;
+    }
+    _teleportMap->setVisible(!(_teleportMap->isVisible()));
+    if (!_teleportMap->isVisible() && !_tab->isVisible())
+    {
+        camera->setInputReceiverEnabled(true);
+        device->getCursorControl()->setVisible(false);
+    }
+}
+
 void Core::setGUI()
 {
 	//set transparency of everyting in the interface to not transparent at all
@@ -231,7 +297,7 @@ void Core::setGUI()
 	_tab->setBackgroundColor(SColor(255, 140, 140, 140));
 
 	//add WorldsParticle logo
-	_env->addImage(_driver->getTexture(RESOURCES_PATH "2017_logo_worldsparticle.png"), core::position2d<s32>(10, 10), true, _tab);
+    _env->addImage(_driver->getTexture(RESOURCES_PATH "/2017_logo_worldsparticle.png"), core::position2d<s32>(10, 10), true, _tab);
 
 	int height = 20; //height of radiobuttons
 	int width = 100; // width of radiobuttons with their text

@@ -25,6 +25,53 @@ void    LakerStep::run()
     createLakes();
 }
 
+// uses duplicate vertices because of UV mapping
+// rectangular decomposition is NP complete, although we could use a fast heuristic to drastically reduce the tri count
+void        LakerStep::createMesh(::map::Lake * lake, float lakeHeight)
+{
+    irr::scene::SMesh* Mesh = new irr::scene::SMesh();
+
+    irr::scene::SMeshBuffer *buf = new irr::scene::SMeshBuffer();
+    Mesh->addMeshBuffer(buf);
+    buf->drop();
+
+    buf->Vertices.reallocate(lake->getPoints().size() * 4);
+    buf->Vertices.set_used(lake->getPoints().size() * 4);
+
+
+    buf->Indices.reallocate(lake->getPoints().size() * 6);
+    buf->Indices.set_used(lake->getPoints().size() * 6);
+
+    unsigned int    vertIndex = 0;
+    unsigned int    indIndex = 0;
+
+    for (auto point : lake->getPoints())
+    {
+        auto vec = point.second;
+
+        float x = static_cast<float>(vec.X);
+        float y = static_cast<float>(vec.Y);
+
+        buf->Vertices[vertIndex++] = irr::video::S3DVertex(x - 0.5f,lakeHeight,y - 0.5f,   0,1,0,    irr::video::SColor(255,0,255,255),    0, 1);
+        buf->Vertices[vertIndex++] = irr::video::S3DVertex(x + 0.5f,lakeHeight,y - 0.5f,   0,1,0,  irr::video::SColor(255,255,0,255),  0, 0);
+        buf->Vertices[vertIndex++] = irr::video::S3DVertex(x - 0.5f,lakeHeight,y + 0.5f,   0,1,0,    irr::video::SColor(255,255,255,0),    1, 1);
+        buf->Vertices[vertIndex++] = irr::video::S3DVertex(x + 0.5f,lakeHeight,y + 0.5f,   0,1,0,    irr::video::SColor(255,255,255,0),    1, 0);
+
+        buf->Indices[indIndex++]= vertIndex - 4;
+        buf->Indices[indIndex++]= vertIndex - 3;
+        buf->Indices[indIndex++]= vertIndex - 1;
+
+        buf->Indices[indIndex++]= vertIndex - 4;
+        buf->Indices[indIndex++]= vertIndex - 1;
+        buf->Indices[indIndex++]= vertIndex - 2;
+    }
+
+    buf->recalculateBoundingBox();
+
+    lake->setMesh(Mesh);
+
+}
+
 void        LakerStep::fillDepthMap(std::vector<int> & depthMap, unsigned int xMax, ::map::Lake * lake)
 {
     std::stack<unsigned int> s;
@@ -324,8 +371,9 @@ void        LakerStep::createLakes()
 
             float depthRatio = static_cast<float>(depthMap[vec.Y * xMax + vec.X]) / fMaxDepth;
 
-            m_map->heightMap().pointAt(vec.X, vec.Y).z = minHeight - std::pow(depthRatio, 0.75) * maxDifferenceHeight;
+            m_map->heightMap().pointAt(vec.X, vec.Y).z = minHeight - std::pow(depthRatio, 0.75f) * maxDifferenceHeight;
         }
+        createMesh(lake, minHeight - std::pow((1.0f / fMaxDepth), 0.75f) * maxDifferenceHeight);
     }
 
 

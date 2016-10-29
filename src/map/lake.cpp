@@ -6,7 +6,8 @@ namespace map
 Lake::Lake() :
         _points(),
         _perimeterPoints(),
-        _zones()
+        _zones(),
+        _mesh(nullptr)
 {
 }
 
@@ -32,6 +33,11 @@ void    Lake::addPerimeterPoint(irr::u32 x, irr::u32 y, irr::u32 mapSize)
 void    Lake::addZone(Zone * z)
 {
     _zones[z] = z;
+}
+
+void    Lake::setMesh(irr::scene::SMesh * mesh)
+{
+    _mesh = mesh;
 }
 
 std::map<irr::u64, irr::core::vector2d< irr::u32 >> &   Lake::getPoints()

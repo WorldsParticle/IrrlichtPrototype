@@ -24,6 +24,7 @@ public:
 
 private:
 
+    void                createMesh(::map::Lake * lake, float lakeHeight);
     void                fillDepthMap(std::vector<int> & depthMap, unsigned int xMax, ::map::Lake * lake);
     void                createLakes();
 };

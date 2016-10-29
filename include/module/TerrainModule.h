@@ -25,8 +25,9 @@ public:
 	virtual int init();
 	virtual int update();
 
-	void generateFromMap(::map::MapGraph *mapGraph);
-    void clearNodes();
+    void                            generateFromMap(::map::MapGraph *mapGraph);
+    irr::scene::ITerrainSceneNode  *getNode(irr::u32 x, irr::u32 y, irr::u32 gridXmax);
+    void                            clearNodes();
 
     float   getHeight(irr::f32 x, irr::f32 z);
 
