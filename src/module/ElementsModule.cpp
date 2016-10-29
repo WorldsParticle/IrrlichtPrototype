@@ -3,6 +3,7 @@
 #include <ctime>
 
 #include "shaders/CustomTreeShader.h"
+#include "shaders/CustomLeafShader.h"
 #include "module/ElementsModule.h"
 #include "Configuration.h"
 
@@ -91,7 +92,7 @@ ElementsModule::generateDouglasFirTree(void)
         needlesMesh->addMeshBuffer(mesh->getMeshBuffer(6));
         auto DouglasFirNeedlesNode = this->smgr->addMeshSceneNode(needlesMesh, DouglasFirNode);
         DouglasFirNeedlesNode->setName("DouglasFirNeedlesNode");
-        DouglasFirNeedlesNode->setMaterialType(CustomTreeShader::GetMaterialType());
+        DouglasFirNeedlesNode->setMaterialType(CustomLeafShader::GetMaterialType());
         DouglasFirNeedlesNode->setMaterialTexture(0, driver->getTexture(RESOURCES_PATH "/models/Trees/DouglasFir/DouglasFirNeedles_diffuse.png"));
         DouglasFirNeedlesNode->setMaterialTexture(1, driver->getTexture(RESOURCES_PATH "/models/Trees/DouglasFir/DouglasFirNeedles_normals.png"));
         DouglasFirNeedlesNode->setMaterialTexture(2, driver->getTexture(RESOURCES_PATH "/models/Trees/DouglasFir/DouglasFirNeedles_alpha.png"));
@@ -106,11 +107,12 @@ ElementsModule::generateDouglasFirTree(void)
         std::cout << "DouglasFir scale : (" << DouglasFirNode->getScale().X << ", " << DouglasFirNode->getScale().Y << ", " << DouglasFirNode->getScale().Z << ")" << std::endl;
 
 
-        for (int i = 0; i < 200; ++i)
+        for (int i = 0; i < 50; ++i)
         {
             auto node = DouglasFirNode->clone();
             glm::vec2 new_position = glm::linearRand(glm::vec2(0.0f), glm::vec2(10000.0f));
-            node->setPosition(irr::core::vector3df(new_position.x, 300.0f, new_position.y));
+            node->setPosition(irr::core::vector3df(new_position.x, 0.0f, new_position.y));
+            node->setScale(irr::core::vector3df(1.0f));
         }
 
     }
