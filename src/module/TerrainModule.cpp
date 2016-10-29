@@ -7,6 +7,8 @@
 #include "generator/generator.h"
 #include "map/map.h"
 
+#include "scene/terrain/TerrainSceneNode.h"
+
 TerrainModule::TerrainModule(IrrlichtDevice* _device, scene::ICameraSceneNode* _camera) :
 	AModule(_device, _camera),
 	_terrainGridNodes(),
@@ -22,6 +24,8 @@ TerrainModule::~TerrainModule()
 
 int TerrainModule::init()
 {
+	TerrainSceneNode *n = new TerrainSceneNode(nullptr, nullptr, nullptr, -1);
+	delete n;
 	return 0;
 }
 
@@ -33,7 +37,7 @@ int TerrainModule::update()
 void TerrainModule::generateFromMap(::map::MapGraph *mapGraph)
 {
     clearNodes();
-    float scale = 500.0f; // temp
+    float scale = 50.0f; // temp
     _terrainGridNodes.resize(mapGraph->gridXMax() * mapGraph->gridYMax());
     _terrainGridAnims.resize(mapGraph->gridXMax() * mapGraph->gridYMax());
 
@@ -42,17 +46,25 @@ void TerrainModule::generateFromMap(::map::MapGraph *mapGraph)
         for (unsigned int y = 0; y < mapGraph->gridYMax(); ++y)
         {
             std::cout << "x : " << x << ", y : " << y << std::endl;
-            scene::ITerrainSceneNode *terrain = smgr->addTerrainSceneNode(
-                mapGraph->heightmapAt(mapGraph->gridYMax() - y - 1, x).c_str(),
-                0,
-                -1,                 // node id
-                core::vector3df(y * mapGraph->gridSize() * scale, 0.f, x * mapGraph->gridSize() * scale),     // position
-                core::vector3df(0.f, 0.f, 0.f),     // rotation
-                core::vector3df(scale, scale, scale),  // scale
-                video::SColor(255, 255, 255, 255),   // vertexColor
-                8,                  // maxLOD
-                scene::ETPS_129,             // patchSize
-                4); // smoothFactor
+						TerrainSceneNode *terrain = new TerrainSceneNode(
+								smgr->getRootSceneNode(),
+								smgr,
+								smgr->getFileSystem(),
+								-1, // Id
+								8, // maxLOD
+								scene::ETPS_17,
+								core::vector3df(y * mapGraph->gridSize() * scale, 0.f, x * mapGraph->gridSize() * scale), // position
+								core::vector3df(0.f, 0.f, 0.f), // rotation
+                core::vector3df(scale, scale, scale) // scale
+							);
+						io::IReadFile* file = smgr->getFileSystem()->createAndOpenFile(mapGraph->heightmapAt(mapGraph->gridYMax() - y - 1, x).c_str());
+						terrain->loadHeightMap(
+																	file,
+																	video::SColor(255, 255, 255, 255), // vertexColor)
+																	4); // smoothFactor
+						if (file)
+							file->drop();
+						terrain->drop();
 
             ///
             /// LMP - Part of placing the terrain at the good position.
@@ -61,11 +73,6 @@ void TerrainModule::generateFromMap(::map::MapGraph *mapGraph)
 
             const auto &aabb = terrain->getBoundingBox();
             terrain->setPosition(irr::core::vector3df(y * (aabb.MaxEdge.X - aabb.MinEdge.X), 0.0f, x * (aabb.MaxEdge.Z - aabb.MinEdge.Z)));
-
-            if (x == 0 && y == 0)
-            {
-                terrain->setMaterialFlag(video::EMF_WIREFRAME, true);
-            }
 
             ///
             /// END - LMP - Part of placing the terrain at the good position.

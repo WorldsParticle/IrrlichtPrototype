@@ -89,7 +89,7 @@ int Core::initModules()
     keyMap[7].Action = EKA_STRAFE_RIGHT;
     keyMap[7].KeyCode = KEY_KEY_D;
 
-	camera = _smgr->addCameraSceneNodeFPS(0, 100.0f, 2.0f, -1, keyMap, 8);
+	camera = _smgr->addCameraSceneNodeFPS(0, 100.0f, 10.0f, -1, keyMap, 8);
 	//_smgr->addCameraSceneNode(0, vector3df(0, 30, -40), vector3df(0, 5, 0));
 
 	camera->setPosition(core::vector3df(2700 * 2, 3000, -500));
