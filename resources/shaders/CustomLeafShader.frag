@@ -31,13 +31,15 @@ in vec3 tangent;
 in vec3 binormal;
 
 uniform sampler2D   diffuse_texture;
+uniform sampler2D   normal_texture;
+uniform sampler2D   alpha_texture;
 uniform Light       light;
 uniform float       specular_hardness;
 
 void    main()
 {
     vec4    fragment_color = pow(texture(diffuse_texture, texture_coords), vec4(2.2f));
-    //vec3    fragment_normal = vec3(1.0f, 0.0f, 0.0f); // todo : get the normal from the texture map
+    vec4   alpha = texture(alpha_texture, texture_coords);
 
     vec3 light_direction = normalize(light.position - position);
     float lambertian = max(dot(light_direction, normal), 0.0);
@@ -50,6 +52,5 @@ void    main()
         specular = pow(specular_angle, specular_hardness);
     }
     fragment_color += vec4(light.ambient + lambertian * light.diffuse + specular * light.specular, 0.0f);
-
-    gl_FragColor = fragment_color;
+    gl_FragColor = vec4(fragment_color.x, fragment_color.y, fragment_color.z, alpha.x + alpha.y + alpha.z);
 }

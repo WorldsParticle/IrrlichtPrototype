@@ -10,6 +10,7 @@
 #include "generator/generator.h"
 #include "map/map.h"
 #include "shaders/CustomTreeShader.h"
+#include "shaders/CustomLeafShader.h"
 
 // Moche, a sortir quand on allegera le core
 #include "generator/step/zoningstep.h"
@@ -107,6 +108,10 @@ int Core::initModules()
     if (CustomTreeShader::Initialize(this->_driver->getGPUProgrammingServices()) == false)
     {
         std::cout << "Failed to initialize CustomTreeShader" << std::endl;
+    }
+    if (CustomLeafShader::Initialize(this->_driver->getGPUProgrammingServices()) == false)
+    {
+        std::cout << "Failed to initialize CustomLeafShader" << std::endl;
     }
 
 	soundModule = new SoundModule(device, camera);
