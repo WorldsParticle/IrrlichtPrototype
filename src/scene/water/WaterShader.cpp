@@ -34,7 +34,7 @@ void WaterShader::init()
 }
 
 
-void WaterShader::OnSetConstants(video::IMaterialRendererServices *services, s32 userData)
+void WaterShader::OnSetConstants(video::IMaterialRendererServices *services, s32)
 {
   // the following 5 next lignes are static and waiting to have a proper dynamique structure to use :)
   // they are still 4 hardcoded attribute in shader waiting to be in here

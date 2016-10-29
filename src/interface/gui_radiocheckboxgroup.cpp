@@ -216,7 +216,7 @@ bool CGUIRadioCheckBoxGroup::OnEvent(const SEvent &event)
 
 void CGUIRadioCheckBoxGroup::autoActivate(bool autoActivate)
 {
-	AutoActivate = false;
+	AutoActivate = autoActivate;
 }
 
 bool CGUIRadioCheckBoxGroup::isAutoActivateEvent() const

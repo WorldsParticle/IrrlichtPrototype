@@ -18,7 +18,7 @@ void    ZoneLookUp::createCloud(::map::MapGraph *m)
 {
     for (const auto & zone : m->zones())
     {
-        ::map::PointCloud<double>::LPoint p = {zone.second->point.x, zone.second->point.y, zone.second};
+        ::map::PointCloud<double>::LPoint p = {zone.second->point.x, zone.second->point.z, zone.second};
         _cloud.pts.push_back(p);
     }
     _pc2kd = std::shared_ptr<PC2KD>(new PC2KD(_cloud));
@@ -26,9 +26,9 @@ void    ZoneLookUp::createCloud(::map::MapGraph *m)
     _tree->buildIndex();
 }
 
-Zone *ZoneLookUp::getNearestZone(double x, double y)
+Zone *ZoneLookUp::getNearestZone(double x, double z)
 {
-    double          queryPoint[2] = {x, y};
+    double          queryPoint[2] = {x, z};
     const size_t    num_results = 1;
     size_t          ret_index;
     double          out_dist_sqr;

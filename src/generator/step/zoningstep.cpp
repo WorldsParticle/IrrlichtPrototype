@@ -47,7 +47,7 @@ std::vector<Point *>    ZoningStep::generateRandomSites()
     std::vector<Point *> sites;
     for (int i = 0; i < m_zoneNumber.value(); ++i)
         sites.push_back(new Point(DRAND(0, m_map->xMax()),
-                                  DRAND(0, m_map->yMax())));
+                                  DRAND(0, m_map->zMax())));
     return sites;
 }
 
@@ -91,12 +91,12 @@ void        ZoningStep::computeMap(const std::vector<vor::Edge *> *edges) // à 
         // Ugly workaround
         if (!left)
         {
-            left = new ::map::Zone(e->left->x, e->left->y);
+            left = new ::map::Zone(e->left->x, e->left->z);
             m_map->zones().insert(std::pair<int, ::map::Zone *>(left->index, left));
         }
         if (!right)
         {
-            right = new ::map::Zone(e->right->x, e->right->y);
+            right = new ::map::Zone(e->right->x, e->right->z);
             m_map->zones().insert(std::pair<int, ::map::Zone *>(right->index, right));
         }
 
@@ -118,7 +118,7 @@ void        ZoningStep::computeMap(const std::vector<vor::Edge *> *edges) // à 
                 m_map->corners().insert(std::pair<int, ::map::Corner *>(c0->index, c0));
 
                 c0->point.x = e->start->x;
-                c0->point.y = e->start->y;
+                c0->point.z = e->start->z;
                 right->corners.push_back(c0);
                 c0->faces.push_back(right);
             }
@@ -134,7 +134,7 @@ void        ZoningStep::computeMap(const std::vector<vor::Edge *> *edges) // à 
                 m_map->corners().insert(std::pair<int, ::map::Corner *>(c1->index, c1));
 
                 c1->point.x = e->end->x;
-                c1->point.y = e->end->y;
+                c1->point.z = e->end->z;
                 right->corners.push_back(c1);
                 c1->faces.push_back(right);
             }
@@ -158,7 +158,7 @@ void        ZoningStep::computeMap(const std::vector<vor::Edge *> *edges) // à 
 {
     for (std::vector<::map::Corner *>::iterator it = z->corners.begin(); it != z->corners.end(); ++it)
         if (std::abs((*it)->point.x - p.x) < std::numeric_limits<double>::epsilon()
-                    && (std::abs((*it)->point.y - p.y) < std::numeric_limits<double>::epsilon()))
+                    && (std::abs((*it)->point.z - p.z) < std::numeric_limits<double>::epsilon()))
             return (*it);
     return nullptr;
 }

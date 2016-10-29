@@ -49,12 +49,12 @@ public:
     ///
     /// \brief Default constructor.
     /// \param Center's x coordinates
-    /// \param Center's y coordinates
+    /// \param Center's z coordinates
     ///
-    explicit Zone(double x = 0, double y = 0);
+    explicit Zone(double x = 0, double z = 0);
 
     inline friend std::ostream &operator<<(std::ostream &os, const Zone &s)
-    { return os << "[" << s.index << "](" << s.point.x << ", " << s.point.y << ")"; }
+    { return os << "[" << s.index << "](" << s.point.x << ", " << s.point.z << ")"; }
 
     ///
     /// \brief Checks if the zone zone has a neighbor.

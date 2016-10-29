@@ -25,6 +25,8 @@
 #include "irrlicht/SMesh.h"
 #include "irrlicht/CDynamicMeshBuffer.h"
 
+#include <iostream>
+
 
 namespace irr
 {
@@ -754,8 +756,6 @@ namespace scene
 			}
 
 			driver->setTransform(video::ETS_WORLD, AbsoluteTransformation);
-
-			static u32 lastTime = 0;
 		}
 	}
 
@@ -1287,7 +1287,7 @@ namespace scene
 
 
 	//! used to calculate or recalculate the distance thresholds
-	void TerrainSceneNode::calculateDistanceThresholds(bool scalechanged)
+	void TerrainSceneNode::calculateDistanceThresholds(bool)
 	{
 		// Only update the LODDistanceThreshold if it's not manually changed
 		if (!OverrideDistanceThreshold)

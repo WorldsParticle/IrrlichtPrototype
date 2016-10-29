@@ -29,7 +29,7 @@ public:
         arch(nullptr),
         point(p),
         is_par_event(ispe),
-        y(p->y)
+        y(p->z)
         {}
 
     ///

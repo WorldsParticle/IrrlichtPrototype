@@ -36,13 +36,13 @@ HeightMap::~HeightMap()
 bool HeightMap::pointInsideTrigon(glm::vec3 s, glm::vec3 a, glm::vec3 b, glm::vec3 c)
 {
     float as_x = s.x-a.x;
-    float as_y = s.y-a.y;
+    float as_z = s.z-a.z;
 
-    bool s_ab = (b.x-a.x)*as_y-(b.y-a.y)*as_x >= 0;
+    bool s_ab = (b.x-a.x)*as_z-(b.z-a.z)*as_x >= 0;
 
-    if(((c.x-a.x)*as_y-(c.y-a.y)*as_x > 0) == s_ab) return false;
+    if(((c.x-a.x)*as_z-(c.z-a.z)*as_x > 0) == s_ab) return false;
 
-    if(((c.x-b.x)*(s.y-b.y)-(c.y-b.y)*(s.x-b.x) > 0) != s_ab) return false;
+    if(((c.x-b.x)*(s.z-b.z)-(c.z-b.z)*(s.x-b.x) > 0) != s_ab) return false;
 
     return true;
 }

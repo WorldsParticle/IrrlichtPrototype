@@ -43,16 +43,16 @@ void    Voronoi::clearData()
 const std::vector<Edge *> *Voronoi::fortuneAlgo(const std::vector<Point *> &sites)
 {
     clearData();
-std::cout << "houray" << std::endl;
+    std::cout << "houray" << std::endl;
     for (std::vector<Point *>::const_iterator it = sites.begin(); it != sites.end(); ++it)
-        m_events.push(new Event(new Point((*it)->x, (*it)->y), true));
+        m_events.push(new Event(new Point((*it)->x, (*it)->z), true));
 
     while (!m_events.empty())
     {
         Event *event = m_events.top();
         m_events.pop();
 
-        m_sweepLine = event->point->y;
+        m_sweepLine = event->point->z;
 
         if(m_deleted.find(event) != m_deleted.end())
         {
@@ -102,12 +102,12 @@ void    Voronoi::addParabola(Point *site)
     if (!m_root) { m_root = std::shared_ptr<Parabola>(new Parabola(site)); return; }
 
     // Nop
-    /*if (_root->isLeaf && _root->site->point.y - site->point.y < 1)
+    /*if (_root->isLeaf && _root->site->point.z - site->point.z < 1)
     {
         _root->isLeaf = false;
         _root->setLeft(new Parabola(_root->site));
         _root->setRight(new Parabola(site));
-        Point   s((site->point.x + _root->site->point.x) / 2, _yMax);
+        Point   s((site->point.x + _root->site->point.x) / 2, _zMax);
 
         if (site->point.x  > _root->site->point.x)
             _root->edge = new Edge(s, _root->site, site);
@@ -126,7 +126,7 @@ void    Voronoi::addParabola(Point *site)
         topParabola->cEvent = nullptr;
     }
 
-    Point   *start = new Point(site->x, getY(topParabola->site, site->x));
+    Point   *start = new Point(site->x, getZ(topParabola->site, site->x));
     m_points.push_back(start);
 
     Edge    *el = new Edge(start, topParabola->site, site);
@@ -174,13 +174,13 @@ void    Voronoi::removeParabola(Event *e)
         p2->cEvent = nullptr;
     }
 
-    Point   *p = new Point(e->point->x, getY(p1->site, e->point->x));
+    Point   *p = new Point(e->point->x, getZ(p1->site, e->point->x));
     m_points.push_back(p);
 
     pLeft->edge->end = p;
     pRight->edge->end = p;
 
-    Parabola * higher;
+    Parabola * higher = nullptr;
     Parabola * par = p1;
     while(par != m_root.get())
     {
@@ -211,7 +211,7 @@ void    Voronoi::removeParabola(Event *e)
     checkCircle(p2);
 }
 
-double      Voronoi::getXofEdge(Parabola *p, double y)
+double      Voronoi::getXofEdge(Parabola *p, double z)
 {
     const Point *sLeft = Parabola::getLeftChild(p)->site;
     const Point *sRight = Parabola::getRightChild(p)->site;
@@ -229,12 +229,12 @@ double      Voronoi::getXofEdge(Parabola *p, double y)
     double result;
 
     // REVERIFIER
-    dp = 2.0 * (sLeft->y - y);
+    dp = 2.0 * (sLeft->z - z);
     a1 = 1.0 / dp;
     b1 = -2.0 * sLeft->x / dp;
-    c1 = y + dp / 4 + sLeft->x * sLeft->x / dp;
+    c1 = z + dp / 4 + sLeft->x * sLeft->x / dp;
 
-    dp = 2.0 * (sRight->y - y);
+    dp = 2.0 * (sRight->z - z);
     a2 = 1.0 / dp;
     b2 = -2.0 * sRight->x / dp;
     c2 = m_sweepLine + dp / 4 + sRight->x * sRight->x / dp; // why _sweepline ?
@@ -247,7 +247,7 @@ double      Voronoi::getXofEdge(Parabola *p, double y)
     x1 = (-b + sqrt(delta)) / (2*a);
     x2 = (-b - sqrt(delta)) / (2*a);
 
-    if(sLeft->y < sRight->y)
+    if(sLeft->z < sRight->z)
         result = std::max(x1, x2);
     else
         result = std::min(x1, x2);
@@ -271,10 +271,10 @@ Parabola    *Voronoi::getParabolaAtX(double nx)
     return p;
 }
 
-double      Voronoi::getY(const Point *s, double x)
+double      Voronoi::getZ(const Point *s, double x)
 {
     // Formule d'intersection, à reviser
-    double dp = 2 * (s->y - m_sweepLine);
+    double dp = 2 * (s->z - m_sweepLine);
     double a1 = 1 / dp;
     double b1 = -2 * s->x / dp;
     double c1 = m_sweepLine + dp / 4 + s->x * s->x / dp;
@@ -301,12 +301,12 @@ void        Voronoi::checkCircle(Parabola *b)
 
     // Trouver la future distance de la sweepline quand intersection
     double dx = a->site->x - s->x;
-    double dy = a->site->y - s->y;
-    double d = sqrt( (dx * dx) + (dy * dy) );
-    if(s->y - d >= m_sweepLine)
+    double dz = a->site->z - s->z;
+    double d = sqrt( (dx * dx) + (dz * dz) );
+    if(s->z - d >= m_sweepLine)
         return;
 
-    Event *e = new Event(new Point(s->x, s->y - d), false);
+    Event *e = new Event(new Point(s->x, s->z - d), false);
     m_points.push_back(e->point);
     b->cEvent = e;
     e->arch = b;
@@ -317,14 +317,14 @@ void        Voronoi::checkCircle(Parabola *b)
 Point   *Voronoi::getEdgeIntersection(Edge *a, Edge *b)
 {
     double x = (b->g - a->g) / (a->f - b->f);
-    double y = a->f * x + a->g;
+    double z = a->f * x + a->g;
 
     if((x - a->start->x)/a->direction->x < 0) return NULL;
-    if((y - a->start->y)/a->direction->y < 0) return NULL;
+    if((z - a->start->z)/a->direction->z < 0) return NULL;
     if((x - b->start->x)/b->direction->x < 0) return NULL;
-    if((y - b->start->y)/b->direction->y < 0) return NULL;
+    if((z - b->start->z)/b->direction->z < 0) return NULL;
 
-    Point   *result = new Point(x, y);
+    Point   *result = new Point(x, z);
     m_points.push_back(result);
     return result;
 }

@@ -405,7 +405,7 @@ bool CGUIRadioButtonGroup::OnEvent(const SEvent &event)
 
 void CGUIRadioButtonGroup::autoActivate(bool autoActivate)
 {
-	AutoActivate = false;
+	AutoActivate = autoActivate;
 }
 
 bool CGUIRadioButtonGroup::isAutoActivateEvent() const
