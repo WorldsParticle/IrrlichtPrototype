@@ -39,13 +39,18 @@ public:
 	void createObjectsFromName(int totalElementInZone, int width, int height, SObjectInfo const &objInfo);
 
 private:
-	float waterHeight = 300;
-	float _soundVolume = 1.0f;
-    list<std::shared_ptr<Object>>	_elements;
-	FMOD::System	*_soundSystem;
-	TerrainModule	*_terrain;
-	std::vector<std::vector<SObjectInfo>> _objectsInfoByZone;
-	glm::vec3 getXYPos(int width, int height);
-	void SetupObject(glm::vec3 const &randomValue, std::shared_ptr<Object> obj, SObjectInfo const &objInfo);
-	float getRandom(float &totalPercent, float nbElem);
+    void        generateDouglasFirTree(void);
+
+private:
+    glm::vec3   getXYPos(int width, int height);
+    void        SetupObject(glm::vec3 const &randomValue, std::shared_ptr<Object> obj, SObjectInfo const &objInfo);
+    float       getRandom(float &totalPercent, float nbElem);
+
+private:
+	float                                   waterHeight = 300;
+	float                                   _soundVolume = 1.0f;
+    list<std::shared_ptr<Object>>	        _elements;
+	FMOD::System	                        *_soundSystem;
+	TerrainModule	                        *_terrain;
+	std::vector<std::vector<SObjectInfo>>   _objectsInfoByZone;
 };

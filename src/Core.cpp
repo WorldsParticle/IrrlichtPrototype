@@ -9,6 +9,7 @@
 #include "interface/gui_radiocheckboxgroup.h"
 #include "generator/generator.h"
 #include "map/map.h"
+#include "shaders/CustomTreeShader.h"
 
 // Moche, a sortir quand on allegera le core
 #include "generator/step/zoningstep.h"
@@ -103,6 +104,11 @@ int Core::initModules()
 	//Add light
 	_smgr->setAmbientLight(video::SColorf(0.6,0.6,0.6,1));
 
+    if (CustomTreeShader::Initialize(this->_driver->getGPUProgrammingServices()) == false)
+    {
+        std::cout << "Failed to initialize CustomTreeShader" << std::endl;
+    }
+
 	soundModule = new SoundModule(device, camera);
 	soundModule->init();
 	soundModule->AddBGMusic(RESOURCES_PATH "/sound/river_bg.ogg");
@@ -116,6 +122,7 @@ int Core::initModules()
 	waterModule->init();
 	particleModule = new ParticleModule(device, camera);
 	particleModule->init();
+
 
 	setGUI();
 
