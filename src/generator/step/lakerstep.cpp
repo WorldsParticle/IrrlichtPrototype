@@ -373,7 +373,7 @@ void        LakerStep::createLakes()
 
             m_map->heightMap().pointAt(vec.X, vec.Y).z = minHeight - std::pow(depthRatio, 0.75f) * maxDifferenceHeight;
         }
-        createMesh(lake, minHeight - std::pow((1.0f / fMaxDepth), 0.75f) * maxDifferenceHeight);
+        //createMesh(lake, minHeight - std::pow((1.0f / fMaxDepth), 0.75f) * maxDifferenceHeight);
     }
 
 
