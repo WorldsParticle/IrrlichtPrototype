@@ -8,6 +8,7 @@
 // go to him.
 
 #include <irrlicht.h>
+#include <iostream>
 
 #include "scene/terrain/TerrainSceneNode.h"
 #include "irrlicht/CTerrainTriangleSelector.h"
@@ -16,7 +17,6 @@
 #include "irrlicht/ICameraSceneNode.h"
 #include "irrlicht/SViewFrustum.h"
 #include "irrlicht/irrMath.h"
-#include "irrlicht/os.h"
 #include "irrlicht/IGUIFont.h"
 #include "irrlicht/IFileSystem.h"
 #include "irrlicht/IReadFile.h"
@@ -84,12 +84,11 @@ namespace scene
 			return false;
 
 		Mesh->MeshBuffers.clear();
-		const u32 startTime = os::Timer::getRealTime();
 		video::IImage* heightMap = SceneManager->getVideoDriver()->createImageFromFile(file);
 
 		if (!heightMap)
 		{
-			os::Printer::log("Unable to load heightmap.");
+			std::cout << "Unable to load heightmap." << std::endl;
 			return false;
 		}
 
@@ -227,13 +226,6 @@ namespace scene
 
 		RenderBuffer->setDirty();
 
-		const u32 endTime = os::Timer::getRealTime();
-
-		c8 tmp[255];
-		snprintf(tmp, 255, "Generated terrain data (%dx%d) in %.4f seconds",
-			TerrainData.Size, TerrainData.Size, (endTime - startTime) / 1000.0f );
-		os::Printer::log(tmp);
-
 		return true;
 	}
 
@@ -248,9 +240,6 @@ namespace scene
 		if (floatVals && bitsPerPixel != 32)
 			return false;
 
-		// start reading
-		const u32 startTime = os::Timer::getTime();
-
 		Mesh->MeshBuffers.clear();
 
 		const s32 bytesPerPixel = bitsPerPixel / 8;
@@ -263,7 +252,7 @@ namespace scene
 		{
 			if ((filesize-file->getPos())/bytesPerPixel>width*width)
 			{
-				os::Printer::log("Error reading heightmap RAW file", "File is too small.");
+				std::cout << "Error reading heightmap RAW file, File is too small." << std::endl;
 				return false;
 			}
 			TerrainData.Size = width;
@@ -406,7 +395,7 @@ namespace scene
 				}
 				if (failure)
 				{
-					os::Printer::log("Error reading heightmap RAW file.");
+					std::cout << "Error reading heightmap RAW file." << std::endl;
 					mb->drop();
 					return false;
 				}
@@ -462,13 +451,6 @@ namespace scene
 		RenderBuffer->getIndexBuffer().set_used(
 				TerrainData.PatchCount*TerrainData.PatchCount*
 				TerrainData.CalcPatchSize*TerrainData.CalcPatchSize*6);
-
-		const u32 endTime = os::Timer::getTime();
-
-		c8 tmp[255];
-		snprintf(tmp, 255, "Generated terrain data (%dx%d) in %.4f seconds",
-			TerrainData.Size, TerrainData.Size, (endTime - startTime) / 1000.0f);
-		os::Printer::log(tmp);
 
 		return true;
 	}
@@ -774,16 +756,6 @@ namespace scene
 			driver->setTransform(video::ETS_WORLD, AbsoluteTransformation);
 
 			static u32 lastTime = 0;
-
-			const u32 now = os::Timer::getRealTime();
-			if (now - lastTime > 1000)
-			{
-				char buf[64];
-				snprintf(buf, 64, "Count: %d, Visible: %d", count, visible);
-				os::Printer::log(buf);
-
-				lastTime = now;
-			}
 		}
 	}
 
@@ -1426,7 +1398,7 @@ namespace scene
 				file->drop();
 			}
 			else
-				os::Printer::log("could not open heightmap", newHeightmap.c_str());
+				std::cout << "could not open heightmap" << newHeightmap.c_str() << std::endl;
 		}
 
 		// set possible new scale
