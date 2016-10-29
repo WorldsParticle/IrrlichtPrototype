@@ -1,4 +1,4 @@
-#include "AWeather.h"
+#include "scene/weather/AWeather.h"
 
 void AWeather::update(irr::scene::IParticleSystemSceneNode * ps)
 {
