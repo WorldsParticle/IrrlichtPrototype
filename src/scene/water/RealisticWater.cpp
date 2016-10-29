@@ -201,7 +201,7 @@ const core::aabbox3d<f32>& RealisticWaterSceneNode::getBoundingBox() const
 	return _waterSceneNode->getBoundingBox();
 }
 
-void RealisticWaterSceneNode::OnSetConstants(video::IMaterialRendererServices* services, s32 userData)
+void RealisticWaterSceneNode::OnSetConstants(video::IMaterialRendererServices* services, s32)
 {
 	video::IVideoDriver* driver = services->getVideoDriver();
 

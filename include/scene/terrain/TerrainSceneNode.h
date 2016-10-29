@@ -189,7 +189,7 @@ namespace scene
 		//! the geomipmap data changes.
 		//! param bVal: Boolean value representing whether or not to update selector dynamically.
 		//! NOTE: Temporarily disabled while working out issues with DynamicSelectorUpdate
-		virtual void setDynamicSelectorUpdate(bool bVal ) { DynamicSelectorUpdate = false; }
+		virtual void setDynamicSelectorUpdate(bool) { DynamicSelectorUpdate = false; }
 
 		//! Override the default generation of distance thresholds for determining the LOD a patch
 		//! is rendered at. If any LOD is overridden, then the scene node will no longer apply

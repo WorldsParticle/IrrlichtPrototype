@@ -3,17 +3,17 @@
 namespace map
 {
 
-MapGraph::MapGraph(unsigned int xMax, unsigned int yMax, unsigned int gridSize) :
+MapGraph::MapGraph(unsigned int xMax, unsigned int zMax, unsigned int tileSize) :
     m_zones(),
     m_corners(),
     m_edges(),
     m_xMax(xMax),
-    m_yMax(yMax),
-    m_heightMap(xMax, yMax),
+    m_zMax(zMax),
+    m_heightMap(xMax, zMax),
     m_lakes(),
-    m_gridSize(gridSize),
-    m_gridXMax(xMax / gridSize),
-    m_gridYMax(yMax / gridSize),
+    m_tileSize(tileSize),
+    m_gridXMax(xMax / tileSize),
+    m_gridZMax(zMax / tileSize),
     m_textureGrid(),
     m_heightmapGrid()
 {

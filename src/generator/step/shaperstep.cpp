@@ -41,10 +41,10 @@ void        ShaperStep::assignCornerLandPerlin(int seed)
     {
         Point p = corner.second->point;
         double xMax = m_map->xMax();
-        double yMax = m_map->yMax();
+        double zMax = m_map->zMax();
 
         // assign corner.border if a corner is out of the map's bounding box
-        if (p.x <= 0 || p.y <= 0 || p.x >= xMax || p.y >= yMax)
+        if (p.x <= 0 || p.z <= 0 || p.x >= xMax || p.z >= zMax)
             corner.second->border = true;
         else
             corner.second->border = false;
@@ -54,20 +54,20 @@ void        ShaperStep::assignCornerLandPerlin(int seed)
             p.x = xMax;
         if (p.x < 0)
             p.x = 0;
-        if (p.y > yMax)
-            p.y = yMax;
-        if (p.y < 0)
-            p.y = 0;
+        if (p.z > zMax)
+            p.z = zMax;
+        if (p.z < 0)
+            p.z = 0;
 
         // perlin random number (z) € [0, 1], points are normalized to [-1, 1],
         // thus the farther a point from the center [0, 0],
         // the higher the threshold to earn the right to be a land corner as magnitude goes up.
 
         p.x = (p.x / xMax - 0.5) * 2;
-        p.y = (p.y / yMax - 0.5) * 2;
+        p.z = (p.z / zMax - 0.5) * 2;
 
-        double magnitude = sqrt(pow(p.x, 2) + pow(p.y, 2));
-        double z = static_cast<double>((octave_noise_2d(8.0f, 0.5f, 0.8f, static_cast<float>(p.x + seed), static_cast<float>(p.y + seed)) + 1) / 2.0f);
+        double magnitude = sqrt(pow(p.x, 2) + pow(p.z, 2));
+        double z = static_cast<double>((octave_noise_2d(8.0f, 0.5f, 0.8f, static_cast<float>(p.x + seed), static_cast<float>(p.z + seed)) + 1) / 2.0f);
         double threshold = ((1.0 - static_cast<double>(m_landRatio.value()) / 100.0) * 0.58 + 0.28 * magnitude * magnitude);
         if (z > threshold && !corner.second->border)
             corner.second->water = false;

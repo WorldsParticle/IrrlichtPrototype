@@ -23,28 +23,28 @@ void TextureStep::run()
 
 void TextureStep::paintTextureGrid()
 {
-  bitmap_image texture(m_map->gridSize(), m_map->gridSize());
-  m_map->textureGrid().resize(m_map->gridXMax() * m_map->gridYMax());
+  bitmap_image texture(m_map->tileSize(), m_map->tileSize());
+  m_map->textureGrid().resize(m_map->gridXMax() * m_map->gridZMax());
 
   for (unsigned int gridX = 0; gridX < m_map->gridXMax(); ++gridX)
-    for (unsigned int gridY = 0; gridY < m_map->gridYMax(); ++gridY)
+    for (unsigned int gridZ = 0; gridZ < m_map->gridZMax(); ++gridZ)
     {
-      for (unsigned int x = 0; x < m_map->gridSize(); ++x)
-        for (unsigned int y = 0; y < m_map->gridSize(); ++y)
+      for (unsigned int x = 0; x < m_map->tileSize(); ++x)
+        for (unsigned int z = 0; z < m_map->tileSize(); ++z)
         {
-          ::map::HeightPoint & p = m_map->heightMap().pointAt(gridX * m_map->gridSize() + x,
-                                                              gridY * m_map->gridSize() + y);
-          texture.set_pixel(x, y,
+          ::map::HeightPoint & p = m_map->heightMap().pointAt(gridX * m_map->tileSize() + x,
+                                                              gridZ * m_map->tileSize() + z);
+          texture.set_pixel(x, z,
                             static_cast<unsigned char>(p.z * 255.0),
                             static_cast<unsigned char>(p.z * 255.0),
                             static_cast<unsigned char>(p.z * 255.0));
         }
       std::string path = (std::string)RESOURCES_PATH + "/generated/" +
-                            std::to_string(gridX) + "_" + std::to_string(gridY) +
+                            std::to_string(gridX) + "_" + std::to_string(gridZ) +
                             "texture.bmp";
       std::cout << "Texture generated : " << path << std::endl;
       texture.save_image(path);
-      m_map->textureGrid()[gridX + m_map->gridXMax() * gridY] = path; // WARNING, preferable to size the grids and use []
+      m_map->textureGrid()[gridX + m_map->gridXMax() * gridZ] = path; // WARNING, preferable to size the grids and use []
 
     }
 }

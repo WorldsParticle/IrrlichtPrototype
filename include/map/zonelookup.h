@@ -20,7 +20,7 @@ struct PointCloud
 
     struct LPoint
     {
-        T  x,y;
+        T  x,z;
     Zone   *zone;
     };
 
@@ -56,7 +56,7 @@ public:
         inline coord_t kdtree_distance(const coord_t *p1, const size_t idx_p2,size_t /*size*/) const
         {
             const coord_t d0=p1[0]-derived().pts[idx_p2].x;
-            const coord_t d1=p1[1]-derived().pts[idx_p2].y;
+            const coord_t d1=p1[1]-derived().pts[idx_p2].z;
             return d0*d0+d1*d1;
         }
 
@@ -66,7 +66,7 @@ public:
         inline coord_t kdtree_get_pt(const size_t idx, int dim) const
         {
             if (dim==0) return derived().pts[idx].x;
-            else return derived().pts[idx].y;
+            else return derived().pts[idx].z;
         }
 
         // Optional bounding-box computation: return false to default to a standard bbox computation loop.
@@ -104,9 +104,9 @@ public:
     ///
     /// \brief Default destructor.
     /// \param X coordinate of the point whose neightbor we have to find.
-    /// \param Y coordinate of the point whose neightbor we have to find.
+    /// \param Z coordinate of the point whose neightbor we have to find.
     ///
-    Zone    *getNearestZone(double x, double y);
+    Zone    *getNearestZone(double x, double z);
 
 
 private:

@@ -58,12 +58,12 @@ private:
     Parabola    *getParabolaAtX(double nx); // return leaf parabola at nx position in the current beachline
 
     ///
-    /// \brief getY will retrieve the intersecting y value between a site parabola and an x value
+    /// \brief getZ will retrieve the intersecting y value between a site parabola and an x value
     /// \param s is the site
     /// \param x is the x value
     /// \return
     ///
-    double      getY(const Point *s, double x);
+    double      getZ(const Point *s, double x);
 
     ///
     /// \brief checkCircle find if the current parabola will close soon

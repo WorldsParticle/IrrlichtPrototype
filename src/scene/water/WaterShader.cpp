@@ -34,7 +34,7 @@ void WaterShader::init()
 }
 
 
-void WaterShader::OnSetConstants(video::IMaterialRendererServices *services, s32 userData)
+void WaterShader::OnSetConstants(video::IMaterialRendererServices *services, s32)
 {
   // the following 5 next lignes are static and waiting to have a proper dynamique structure to use :)
   // they are still 4 hardcoded attribute in shader waiting to be in here
@@ -43,8 +43,8 @@ void WaterShader::OnSetConstants(video::IMaterialRendererServices *services, s32
   moveFactor = (int)moveFactor % 1000;
   moveFactor /= 1000.0f;
 
-  core::vector3df lightColour(0.95, 0.95, 0.9); // ca fait l'affaire
-  core::vector3df lightPosition(20000, 20000, -20000); // inverser x/z pour nuit
+  core::vector3df lightColour(0.95f, 0.95f, 0.9f); // ca fait l'affaire
+  core::vector3df lightPosition(20000.0f, 20000.0f, -20000.0f); // inverser x/z pour nuit
 
   // end of static madness
 

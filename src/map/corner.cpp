@@ -26,7 +26,7 @@ Corner::Corner() :
 
 Corner::Corner(const Corner& other) :
 index(other.index),
-point(other.point.x, other.point.y),
+point(other.point.x, other.point.z),
 ocean(other.ocean),
 water(other.water),
 coast(other.coast),
@@ -45,7 +45,7 @@ watershedSize(other.watershedSize)
 
 Corner::Corner(Corner&& other) :
     index(other.index),
-    point(other.point.x, other.point.y),
+    point(other.point.x, other.point.z),
     ocean(other.ocean),
     water(other.water),
     coast(other.coast),
@@ -67,7 +67,7 @@ Corner& Corner::operator=(const Corner& other)
 if (&other != this)
 {
     *(const_cast<int *>(&(this->index))) = other.index;
-    point = Point(other.point.x, other.point.y);
+    point = Point(other.point.x, other.point.z);
     ocean = other.ocean;
     water = other.water;
     coast = other.coast;
@@ -90,7 +90,7 @@ Corner& Corner::operator=(Corner&& other)
 if (&other != this)
 {
     *(const_cast<int *>(&(this->index))) = other.index;
-    point = Point(other.point.x, other.point.y);
+    point = Point(other.point.x, other.point.z);
     ocean = other.ocean;
     water = other.water;
     coast = other.coast;

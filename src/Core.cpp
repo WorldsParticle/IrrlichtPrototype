@@ -95,7 +95,7 @@ int Core::initModules()
 
 	camera->setPosition(core::vector3df(2700 * 2, 3000, -500));
 	camera->setTarget(core::vector3df(2700 * 2, 1000, 2700 * 4));
-    camera->setFarValue(100000.0f);
+    camera->setFarValue(500000.0f);
 	// disable mouse cursor
 	device->getCursorControl()->setVisible(false);
 
@@ -160,8 +160,8 @@ void Core::generate()
 	if (map)
 		delete map;
 
-	map = generator->run(2500, 2500);
-	terrainModule->generateFromMap(map);
+	map = generator->run(4096, 4096);
+	terrainModule->generateFromMap(*map);
 }
 
 int Core::run()

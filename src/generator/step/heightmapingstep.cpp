@@ -22,7 +22,7 @@ HeightMapingStep::~HeightMapingStep()
 // crée une bitmap coloriée en en greyscale selon l'humidité des points
 void    HeightMapingStep::paintByMoisture()
 {
-    int _height = static_cast<int>(m_map->yMax());
+    int _height = static_cast<int>(m_map->zMax());
     int _width = static_cast<int>(m_map->xMax());
     bitmap_image m_image(_width, _height);
     m_image.clear();
@@ -42,7 +42,7 @@ void    HeightMapingStep::paintByMoisture()
 // crée une bitmap coloriée en greyscale selon la hauteur des points
 void    HeightMapingStep::paintByHeight()
 {
-    int _height = static_cast<int>(m_map->yMax());
+    int _height = static_cast<int>(m_map->zMax());
     int _width = static_cast<int>(m_map->xMax());
     bitmap_image m_image(_width, _height);
     m_image.clear();
@@ -62,7 +62,7 @@ void    HeightMapingStep::paintByHeight()
 // crée une bitmap qui assigne différentes couleures selon le land time (bordure, océan, beach/coast et water
 void    HeightMapingStep::paintByLandType()
 {
-    int _height = static_cast<unsigned int>(m_map->yMax());
+    int _height = static_cast<unsigned int>(m_map->zMax());
     int _width = static_cast <unsigned int>(m_map->xMax());
     bitmap_image m_image(_width, _height);
     m_image.clear();
@@ -88,7 +88,7 @@ void    HeightMapingStep::paintByLandType()
 // crée une bitmap qui colorie les zones selon leur biome
 void    HeightMapingStep::paintByBiome()
 {
-    int _height = static_cast<int>(m_map->yMax());
+    int _height = static_cast<int>(m_map->zMax());
     int _width = static_cast<int>(m_map->xMax());
     bitmap_image m_image(_width, _height);
     m_image.clear();
@@ -147,15 +147,15 @@ void    HeightMapingStep::run()
 
     for (unsigned int i = 0; i < m_map->xMax(); ++i)
     {
-        for (unsigned int j = 0; j < m_map->yMax(); ++j)
+        for (unsigned int j = 0; j < m_map->zMax(); ++j)
         {
             ::map::HeightPoint &p = m_map->heightMap().pointAt(i, j);
-            p.x = static_cast<double>(j);
-            p.y = static_cast<double>(i);
+            p.x = static_cast<double>(i);
+            p.z = static_cast<double>(j);
 
             ::map::Zone *z;
-            // trouve la zone à laquelle appartient le pixel en (j, i)
-            z = m_zoneLookUp.getNearestZone(static_cast<double>(j), static_cast<double>(i));
+            // trouve la zone à laquelle appartient le pixel en (i, j)
+            z = m_zoneLookUp.getNearestZone(static_cast<double>(i), static_cast<double>(j));
             p.zone = z;
 
             float elevation = 0.0;
@@ -163,18 +163,18 @@ void    HeightMapingStep::run()
             {
                 glm::vec3 a, b, c;
                 a.x = static_cast<float>(z->point.x);
-                a.y = static_cast<float>(z->point.y);
-                a.z = z->elevation;
+                a.y = z->elevation;
+                a.z = static_cast<float>(z->point.z);
 
                 b.x = static_cast<float>(e->c0->point.x);
-                b.y = static_cast<float>(e->c0->point.y);
-                b.z = e->c0->elevation;
+                b.y = e->c0->elevation;
+                b.z = static_cast<float>(e->c0->point.z);
 
                 c.x = static_cast<float>(e->c1->point.x);
-                c.y = static_cast<float>(e->c1->point.y);
-                c.z = e->c1->elevation;
+                c.y = e->c1->elevation;
+                c.z = static_cast<float>(e->c1->point.z);
 
-                if (::map::HeightMap::pointInsideTrigon(glm::vec3(static_cast<float>(j), static_cast<float>(i), 0.0), a, b, c))
+                if (::map::HeightMap::pointInsideTrigon(glm::vec3(static_cast<float>(i), 0.0, static_cast<float>(j)), a, b, c))
                 {
                     glm::vec3 cross;
                     float d;
@@ -182,7 +182,7 @@ void    HeightMapingStep::run()
                     c = c - a;
                     cross = glm::cross(b, c);
                     d = cross.x * a.x + cross.y * a.y + cross.z * a.z;
-                    elevation = (d - cross.x * static_cast<float>(j) - static_cast<float>(i) * cross.y) / cross.z;
+                    elevation = (d - cross.x * static_cast<float>(i) - static_cast<float>(j) * cross.z) / cross.y;
                     break;
                 }
             }
@@ -192,11 +192,10 @@ void    HeightMapingStep::run()
             /*float  additionalNoise = octave_noise_2d(8.0f, 0.5f, 0.012f, static_cast<float>(j) + static_cast<float>(seed), static_cast<float>(i) + static_cast<float>(seed));
             additionalNoise = additionalNoise / 10.0f;*/
 
-            // set le z du point sur la heightmap
-            p.z = static_cast<double>(elevation); //+ additionalNoise;
-            if (p.z > 1.0)
-                p.z = 1.0;
-
+            // set le y du point sur la heightmap
+            p.y = static_cast<double>(elevation); //+ additionalNoise;
+            if (p.y > 1.0)
+                p.y = 1.0;
         }
     }
 
@@ -217,42 +216,42 @@ void    HeightMapingStep::run()
 
 void   HeightMapingStep::paintHeightmapGrid()
 {
-  bitmap_image heightmap(m_map->gridSize(), m_map->gridSize());
-  m_map->heightmapGrid().resize(m_map->gridXMax() * m_map->gridYMax());
+  bitmap_image heightmap(m_map->tileSize(), m_map->tileSize());
+  m_map->heightmapGrid().resize(m_map->gridXMax() * m_map->gridZMax());
 
   for (unsigned int gridX = 0; gridX < m_map->gridXMax(); ++gridX)
-    for (unsigned int gridY = 0; gridY < m_map->gridYMax(); ++gridY)
+    for (unsigned int gridZ = 0; gridZ < m_map->gridZMax(); ++gridZ)
     {
-      for (unsigned int x = 0; x < m_map->gridSize(); ++x)
-        for (unsigned int y = 0; y < m_map->gridSize(); ++y)
+      for (unsigned int x = 0; x < m_map->tileSize(); ++x)
+        for (unsigned int z = 0; z < m_map->tileSize(); ++z)
         {
           ::map::HeightPoint *p;
         /*  if (x > (m_map->gridSize() - 50) && gridX < (m_map->gridXMax() - 1))
           {
-            p = &m_map->heightMap().pointAt(gridX * m_map->gridSize() + m_map->gridSize(),
-          gridY * m_map->gridSize() + y);
+            p = &m_map->heightMap().pointAt(gridX * m_map->tileSize() + m_map->tileSize(),
+          gridY * m_map->tileSize() + z);
                                                       }
           else if (x < 50 && gridX != 0)
           {
-            p = &m_map->heightMap().pointAt(gridX * m_map->gridSize(),
-          gridY * m_map->gridSize() + y);
+            p = &m_map->heightMap().pointAt(gridX * m_map->tileSize(),
+          gridZ * m_map->tileSize() + e);
                                                             }
           else
           {*/
-            p = &m_map->heightMap().pointAt(gridX * m_map->gridSize() + x,
-                                                              gridY * m_map->gridSize() + y);
+          p = &m_map->heightMap().pointAt(gridX * m_map->tileSize() + x,
+                                                              gridZ * m_map->tileSize() + z);
                                                             //}
-          heightmap.set_pixel(x, y,
-                            static_cast<unsigned char>(p->z * 255.0),
-                            static_cast<unsigned char>(p->z * 255.0),
-                            static_cast<unsigned char>(p->z * 255.0));
+          heightmap.set_pixel(x, z,
+                            static_cast<unsigned char>(p->y * 255.0),
+                            static_cast<unsigned char>(p->y * 255.0),
+                            static_cast<unsigned char>(p->y * 255.0));
         }
       std::string path = (std::string)RESOURCES_PATH + "/generated/" +
-                          std::to_string(gridY) + "y_" + std::to_string(gridX) +
+                          std::to_string(gridZ) + "z_" + std::to_string(gridX) +
                           "x_heightmap.bmp";
       std::cout << "Heightmap generated : " << path << std::endl;
       heightmap.save_image(path);
-      m_map->heightmapGrid()[gridX + m_map->gridXMax() * gridY] = path; // WARNING, preferable to size the grids and use []
+      m_map->heightmapGrid()[gridX + m_map->gridXMax() * gridZ] = path; // WARNING, preferable to size the grids and use []
     }
 }
 

@@ -23,7 +23,7 @@ void Object::remove()
 		_sound->release();
 }
 
-int Object::LoadMesh(std::string const &meshPath, std::string const &texturePath)
+int Object::LoadMesh(std::string const &meshPath, std::string const &)
 {
     scene::IAnimatedMesh *mesh;
 

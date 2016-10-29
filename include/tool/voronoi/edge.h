@@ -93,11 +93,11 @@ public:
     {
 
 
-        f = (r->x - l->x) / (l->y - r->y) ;
-        g = s->y - f * s->x ;
+        f = (r->x - l->x) / (l->z - r->z) ;
+        g = s->z - f * s->x ;
 
         // Revoir
-        direction = new Point((r->y - l->y),
+        direction = new Point((r->z - l->z),
                               -(r->x - l->x));
     }
 

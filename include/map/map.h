@@ -19,7 +19,7 @@ namespace map
 class MapGraph
 {
 public:
-    MapGraph(unsigned int xMax, unsigned int yMax, unsigned int gridSize);
+    MapGraph(unsigned int xMax, unsigned int zMax, unsigned int tileSize);
 
     ///
     /// \brief Copy constructor.
@@ -47,32 +47,32 @@ public:
     inline double xMax()
     { return m_xMax; }
 
-    inline double yMax()
-    { return m_yMax; }
+    inline double zMax()
+    { return m_zMax; }
 
     inline HeightMap   &heightMap()
     { return m_heightMap; }
 
-    inline unsigned int gridSize()
-    { return m_gridSize; }
+    inline unsigned int tileSize()
+    { return m_tileSize; }
 
     inline unsigned int gridXMax()
     { return m_gridXMax; }
 
-    inline unsigned int gridYMax()
-    { return m_gridYMax; }
+    inline unsigned int gridZMax()
+    { return m_gridZMax; }
 
     inline std::vector<std::string> &textureGrid()
     { return m_textureGrid; }
 
-    inline std::string &textureAt(unsigned int x, unsigned int y)
-    { return m_textureGrid[x * m_yMax + y]; }
+    inline std::string &textureAt(unsigned int x, unsigned int z)
+    { return m_textureGrid[x * m_zMax + z]; }
 
     inline std::vector<std::string> &heightmapGrid()
     { return m_heightmapGrid; }
 
-    inline std::string &heightmapAt(unsigned int x, unsigned int y)
-    { return m_heightmapGrid[x + m_gridXMax * y]; }
+    inline std::string &heightmapAt(unsigned int x, unsigned int z)
+    { return m_heightmapGrid[x + m_gridXMax * z]; }
 
 private:
 
@@ -99,7 +99,7 @@ private:
     ///
     /// \brief Height of the map
     ///
-    double    m_yMax;
+    double    m_zMax;
 
     HeightMap m_heightMap;
 
@@ -107,9 +107,9 @@ private:
     std::list<Lake *> m_lakes;
 
     /// gestion de la grille de texture (multi terrain)
-    unsigned int m_gridSize; // longueur et largeur d'une cellule
+    unsigned int m_tileSize; // longueur et largeur d'une cellule
     unsigned int m_gridXMax; // nombre de cellules en x
-    unsigned int m_gridYMax; // nombre de cellules en y
+    unsigned int m_gridZMax; // nombre de cellules en z
     std::vector<std::string>  m_textureGrid; // path to the image
     std::vector<std::string>  m_heightmapGrid; // same
 };

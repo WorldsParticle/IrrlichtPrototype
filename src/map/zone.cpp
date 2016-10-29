@@ -4,9 +4,9 @@ namespace map
 {
 
 int Zone::indexMax = 0;
-Zone::Zone(double x, double y) :
+Zone::Zone(double x, double z) :
     index(indexMax),
-    point(x, y),
+    point(x, z),
     water(false),
     ocean(false),
     coast(false),
@@ -23,8 +23,8 @@ Zone::Zone(double x, double y) :
 
 bool    Zone::haveNeighbor(Zone *zone)
 {
-    for (const auto &z: neighbors)
-        if (z == zone)
+    for (const auto &n: neighbors)
+        if (n == zone)
             return true;
     return false;
 }

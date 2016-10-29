@@ -122,9 +122,9 @@ void        LakerStep::fillDepthMap(std::vector<int> & depthMap, unsigned int xM
     }
 }
 
-void        LakerStep::createLakes()
+void        LakerStep::createLakes() // CAREFULL, z/y translation
 {
-    unsigned int    yMax = static_cast<unsigned int>(m_map->yMax());
+    unsigned int    yMax = static_cast<unsigned int>(m_map->zMax());
     unsigned int    xMax = static_cast<unsigned int>(m_map->xMax());
 
     // Temporary, create one random lake somewhere.
