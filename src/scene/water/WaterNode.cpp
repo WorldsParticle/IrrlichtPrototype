@@ -6,7 +6,7 @@
 #include "scene/water/WaterFrameBuffers.h"
 #include "scene/water/WaterShader.h"
 
-const core::vector2df  WaterNode::TILE_SIZE = core::vector2df(500, 500);
+const core::vector2df  WaterNode::TILE_SIZE = core::vector2df(4096, 4096);
 
 
 WaterNode::WaterNode(scene::ISceneNode *parent, scene::ISceneManager *smgr, const core::vector3df &pos, const core::vector2df &size) :
@@ -29,15 +29,18 @@ void WaterNode::init()
   _reflectionCamera = _smgr->addCameraSceneNode(0, core::vector3df(0, 0, 0), core::vector3df(0, 0, 0), -1, false);
   _reflectionCamera->bindTargetAndRotation(true);
 
+  _waterShader = new WaterShader(_smgr, &_time);
+  _waterBuffers = new WaterFrameBuffers(_smgr);
+
   _waterMesh = _smgr->getGeometryCreator()->createPlaneMesh(TILE_SIZE,
-                      core::dimension2du(_size.X / TILE_SIZE.X, _size.Y / TILE_SIZE.Y));
+                      core::dimension2du(_size.X / TILE_SIZE.X, _size.Y / TILE_SIZE.Y),
+                      0,
+                      core::dimension2df(4096 / 512, 4096 / 512));
 
   _waterNode = _smgr->addMeshSceneNode(_waterMesh);
   //_waterNode = _smgr->addWaterSurfaceSceneNode(_waterMesh, 5.0f, 500.0f, 200.0f);
   _waterNode->setPosition(_pos);
 
-  _waterShader = new WaterShader(_smgr, &_time);
-  _waterBuffers = new WaterFrameBuffers(_smgr);
 
   _waterNode->setMaterialType((video::E_MATERIAL_TYPE)_waterShader->material());
 
