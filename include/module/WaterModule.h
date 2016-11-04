@@ -11,7 +11,7 @@ class WaterNode;
 class WaterModule : public AModule
 {
     public:
-	WaterModule(IrrlichtDevice* _device, scene::ICameraSceneNode* _camera, TerrainModule *terrain);
+	WaterModule(Core *c, IrrlichtDevice* _device, scene::ICameraSceneNode* _camera, TerrainModule *terrain);
 	~WaterModule();
 inline std::list<WaterNode *>  &waterNodes()
 { return _waterNodes; }

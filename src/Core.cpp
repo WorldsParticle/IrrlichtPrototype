@@ -114,18 +114,18 @@ int Core::initModules()
         std::cout << "Failed to initialize CustomLeafShader" << std::endl;
     }
 
-	soundModule = new SoundModule(device, camera);
+	soundModule = new SoundModule(this, device, camera);
 	soundModule->init();
 	soundModule->AddBGMusic(RESOURCES_PATH "/sound/river_bg.ogg");
-	skyboxModule = new SkyboxModule(device, camera);
+	skyboxModule = new SkyboxModule(this, device, camera);
 	skyboxModule->init();
-	terrainModule = new TerrainModule(device, camera);
+	terrainModule = new TerrainModule(this, device, camera);
 	terrainModule->init();
-	elementsModule = new ElementsModule(device, camera, soundModule->soundSystem, terrainModule);
+	elementsModule = new ElementsModule(this, device, camera, soundModule->soundSystem, terrainModule);
 	elementsModule->init();
-	waterModule = new WaterModule(device, camera, terrainModule);
+	waterModule = new WaterModule(this, device, camera, terrainModule);
 	waterModule->init();
-	particleModule = new ParticleModule(device, camera);
+	particleModule = new ParticleModule(this, device, camera);
 	particleModule->init();
 
 
@@ -160,8 +160,9 @@ void Core::generate()
 	if (map)
 		delete map;
 
-	map = generator->run(512, 512);
+	map = generator->run(1024, 1024);
 	terrainModule->generateFromMap(*map);
+	elementsModule->generateDouglasFirTree();
 }
 
 int Core::run()

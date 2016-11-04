@@ -5,8 +5,8 @@
 #include "scene/water/WaterNode.h"
 #include <iostream>
 
-WaterModule::WaterModule(IrrlichtDevice* _device, scene::ICameraSceneNode* _camera, TerrainModule *terrain) :
-	AModule{ _device, _camera }, _terrain(terrain), _waterNodes(std::list<WaterNode *>())
+WaterModule::WaterModule(Core *c, IrrlichtDevice* _device, scene::ICameraSceneNode* _camera, TerrainModule *terrain) :
+	AModule(c, _device, _camera), _terrain(terrain), _waterNodes(std::list<WaterNode *>())
 {
 
 }
@@ -20,8 +20,8 @@ WaterModule::~WaterModule()
 int WaterModule::init()
 {
 	WaterNode *w = new WaterNode (smgr->getRootSceneNode(), smgr,
-                                                    core::vector3df((512 * 500) / 2 - 512, 100, (512 * 500) / 2 - 512),
-                                                    core::vector2df((512 * 500) * 4, (512 * 500) * 4));
+                                                    core::vector3df((1024 * 500) / 2 - 1024, 120, (1024 * 500) / 2 - 1024),
+                                                    core::vector2df((1024 * 500) * 2, (1024 * 500) * 2));
 
 
 	_waterNodes.push_back(w);

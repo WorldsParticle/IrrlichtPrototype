@@ -10,9 +10,9 @@ const float DISTANCEFACTOR = 100.0f;          // Units per meter.  I.e feet woul
 class SoundModule : public AModule
 {
 public:
-    SoundModule(IrrlichtDevice* _device,
+    SoundModule(Core *c, IrrlichtDevice* _device,
     scene::ICameraSceneNode* _camera)
-    : AModule(_device, _camera)
+    : AModule(c, _device, _camera)
     {
     }
     ~SoundModule()
@@ -42,4 +42,3 @@ private:
     FMOD::Sound		*_BGSound;
     FMOD::Channel	*_BGChannel;
 };
-
