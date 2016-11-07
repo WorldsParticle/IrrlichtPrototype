@@ -23,9 +23,6 @@ int ParticleModule::init()
     _weathers[AWeather::E_WEATHER::SNOW] = new SnowWeather(_particleSystem, driver);
     _weathers[AWeather::E_WEATHER::RAIN] = new RainWeather(_particleSystem, driver);
 
-    // Init timer
-    _timer = device->getTimer();
-    _timer->start();
     // Define the weather update speed (in ms)
     _updateSpeed = WEATHER_UPDATE_SPEED * 1000;
     // Init the time for the nex weather update
@@ -48,6 +45,8 @@ int ParticleModule::update()
 
 void ParticleModule::setWeather(int w)
 {
+    _nextUpdate = _timer->getTime() + _updateSpeed;
+
     _weather = static_cast<AWeather::E_WEATHER>(w);
     auto weather = _weathers[_weather];
     if (weather)

@@ -6,6 +6,7 @@
 #include "module/WaterModule.h"
 #include "module/SoundModule.h"
 #include "module/ParticleModule.h"
+#include "module/TimerModule.h"
 #include "interface/gui_radiocheckboxgroup.h"
 #include "generator/generator.h"
 #include "map/map.h"
@@ -103,10 +104,12 @@ int Core::initModules()
 	//Add light
 	_smgr->setAmbientLight(video::SColorf(0.6,0.6,0.6,1));
 
+    timerModule = new TimerModule(device, camera);
+    timerModule->init();
 	soundModule = new SoundModule(device, camera);
 	soundModule->init();
 	soundModule->AddBGMusic(RESOURCES_PATH "/sound/river_bg.ogg");
-	skyboxModule = new SkyboxModule(device, camera);
+	skyboxModule = new SkyboxModule(device, camera, timerModule);
 	skyboxModule->init();
 	terrainModule = new TerrainModule(device, camera);
 	terrainModule->init();
@@ -114,8 +117,9 @@ int Core::initModules()
 	elementsModule->init();
 	waterModule = new WaterModule(device, camera, terrainModule);
 	waterModule->init();
-	particleModule = new ParticleModule(device, camera);
+	particleModule = new ParticleModule(device, camera, timerModule);
 	particleModule->init();
+    
 
 	setGUI();
 
@@ -160,6 +164,7 @@ int Core::run()
 	while (device->run())
 		if (device->isWindowActive())
 		{
+            timerModule->update();
 			elementsModule->update();
 			skyboxModule->update();
 			terrainModule->update();

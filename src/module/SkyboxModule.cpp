@@ -24,9 +24,6 @@ int SkyboxModule::init()
     _active = _skyboxes[_weather].first;
     _active->setVisible(true);
 
-    // Init timer
-    _timer = device->getTimer();
-
 	return 0;
 }
 
@@ -111,8 +108,7 @@ int SkyboxModule::update()
 {
     // Get elapsedTime
     irr::u32 time = _timer->getTime();
-    float elapsedTime = (time - _lastTime) / 1000.0f;
-    _lastTime = time;
+    float elapsedTime = _timer->getElapsedTime();
     time %= static_cast<int>(TIME_OF_DAY);
 
     // Calc rotation speed for one Day/Night cycle

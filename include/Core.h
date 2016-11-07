@@ -10,6 +10,7 @@ class TerrainModule;
 class WaterModule;
 class SoundModule;
 class ParticleModule;
+class TimerModule;
 
 namespace gen
 { class Generator; }
@@ -39,17 +40,20 @@ private:
 	irr::gui::IGUITab		*_tab = NULL;
 
 	void setGUI();
+
 public:
-	ElementsModule								*elementsModule;
-	SkyboxModule									*skyboxModule;
-	TerrainModule									*terrainModule;
-	WaterModule										*waterModule;
-	SoundModule										*soundModule;
-	ParticleModule								*particleModule;
+	ElementsModule	*elementsModule;
+	SkyboxModule	*skyboxModule;
+	TerrainModule	*terrainModule;
+	WaterModule		*waterModule;
+	SoundModule		*soundModule;
+	ParticleModule	*particleModule;
+    TimerModule     *timerModule;
+
 	irr::scene::ICameraSceneNode	*camera;
-	irr::IrrlichtDevice						*device;
-	gen::Generator								*generator;
-	::map::MapGraph									*map;
+	irr::IrrlichtDevice				*device;
+	gen::Generator					*generator;
+	::map::MapGraph					*map;
 
 	bool isInterfaceVisible() const;
 	void toggleInterface();
