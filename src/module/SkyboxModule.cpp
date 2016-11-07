@@ -1,6 +1,11 @@
 #include "module/SkyboxModule.h"
 #include "Configuration.h"
 
+#define     TIME_OF_DAY         DAY_LENGTH * 60 * 1000  // Time of one day in ms depending on DAY_LENGTH
+#define     TWILIGHT_START      TIME_OF_DAY * 0.5f
+#define     NIGHT_START         TIME_OF_DAY * 0.575f
+#define     DAWN_START          TIME_OF_DAY * 0.925f
+
 int SkyboxModule::init()
 {
     // Init shader for Day/Night cycle
@@ -32,7 +37,7 @@ void SkyboxModule::createSkyboxesPair(AWeather::E_WEATHER w, const std::string &
     scene::ISceneNode * day = createSkybox(pathDay);
     scene::ISceneNode * night = createSkybox(pathNight);
 
-    // Create new Texture layer with the opposite time Skybox.
+    // Create new Texture layer with the opposite time(Day/Night) Skybox.
     // Used by the shader to mix Day & Night Skybox depending on the time
     // Would be easier if irrlicht supported CubeMapping...
     for (u32 i = 0; i < day->getMaterialCount(); ++i)
@@ -108,10 +113,10 @@ int SkyboxModule::update()
     irr::u32 time = _timer->getTime();
     float elapsedTime = (time - _lastTime) / 1000.0f;
     _lastTime = time;
-    time %= (int)(TIME_OF_DAY * 60 * 1000);
+    time %= static_cast<int>(TIME_OF_DAY);
 
-    // Calc rotation speed for a TIME_OF_DAY(min) Day/Night cycle
-    float angle = 360.0f / (TIME_OF_DAY * 60);
+    // Calc rotation speed for one Day/Night cycle
+    float angle = 360.0f / (DAY_LENGTH * 60);
     float speed = angle * elapsedTime;
 
     // Update skybox rotation
@@ -119,19 +124,21 @@ int SkyboxModule::update()
     rot.Y -= speed;
     _active->setRotation(rot);
 
-    // Stuff to mix Skyboxes depending on time
+    // Calc mixFactor's Skyboxes depending on time
     _mixFactor = 0;
     // Dawn start
-    if (time >= DAWN_START * 60 * 1000)
-        _mixFactor = (TIME_OF_DAY * 60 * 1000 - time) /
-                     (TIME_OF_DAY * 60 * 1000 - DAWN_START * 60 * 1000);
+    if (time >= DAWN_START)
+        _mixFactor = (TIME_OF_DAY - time) /
+                     (TIME_OF_DAY - DAWN_START);
+
     // Twilight end / Night start
-    else if (time >= NIGHT_START * 60 * 1000)
+    else if (time >= NIGHT_START)
         _mixFactor = 1;
+
     // Twilight start
-    else if (time >= TWILIGHT_START * 60 * 1000)
-        _mixFactor = (time - TWILIGHT_START * 60 * 1000) /
-                     (NIGHT_START * 60 * 1000 - TWILIGHT_START * 60 * 1000);
+    else if (time >= TWILIGHT_START)
+        _mixFactor = (time - TWILIGHT_START) /
+                     (NIGHT_START - TWILIGHT_START);
  
     return 0;
 }

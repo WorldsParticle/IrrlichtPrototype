@@ -18,6 +18,7 @@ public:
 public:
     virtual int init();
     virtual int update();
+
     void setWeather(int w);
 
 

@@ -2,6 +2,9 @@
 #include "scene/weather/SnowWeather.h"
 #include "scene/weather/RainWeather.h"
 
+// Weather update speed in sec
+#define     WEATHER_UPDATE_SPEED  10
+
 int ParticleModule::init()
 {
     // Create new ParticleSystem and disable the default Emiter
@@ -24,7 +27,7 @@ int ParticleModule::init()
     _timer = device->getTimer();
     _timer->start();
     // Define the weather update speed (in ms)
-    _updateSpeed = 10 * 1000;
+    _updateSpeed = WEATHER_UPDATE_SPEED * 1000;
     // Init the time for the nex weather update
     _nextUpdate = _timer->getTime() + _updateSpeed;
     return 0;

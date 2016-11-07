@@ -4,6 +4,8 @@
 #include "scene/weather/AWeather.h"
 #include <map>
 
+// Real time length for one day (in min)
+#define     DAY_LENGTH      1.0f
 
 class SkyboxModule : public AModule, video::IShaderConstantSetCallBack
 {
@@ -31,6 +33,7 @@ public:
     irr::s32 _shader;
     virtual void OnSetConstants(video::IMaterialRendererServices* services, s32 userData);
 
+
 private:
     void createSkyboxesPair(AWeather::E_WEATHER w, const std::string & pathDay, const std::string & pathNight);
     scene::ISceneNode * createSkybox(const std::string & path);
@@ -47,9 +50,4 @@ private:
 
     std::map<AWeather::E_WEATHER,
              std::pair<scene::ISceneNode *, scene::ISceneNode *>>   _skyboxes;
-
-    #define     TIME_OF_DAY     1.0f                // Real time for one day (in min)
-    #define     TWILIGHT_START  TIME_OF_DAY * 0.5
-    #define     NIGHT_START     TIME_OF_DAY * 0.575
-    #define     DAWN_START      TIME_OF_DAY * 0.925
 };
