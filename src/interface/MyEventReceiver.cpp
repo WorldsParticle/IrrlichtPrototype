@@ -21,13 +21,13 @@ void MyEventReceiver::ApplyGUIParametersToWorld()
 	std::cout << "Environment: " << _context.envRadioBox->getSelected() << std::endl;
 	std::cout << "Time: " << _context.timeRadioBox->getSelected() << std::endl;
 	std::cout << "Climat: " << _context.climatRadioBox->getSelected() << std::endl;
-	_core->skyboxModule->setSkybox(_context.timeRadioBox->getSelected(),
-			_context.climatRadioBox->getSelected());
-	_core->particleModule->setWeather(_context.climatRadioBox->getSelected());
-	_core->soundModule->SetEnvironmentalSound(_context.envRadioBox->getSelected(),
-			_context.timeRadioBox->getSelected(),
-			_context.climatRadioBox->getSelected());
-	_core->elementsModule->putElementsOfZone(_context.envRadioBox->getSelected());
+	//_core->skyboxModule->setSkybox(_context.timeRadioBox->getSelected(),
+	//		_context.climatRadioBox->getSelected());
+	//_core->particleModule->setWeather(_context.climatRadioBox->getSelected());
+	//_core->soundModule->SetEnvironmentalSound(_context.envRadioBox->getSelected(),
+	//		_context.timeRadioBox->getSelected(),
+	//		_context.climatRadioBox->getSelected());
+	//_core->elementsModule->putElementsOfZone(_context.envRadioBox->getSelected());
 }
 
 bool MyEventReceiver::OnEvent(const SEvent& event)
@@ -37,9 +37,9 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 	{
 		switch (event.KeyInput.Key)
 		{
-	  case irr::KEY_KEY_C: // switch camera
-			switchCameraMode();
-			return true;
+	  //case irr::KEY_KEY_C: // switch camera
+			////switchCameraMode();
+			//return true;
 		case irr::KEY_KEY_V: // switch wireframe mode
 			switchWireframe();
 			return true;
@@ -116,20 +116,20 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 				}
 				break;
 
-			case EGET_SCROLL_BAR_CHANGED:
-				if (id == GUI_ID_MUSIC_SCROLL_BAR)
-				{
-					s32 pos = ((IGUIScrollBar*)event.GUIEvent.Caller)->getPos();
-					_core->soundModule->SetVolume((float)pos / 100.0);
-					std::cout << "Music volume: " << pos << std::endl;
-				}
-				else if (id == GUI_ID_SOUND_SCROLL_BAR)
-				{
-					s32 pos = ((IGUIScrollBar*)event.GUIEvent.Caller)->getPos();
-					_core->elementsModule->SetVolume((float)pos / 100.0);
-					std::cout << "Sound volume: " << pos << std::endl;
-				}
-				break;
+			//case EGET_SCROLL_BAR_CHANGED:
+			//	if (id == GUI_ID_MUSIC_SCROLL_BAR)
+			//	{
+			//		s32 pos = ((IGUIScrollBar*)event.GUIEvent.Caller)->getPos();
+			//		_core->soundModule->SetVolume((float)pos / 100.0);
+			//		std::cout << "Music volume: " << pos << std::endl;
+			//	}
+			//	else if (id == GUI_ID_SOUND_SCROLL_BAR)
+			//	{
+			//		s32 pos = ((IGUIScrollBar*)event.GUIEvent.Caller)->getPos();
+			//		_core->elementsModule->SetVolume((float)pos / 100.0);
+			//		std::cout << "Sound volume: " << pos << std::endl;
+			//	}
+			//	break;
 
 			default:
 				break;
@@ -146,8 +146,8 @@ void MyEventReceiver::switchWireframe()
 
 	for (scene::ITerrainSceneNode *node : _core->terrainModule->terrainGridNodes())
 		node->setMaterialFlag(EMF_WIREFRAME, wireframe);
-	for (WaterNode *node: _core->waterModule->waterNodes())
-		node->waterNode()->setMaterialFlag(EMF_WIREFRAME, wireframe);
+	//for (WaterNode *node: _core->waterModule->waterNodes())
+	//	node->waterNode()->setMaterialFlag(EMF_WIREFRAME, wireframe);
 }
 
 void MyEventReceiver::switchCameraMode()

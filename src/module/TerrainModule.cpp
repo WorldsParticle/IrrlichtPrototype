@@ -1,5 +1,6 @@
 #include "module/TerrainModule.h"
 #include "Configuration.h"
+#include "Core.h"
 
 #include "tool/bitmap_image.h"
 #include "tool/simplexnoise.h"
@@ -24,8 +25,54 @@ TerrainModule::~TerrainModule()
 
 int TerrainModule::init()
 {
-	TerrainSceneNode *n = new TerrainSceneNode(nullptr, nullptr, nullptr, -1);
-	delete n;
+	//TerrainSceneNode *n = new TerrainSceneNode(nullptr, nullptr, nullptr, -1);
+	//TerrainSceneNode *terrain = new TerrainSceneNode(
+	//	smgr->getRootSceneNode(),
+	//	smgr,
+	//	smgr->getFileSystem(),
+	//	-1, // Id
+	//	8, // maxLOD
+	//	scene::ETPS_17,
+	//	core::vector3df(0.f, 0.f, 0.f), // position
+	//	core::vector3df(0.f, 0.f, 0.f), // rotation
+	//	core::vector3df(MAP_SIZE, 0, MAP_SIZE) // scale
+	//);
+
+	//terrain->setMaterialFlag(video::EMF_LIGHTING, true);
+	//terrain->setMaterialTexture(0,
+	//	driver->getTexture(RESOURCES_PATH "/terrain-texture.jpg"));
+	//terrain->setMaterialTexture(1,
+	//	driver->getTexture(RESOURCES_PATH "/detailmap3.jpg"));
+	//terrain->setMaterialType(video::EMT_DETAIL_MAP);
+	//terrain->scaleTexture(1.0f, 20.0f);
+
+	// add terrain scene node
+	scene::ITerrainSceneNode* terrain = smgr->addTerrainSceneNode(
+		RESOURCES_PATH "/terrain-heightmap.bmp",
+		0,                  // parent node
+		-1,                 // node id
+		-ORIGIN_POS,     // position
+		core::vector3df(0.f, 0.f, 0.f),     // rotation
+		core::vector3df(MAP_SIZE, 4.4f, MAP_SIZE),  // scale
+		video::SColor(255, 255, 255, 255),   // vertexColor
+		5,                  // maxLOD
+		scene::ETPS_17,             // patchSize
+		4                   // smoothFactor
+	);
+
+	terrain->setMaterialFlag(video::EMF_LIGHTING, false);
+
+	terrain->setMaterialTexture(0,
+		driver->getTexture(RESOURCES_PATH "/terrain-texture.jpg"));
+	terrain->setMaterialTexture(1,
+		driver->getTexture(RESOURCES_PATH "/detailmap3.jpg"));
+
+	terrain->setMaterialType(video::EMT_DETAIL_MAP);
+
+	terrain->scaleTexture(1.0f, 20.0f);
+
+	//terrain->drop();
+	//delete n;
 	return 0;
 }
 
@@ -37,7 +84,7 @@ int TerrainModule::update()
 void TerrainModule::generateFromMap(::map::MapGraph &map)
 {
     clearNodes();
-    float scale = 500.0f; // temp
+	float scale = WORLD_UNIT_SCALE;
     _terrainGridNodes.resize(map.gridXMax() * map.gridZMax());
     _terrainGridAnims.resize(map.gridXMax() * map.gridZMax());
 
@@ -46,8 +93,7 @@ void TerrainModule::generateFromMap(::map::MapGraph &map)
         for (unsigned int z = 0; z < map.gridZMax(); ++z)
         {
             std::cout << "x : " << x << ", z : " << z << std::endl;
-						scene::ITerrainSceneNode *terrain = loadTerrain(map,
-																														x, z, scale);
+						scene::ITerrainSceneNode *terrain = loadTerrain(map, x, z, scale);
 
             // create triangle selector for the terrain
             scene::ITriangleSelector* selector
@@ -102,21 +148,21 @@ scene::ITerrainSceneNode	*TerrainModule::loadTerrain(::map::MapGraph &map, unsig
 			core::vector3df(scale, scale, scale) // scale
 		);
 
-	io::IReadFile* file = smgr->getFileSystem()->createAndOpenFile(map.heightmapAt(map.gridZMax() - z - 1, x).c_str());
-	terrain->loadHeightMap(
-												file,
-												video::SColor(255, 255, 255, 255), // vertexColor)
-												5); // smoothFactor
-	if (file)
-		file->drop();
+	//io::IReadFile* file = smgr->getFileSystem()->createAndOpenFile(map.heightmapAt(map.gridZMax() - z - 1, x).c_str());
+	//terrain->loadHeightMap(
+	//											file,
+	//											video::SColor(255, 255, 255, 255), // vertexColor)
+	//											5); // smoothFactor
+	//if (file)
+	//	file->drop();
 
-	///
-	/// LMP - Part of placing the terrain at the good position.
-	/// Previous position set was not working at all.
-	///
+	/////
+	///// LMP - Part of placing the terrain at the good position.
+	///// Previous position set was not working at all.
+	/////
 
-	const auto &aabb = terrain->getBoundingBox();
-	terrain->setPosition(irr::core::vector3df(z * (aabb.MaxEdge.X - aabb.MinEdge.X), 0.0f, x * (aabb.MaxEdge.Z - aabb.MinEdge.Z)));
+	//const auto &aabb = terrain->getBoundingBox();
+	//terrain->setPosition(irr::core::vector3df(z * (aabb.MaxEdge.X - aabb.MinEdge.X), 0.0f, x * (aabb.MaxEdge.Z - aabb.MinEdge.Z)));
 
 	///
 	/// END - LMP - Part of placing the terrain at the good position.

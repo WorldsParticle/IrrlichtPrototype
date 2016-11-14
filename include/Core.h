@@ -2,6 +2,7 @@
 
 #include <irrlicht.h>
 #include "driverChoice.h"
+#include "WorldSettings.h"
 
 class MyEventReceiver;
 class ElementsModule;
@@ -40,16 +41,16 @@ private:
 
 	void setGUI();
 public:
-	ElementsModule								*elementsModule;
-	SkyboxModule									*skyboxModule;
+	//ElementsModule								*elementsModule;
+	//SkyboxModule									*skyboxModule;
 	TerrainModule									*terrainModule;
-	WaterModule										*waterModule;
-	SoundModule										*soundModule;
-	ParticleModule								*particleModule;
+	//WaterModule										*waterModule;
+	//SoundModule										*soundModule;
+	//ParticleModule								*particleModule;
 	irr::scene::ICameraSceneNode	*camera;
-	irr::IrrlichtDevice						*device;
-	gen::Generator								*generator;
-	::map::MapGraph									*map;
+	irr::IrrlichtDevice				*device;
+	gen::Generator					*generator;
+	::map::MapGraph					*map;
 
 	bool isInterfaceVisible() const;
 	void toggleInterface();

@@ -28,7 +28,7 @@ public:
 	virtual int update() = 0;
 
 protected:
-	Core										*core;
+	Core				*core;
 
 	IrrlichtDevice		*device;
 	video::IVideoDriver	*driver;
