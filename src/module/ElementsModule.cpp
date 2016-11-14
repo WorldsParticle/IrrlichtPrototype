@@ -37,9 +37,9 @@ int ElementsModule::init()
 		} //zone 2 : beach
 		};
 	srand(static_cast<unsigned int>(time(nullptr)));
-	//putElementsOfZone(0);
+	putElementsOfZone(0);
 
-    this->generateDouglasFirTree();
+    //this->generateDouglasFirTree();
 
 	return 0;
 }
@@ -124,7 +124,7 @@ void ElementsModule::putElementsOfZone(int zone)
 		clear();
 	for (auto const &objInfo : _objectsInfoByZone[zone])
 	{
-		createObjectsFromName(20, 10000, 10000, objInfo); //nbTotalElements, width, height
+		createObjectsFromName(5, 10000, 10000, objInfo); //nbTotalElements, width, height
 	}
 	SetVolume(_soundVolume);
 }
