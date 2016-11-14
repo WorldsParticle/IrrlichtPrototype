@@ -47,29 +47,29 @@ int TerrainModule::init()
 	//terrain->scaleTexture(1.0f, 20.0f);
 
 	// add terrain scene node
-	scene::ITerrainSceneNode* terrain = smgr->addTerrainSceneNode(
-		RESOURCES_PATH "/terrain-heightmap.bmp",
-		0,                  // parent node
-		-1,                 // node id
-		-ORIGIN_POS,     // position
-		core::vector3df(0.f, 0.f, 0.f),     // rotation
-		core::vector3df(MAP_SIZE, 4.4f, MAP_SIZE),  // scale
-		video::SColor(255, 255, 255, 255),   // vertexColor
-		5,                  // maxLOD
-		scene::ETPS_17,             // patchSize
-		4                   // smoothFactor
-	);
+	//scene::ITerrainSceneNode* terrain = smgr->addTerrainSceneNode(
+	//	RESOURCES_PATH "/terrain-heightmap.bmp",
+	//	0,                  // parent node
+	//	-1,                 // node id
+	//	-ORIGIN_POS,     // position
+	//	core::vector3df(0.f, 0.f, 0.f),     // rotation
+	//	core::vector3df(MAP_SIZE, 4.4f, MAP_SIZE),  // scale
+	//	video::SColor(255, 255, 255, 255),   // vertexColor
+	//	5,                  // maxLOD
+	//	scene::ETPS_17,             // patchSize
+	//	4                   // smoothFactor
+	//);
 
-	terrain->setMaterialFlag(video::EMF_LIGHTING, false);
+	//terrain->setMaterialFlag(video::EMF_LIGHTING, false);
 
-	terrain->setMaterialTexture(0,
-		driver->getTexture(RESOURCES_PATH "/terrain-texture.jpg"));
-	terrain->setMaterialTexture(1,
-		driver->getTexture(RESOURCES_PATH "/detailmap3.jpg"));
+	//terrain->setMaterialTexture(0,
+	//	driver->getTexture(RESOURCES_PATH "/terrain-texture.jpg"));
+	//terrain->setMaterialTexture(1,
+	//	driver->getTexture(RESOURCES_PATH "/detailmap3.jpg"));
 
-	terrain->setMaterialType(video::EMT_DETAIL_MAP);
+	//terrain->setMaterialType(video::EMT_DETAIL_MAP);
 
-	terrain->scaleTexture(1.0f, 20.0f);
+	//terrain->scaleTexture(1.0f, 20.0f);
 
 	//terrain->drop();
 	//delete n;
@@ -148,21 +148,21 @@ scene::ITerrainSceneNode	*TerrainModule::loadTerrain(::map::MapGraph &map, unsig
 			core::vector3df(scale, scale, scale) // scale
 		);
 
-	//io::IReadFile* file = smgr->getFileSystem()->createAndOpenFile(map.heightmapAt(map.gridZMax() - z - 1, x).c_str());
-	//terrain->loadHeightMap(
-	//											file,
-	//											video::SColor(255, 255, 255, 255), // vertexColor)
-	//											5); // smoothFactor
-	//if (file)
-	//	file->drop();
+	io::IReadFile* file = smgr->getFileSystem()->createAndOpenFile(map.heightmapAt(map.gridZMax() - z - 1, x).c_str());
+	terrain->loadHeightMap(
+												file,
+												video::SColor(255, 255, 255, 255), // vertexColor)
+												5); // smoothFactor
+	if (file)
+		file->drop();
 
-	/////
-	///// LMP - Part of placing the terrain at the good position.
-	///// Previous position set was not working at all.
-	/////
+	///
+	/// LMP - Part of placing the terrain at the good position.
+	/// Previous position set was not working at all.
+	///
 
-	//const auto &aabb = terrain->getBoundingBox();
-	//terrain->setPosition(irr::core::vector3df(z * (aabb.MaxEdge.X - aabb.MinEdge.X), 0.0f, x * (aabb.MaxEdge.Z - aabb.MinEdge.Z)));
+	const auto &aabb = terrain->getBoundingBox();
+	terrain->setPosition(irr::core::vector3df(z * (aabb.MaxEdge.X - aabb.MinEdge.X), 0.0f, x * (aabb.MaxEdge.Z - aabb.MinEdge.Z)));
 
 	///
 	/// END - LMP - Part of placing the terrain at the good position.

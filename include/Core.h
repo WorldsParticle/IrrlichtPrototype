@@ -41,12 +41,12 @@ private:
 
 	void setGUI();
 public:
-	//ElementsModule								*elementsModule;
-	//SkyboxModule									*skyboxModule;
+	ElementsModule								*elementsModule;
+	SkyboxModule									*skyboxModule;
 	TerrainModule									*terrainModule;
-	//WaterModule										*waterModule;
-	//SoundModule										*soundModule;
-	//ParticleModule								*particleModule;
+	WaterModule										*waterModule;
+	SoundModule										*soundModule;
+	ParticleModule								*particleModule;
 	irr::scene::ICameraSceneNode	*camera;
 	irr::IrrlichtDevice				*device;
 	gen::Generator					*generator;

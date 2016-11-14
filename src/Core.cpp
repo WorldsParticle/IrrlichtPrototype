@@ -115,20 +115,20 @@ int Core::initModules()
     {
         std::cout << "Failed to initialize CustomLeafShader" << std::endl;
     }
-
-	//soundModule = new SoundModule(this, device, camera);
-	//soundModule->init();
-	//soundModule->AddBGMusic(RESOURCES_PATH "/sound/river_bg.ogg");
-	//skyboxModule = new SkyboxModule(this, device, camera);
-	//skyboxModule->init();
+	
+	soundModule = new SoundModule(this, device, camera);
+	soundModule->init();
+	soundModule->AddBGMusic(RESOURCES_PATH "/sound/river_bg.ogg");
+	skyboxModule = new SkyboxModule(this, device, camera);
+	skyboxModule->init();
 	terrainModule = new TerrainModule(this, device, camera);
 	terrainModule->init();
-	//elementsModule = new ElementsModule(this, device, camera, soundModule->soundSystem, terrainModule);
-	//elementsModule->init();
-	//waterModule = new WaterModule(this, device, camera, terrainModule);
-	//waterModule->init();
-	//particleModule = new ParticleModule(this, device, camera);
-	//particleModule->init();
+	elementsModule = new ElementsModule(this, device, camera, soundModule->soundSystem, terrainModule);
+	elementsModule->init();
+	waterModule = new WaterModule(this, device, camera, terrainModule);
+	waterModule->init();
+	particleModule = new ParticleModule(this, device, camera);
+	particleModule->init();
 
 
 	setGUI();
@@ -155,31 +155,32 @@ int	Core::initGenerator()
 
 void Core::generate()
 {
-	//// apply gui value
-	//// todo
-	//dynamic_cast<IntValue *>(generator->step("Zones")->param("Nombre"))->setValue(200);
+	// apply gui value
+	// todo
+	dynamic_cast<IntValue *>(generator->step("Zones")->param("Nombre"))->setValue(200);
 
-	//if (map)
-	//	delete map;
+	if (map)
+		delete map;
 
-	//map = generator->run(MAP_SIZE, MAP_SIZE);
-	//terrainModule->generateFromMap(*map);
-	////elementsModule->generateDouglasFirTree();
+	map = generator->run(MAP_SIZE, MAP_SIZE);
+	terrainModule->generateFromMap(*map);
+	//elementsModule->generateDouglasFirTree();
 }
 
 int Core::run()
 {
 	int lastFPS = -1;
 
+	generate();
 	while (device->run())
 		if (device->isWindowActive())
 		{
-			//elementsModule->update();
-			//skyboxModule->update();
+			elementsModule->update();
+			skyboxModule->update();
 			terrainModule->update();
-			//particleModule->update();
-			//soundModule->update();
-			//waterModule->update();
+			particleModule->update();
+			soundModule->update();
+			waterModule->update();
 
 			_driver->beginScene(true, true, 0);
 

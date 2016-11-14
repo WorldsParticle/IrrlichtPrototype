@@ -47,7 +47,7 @@ private:
     float       getRandom(float &totalPercent, float nbElem);
 
 private:
-	float                                   waterHeight = 300;
+	//float                                   waterHeight = 300;
 	float                                   _soundVolume = 1.0f;
     list<std::shared_ptr<Object>>	        _elements;
 	FMOD::System	                        *_soundSystem;

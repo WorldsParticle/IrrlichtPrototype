@@ -2,6 +2,7 @@
 #include "module/TerrainModule.h"
 #include "scene/water/RealisticWater.h"
 #include "Configuration.h"
+#include "WorldSettings.h"
 #include "scene/water/WaterNode.h"
 #include <iostream>
 
@@ -19,8 +20,9 @@ WaterModule::~WaterModule()
 
 int WaterModule::init()
 {
-	WaterNode *w = new WaterNode (smgr->getRootSceneNode(), smgr,
-                                                    core::vector3df((512 * 500) / 2 - 512, 120, (512 * 500) / 2 - 512),
+	WaterNode *w = new WaterNode(smgr->getRootSceneNode(), smgr, 
+		//ORIGIN_POS + core::vector3df(0, WATER_HEIGHT, 0), core::vector2df(MAP_SIZE, MAP_SIZE));
+                                                    core::vector3df((512 * 500) / 2 - 512, WATER_HEIGHT, (512 * 500) / 2 - 512),
                                                     core::vector2df((512 * 500) * 2, (512 * 500) * 2));
 
 
