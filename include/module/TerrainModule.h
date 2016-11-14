@@ -11,7 +11,7 @@ class bitmap_image;
 class TerrainModule : public AModule
 {
 public:
-	TerrainModule(IrrlichtDevice* _device, scene::ICameraSceneNode* _camera);
+	TerrainModule(Core *c, IrrlichtDevice* _device, scene::ICameraSceneNode* _camera);
 	~TerrainModule();
 
 	inline std::vector<scene::ITerrainSceneNode *>  &terrainGridNodes()

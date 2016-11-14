@@ -8,9 +8,9 @@
 class SkyboxModule : public AModule
 {
 public:
-    SkyboxModule(IrrlichtDevice* _device,
+    SkyboxModule(Core *c, IrrlichtDevice* _device,
         scene::ICameraSceneNode* _camera)
-        : AModule(_device, _camera),
+        : AModule(c, _device, _camera),
         _active(nullptr),
         _weather(AWeather::E_WEATHER::NONE),
         _night(false)

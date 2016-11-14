@@ -21,10 +21,10 @@ public:
 		std::string texturePath;
 		std::string soundPath;
 	};
-	ElementsModule(IrrlichtDevice* _device,
+	ElementsModule(Core *c, IrrlichtDevice* _device,
 		scene::ICameraSceneNode* _camera, FMOD::System *sndSystem,
 		TerrainModule *terrain)
-		: AModule(_device, _camera), _soundSystem(sndSystem), _terrain(terrain)
+		: AModule(c, _device, _camera), _soundSystem(sndSystem), _terrain(terrain)
 	{}
 	~ElementsModule()
 	{ clear(); }
@@ -38,7 +38,7 @@ public:
 	void clear();
 	void createObjectsFromName(int totalElementInZone, int width, int height, SObjectInfo const &objInfo);
 
-private:
+//private:
     void        generateDouglasFirTree(void);
 
 private:

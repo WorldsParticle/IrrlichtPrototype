@@ -7,8 +7,8 @@
 class ParticleModule : public AModule
 {
 public:
-    ParticleModule(IrrlichtDevice* _device, scene::ICameraSceneNode* _camera)
-        : AModule{ _device, _camera },
+    ParticleModule(Core *c, IrrlichtDevice* _device, scene::ICameraSceneNode* _camera)
+        : AModule(c, _device, _camera),
         _particleSystem(nullptr),
         _weathers(),
         _weather(AWeather::E_WEATHER::NONE)

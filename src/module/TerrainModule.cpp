@@ -9,8 +9,8 @@
 
 #include "scene/terrain/TerrainSceneNode.h"
 
-TerrainModule::TerrainModule(IrrlichtDevice* _device, scene::ICameraSceneNode* _camera) :
-	AModule(_device, _camera),
+TerrainModule::TerrainModule(Core *c, IrrlichtDevice* _device, scene::ICameraSceneNode* _camera) :
+	AModule(c, _device, _camera),
 	_terrainGridNodes(),
 	_terrainGridAnims()
 {

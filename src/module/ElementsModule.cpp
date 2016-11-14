@@ -7,6 +7,9 @@
 #include "module/ElementsModule.h"
 #include "Configuration.h"
 
+#include "Core.h"
+#include "module/TerrainModule.h"
+
 float ElementsModule::getRandom(float &totalPercent, float nbElem)
 {
 	float maxPercent = totalPercent;
@@ -99,7 +102,7 @@ ElementsModule::generateDouglasFirTree(void)
 
         // Settings not needed at the end.
 
-        DouglasFirNode->setPosition(irr::core::vector3df(5000.0f, 300.0f, 5000.0f));
+        DouglasFirNode->setPosition(irr::core::vector3df(5000.0f, -5000.0f, 5000.0f));
         DouglasFirNode->setRotation(irr::core::vector3df(-90.0f, 0.0f, 0.0f));
 
         std::cout << "DouglasFir absolute position : (" << DouglasFirNode->getAbsolutePosition().X << ", " << DouglasFirNode->getAbsolutePosition().Y << ", " << DouglasFirNode->getAbsolutePosition().Z << ")" << std::endl;
@@ -107,11 +110,13 @@ ElementsModule::generateDouglasFirTree(void)
         std::cout << "DouglasFir scale : (" << DouglasFirNode->getScale().X << ", " << DouglasFirNode->getScale().Y << ", " << DouglasFirNode->getScale().Z << ")" << std::endl;
 
 
-        for (int i = 0; i < 50; ++i)
+        for (int i = 0; i < 250; ++i)
         {
             auto node = DouglasFirNode->clone();
-            glm::vec2 new_position = glm::linearRand(glm::vec2(0.0f), glm::vec2(10000.0f));
-            node->setPosition(irr::core::vector3df(new_position.x, 0.0f, new_position.y));
+            glm::vec2 new_position = glm::linearRand(glm::vec2(0.0f), glm::vec2(10000.0f * 10));
+            node->setPosition(irr::core::vector3df(new_position.x + 80000,
+																									core->terrainModule->getHeight(new_position.x + 80000, new_position.y + 80000),
+																									new_position.y + 80000));
             node->setScale(irr::core::vector3df(1.0f));
         }
 

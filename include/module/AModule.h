@@ -8,12 +8,14 @@ using namespace video;
 using namespace io;
 using namespace gui;
 
+class	Core;
+
 class AModule
 {
 public:
-	AModule(IrrlichtDevice* _device,
+	AModule(Core *c, IrrlichtDevice* _device,
 		scene::ICameraSceneNode* _camera)
-		: device(_device), camera(_camera)
+		: core(c), device(_device), camera(_camera)
 	{
 		driver = device->getVideoDriver();
 		smgr = device->getSceneManager();
@@ -26,6 +28,8 @@ public:
 	virtual int update() = 0;
 
 protected:
+	Core										*core;
+
 	IrrlichtDevice		*device;
 	video::IVideoDriver	*driver;
 	scene::ISceneManager	*smgr;
