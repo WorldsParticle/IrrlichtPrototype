@@ -35,6 +35,9 @@ int ParticleModule::update()
     // Manage weather update depending on the _updateSpeed
     if (_timer->getTime() > _nextUpdate)
     {
+        // 20% chance to change
+        // getNextWeather();
+        // getPreviousWeather();
         auto weather = _weathers[_weather];
         if (weather)
             weather->update(_particleSystem);
@@ -43,10 +46,13 @@ int ParticleModule::update()
     return 0;
 }
 
-void ParticleModule::setWeather(int w)
+void ParticleModule::setWeather(int w) // Get vector<int> w
 {
+    // Define time for next weather update
     _nextUpdate = _timer->getTime() + _updateSpeed;
 
+    // int rand = rand() % w.size();
+    // _weather = static_cast<int>(w[rand]);
     _weather = static_cast<AWeather::E_WEATHER>(w);
     auto weather = _weathers[_weather];
     if (weather)

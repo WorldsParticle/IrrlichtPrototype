@@ -23,7 +23,7 @@ void MyEventReceiver::ApplyGUIParametersToWorld()
 	std::cout << "Climat: " << _context.climatRadioBox->getSelected() << std::endl;
     _core->timerModule->setTime(0); // Will later get new time from UI
 	_core->skyboxModule->setSkybox(_context.timeRadioBox->getSelected(),
-			_context.climatRadioBox->getSelected());
+			_context.climatRadioBox->getSelected()); // Will later only get weather value
 	_core->particleModule->setWeather(_context.climatRadioBox->getSelected());
 	_core->soundModule->SetEnvironmentalSound(_context.envRadioBox->getSelected(),
 			_context.timeRadioBox->getSelected(),
