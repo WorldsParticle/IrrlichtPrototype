@@ -27,7 +27,7 @@ Generator::~Generator()
 
 ::map::MapGraph    *Generator::run(unsigned int xMax, unsigned int yMax)
 {
-  map::MapGraph *map = new map::MapGraph(xMax, yMax, 1024); // gridSize have to move inside a step
+  map::MapGraph *map = new map::MapGraph(xMax, yMax, 512); // gridSize have to move inside a step
     for (const auto &step: m_steps)
     {
         std::cout << step->name() << std::endl;

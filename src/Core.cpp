@@ -162,7 +162,7 @@ void Core::generate()
 
 	map = generator->run(1024, 1024);
 	terrainModule->generateFromMap(*map);
-	elementsModule->generateDouglasFirTree();
+	//elementsModule->generateDouglasFirTree();
 }
 
 int Core::run()

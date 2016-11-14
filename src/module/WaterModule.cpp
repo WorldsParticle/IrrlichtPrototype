@@ -20,8 +20,8 @@ WaterModule::~WaterModule()
 int WaterModule::init()
 {
 	WaterNode *w = new WaterNode (smgr->getRootSceneNode(), smgr,
-                                                    core::vector3df((1024 * 500) / 2 - 1024, 120, (1024 * 500) / 2 - 1024),
-                                                    core::vector2df((1024 * 500) * 2, (1024 * 500) * 2));
+                                                    core::vector3df((512 * 500) / 2 - 512, 120, (512 * 500) / 2 - 512),
+                                                    core::vector2df((512 * 500) * 2, (512 * 500) * 2));
 
 
 	_waterNodes.push_back(w);
