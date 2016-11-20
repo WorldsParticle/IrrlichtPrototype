@@ -65,7 +65,7 @@ int Core::initModules()
 	device->setWindowCaption(L"WorldsParticle prototype");
 
 	_driver->setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
-	_driver->setFog(video::SColor(0,125,125,125),EFT_FOG_LINEAR, WP_CAM_FARVALUE / 8, WP_CAM_FARVALUE * 0.8, 0.5, true, true);
+	_driver->setFog(video::SColor(255,255 / 5,255 / 5, 255 / 5),EFT_FOG_LINEAR, WP_CAM_FARVALUE / 8, WP_CAM_FARVALUE * 0.8, 0.5, true, true);
 
 	//
 	// CAMERA
@@ -111,7 +111,7 @@ int Core::initModules()
 	//MODULES
 	//
 	//Add light
-	_smgr->setAmbientLight(video::SColorf(0.3,0.3,0.3,1));
+	_smgr->setAmbientLight(video::SColorf(0.2,0.2,0.2, 1));
 
     if (CustomTreeShader::Initialize(this->_driver->getGPUProgrammingServices()) == false)
     {
