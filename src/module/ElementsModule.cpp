@@ -10,6 +10,8 @@
 #include "Core.h"
 #include "module/TerrainModule.h"
 
+#include "WorldSettings.h"
+
 float ElementsModule::getRandom(float &totalPercent, float nbElem)
 {
 	float maxPercent = totalPercent;
@@ -110,14 +112,19 @@ ElementsModule::generateDouglasFirTree(void)
         std::cout << "DouglasFir scale : (" << DouglasFirNode->getScale().X << ", " << DouglasFirNode->getScale().Y << ", " << DouglasFirNode->getScale().Z << ")" << std::endl;
 
 
-        for (int i = 0; i < 250; ++i)
+        for (int i = 0; i < (WP_WORLD_SCALE) ; ++i)
         {
             auto node = DouglasFirNode->clone();
-            glm::vec2 new_position = glm::linearRand(glm::vec2(0.0f), glm::vec2(10000.0f * 10));
-            node->setPosition(irr::core::vector3df(new_position.x + 80000,
-																									core->terrainModule->getHeight(new_position.x + 80000, new_position.y + 80000),
-																									new_position.y + 80000));
-            node->setScale(irr::core::vector3df(1.0f));
+            glm::vec2 new_position = glm::linearRand(glm::vec2(0.0f), glm::vec2(WP_TERRAIN_SIZE));
+						f32 	height = core->terrainModule->getHeight(new_position.x, new_position.y);
+						if (height > WP_SEA_HEIGHT)
+						{
+            	node->setPosition(irr::core::vector3df(new_position.x,
+																									core->terrainModule->getHeight(new_position.x, new_position.y),
+																									new_position.y));
+							float randomScale = ( (float)( (rand() % 10) + 5 ) ) / 10.0f; // 0.5~1.4
+            	node->setScale(irr::core::vector3df(WP_ELEMENT_SCALE * randomScale));
+						}
         }
 
     }

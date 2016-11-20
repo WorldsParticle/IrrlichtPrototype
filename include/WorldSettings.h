@@ -5,12 +5,7 @@
 
 // Generic
 #define WP_TEXTURE_SIZE 512
-#define WP_WORLD_SCALE  100.0f
-
-// Camera
-#define WP_CAM_FARVALUE     (WP_WORLD_SCALE * 1000.0f)
-#define WP_CAM_EXPLO_SPEED  0.5f
-#define WP_CAM_DEV_SPEED    (WP_CAM_EXPLO_SPEED * 20)
+#define WP_WORLD_SCALE  500.0f
 
 // Map (one node = one heightmap)
 #define WP_MAP_NODE_SIZE    (WP_TEXTURE_SIZE * 2)  // More *2, more presition from the generator
@@ -18,10 +13,19 @@
 #define WP_MAP_SIZE         (WP_MAP_NODE_SIZE * WP_MAP_NODE_NUMBER)
 
 // Terrain (size in irrlicht unit, or should be)
-#define WP_TERRAIN_NODE_SIZE      (WP_MAP_NODE_SIZE * WP_WORLD_SCALE)
-#define WP_TERRAIN_SIZE           (WP_MAP_SIZE * WP_WORLD_SCALE)
+#define WP_TERRAIN_SCALE        WP_WORLD_SCALE
+#define WP_TERRAIN_NODE_SIZE    (WP_MAP_NODE_SIZE * WP_TERRAIN_SCALE)
+#define WP_TERRAIN_SIZE         (WP_MAP_SIZE * WP_TERRAIN_SCALE)
 
 // Sea
 #define WP_SEA_TILE_SIZE        (WP_TEXTURE_SIZE * 2 * 2 * 2)
-#define WP_SEA_SIZE             (WP_TERRAIN_SIZE * 2 * 2 * 2)
-#define WP_SEA_HEIGHT           (WP_WORLD_SCALE * 10.0f)
+#define WP_SEA_SIZE             (WP_TERRAIN_SIZE)
+#define WP_SEA_HEIGHT           (WP_WORLD_SCALE * 255.0f / 10.0F) // Heightmap store height from 0 to 255
+
+// Element
+#define WP_ELEMENT_SCALE  5.0f
+
+// Camera
+#define WP_CAM_FARVALUE     (WP_TERRAIN_SIZE / 4)
+#define WP_CAM_EXPLO_SPEED  0.5f
+#define WP_CAM_DEV_SPEED    (WP_CAM_EXPLO_SPEED * 20)

@@ -167,7 +167,7 @@ void Core::generate()
 															  terrainModule->getHeight(WP_TERRAIN_SIZE / 2, WP_TERRAIN_SIZE / 2),
 																WP_TERRAIN_SIZE / 2));
 	camera->setTarget(vector3df(0, terrainModule->getHeight(WP_TERRAIN_SIZE / 2, WP_TERRAIN_SIZE / 2), 0));
-	//elementsModule->generateDouglasFirTree();
+	elementsModule->generateDouglasFirTree();
 }
 
 int Core::run()
