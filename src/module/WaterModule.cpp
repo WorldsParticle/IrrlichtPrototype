@@ -35,13 +35,22 @@ int WaterModule::init()
 int WaterModule::update()
 {
 	// Temporary
-	static core::vector3df correctPos(0, WP_SEA_HEIGHT + 1, 0); // CAREFULL, this will fail if cam start under water
+	static core::vector3df lastPos(0, 0, 0);
+	static bool init = true;
+
+	if (init)
+	{
+		lastPos.X = WP_TERRAIN_SIZE / 2;
+		lastPos.Y = core->terrainModule->getHeight(WP_TERRAIN_SIZE / 2, WP_TERRAIN_SIZE / 2); // CAREFULL, this will fail if cam start under water
+		lastPos.Z = WP_TERRAIN_SIZE / 2;
+		init = false;
+	}
 
 
 	const core::vector3df &pos = smgr->getActiveCamera()->getAbsolutePosition();
-	if (pos.Y  < WP_SEA_HEIGHT + 1)
-		smgr->getActiveCamera()->setPosition(correctPos);
+	if (pos.Y  < WP_SEA_HEIGHT + WP_WORLD_SCALE)
+		smgr->getActiveCamera()->setPosition(lastPos);
 	else
-		correctPos = pos;
+		lastPos = pos;
 	return true;
 }
