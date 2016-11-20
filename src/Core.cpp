@@ -65,6 +65,7 @@ int Core::initModules()
 	device->setWindowCaption(L"WorldsParticle prototype");
 
 	_driver->setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
+	_driver->setFog(video::SColor(0,125,125,125),EFT_FOG_LINEAR, WP_CAM_FARVALUE / 2, WP_CAM_FARVALUE, 0.5, true, true);
 
 	//
 	// CAMERA

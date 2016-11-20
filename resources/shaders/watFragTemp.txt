@@ -42,7 +42,7 @@ void main(void)
 
 	vec3 viewVector = normalize(toCamVector);
 	float refractiveFactor = dot(viewVector, vec3(0.0, 1.0, 0.0));
-	refractiveFactor = pow(refractiveFactor, 1); 				// <---
+	refractiveFactor = pow(refractiveFactor, 2); 				// <---
 
 	vec4 normalMapColour = texture(normalMap, distortedTexCoords);
 	vec3 normal = vec3(normalMapColour.r * 2.0 - 1.0, normalMapColour.b, normalMapColour.g * 2.0 - 1.0);

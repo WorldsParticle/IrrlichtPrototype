@@ -1,6 +1,8 @@
 #include <irrlicht.h>
 #include "Configuration.h"
 
+#include "WorldSettings.h"
+
 using namespace irr;
 
 // SHOULD BECOME A UNIQUE INSTANCE !!!!
@@ -29,10 +31,10 @@ private:
 	const static core::stringc	DUDV_FILE;
 	const static core::stringc  NORMAL_FILE;
 
-	const static int	REFLECTION_WIDTH = 512;
-	const static int	REFLECTION_HEIGHT = 512;
-	const static int	REFRACTION_WIDTH = 512;
-	const static int	REFRACTION_HEIGHT = 512;
+	const static int	REFLECTION_WIDTH = WP_TEXTURE_SIZE;
+	const static int	REFLECTION_HEIGHT = WP_TEXTURE_SIZE;
+	const static int	REFRACTION_WIDTH = WP_TEXTURE_SIZE;
+	const static int	REFRACTION_HEIGHT = WP_TEXTURE_SIZE;
 
 	video::ITexture	*_reflectionFrameBuffer;  // Probably no need
 	video::ITexture	*_reflectionTexture;

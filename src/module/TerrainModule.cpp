@@ -92,7 +92,7 @@ void TerrainModule::generateFromMap(::map::MapGraph &map)
         for (unsigned int z = 0; z < map.gridZMax(); ++z)
         {
             std::cout << "x : " << x << ", z : " << z << std::endl;
-						scene::ITerrainSceneNode *terrain = loadTerrain(map, x, z, WP_WORLD_SCALE);
+						scene::ITerrainSceneNode *terrain = loadTerrain(map, x, z, WP_TERRAIN_SCALE);
 
             // create triangle selector for the terrain
             scene::ITriangleSelector* selector
@@ -106,6 +106,8 @@ void TerrainModule::generateFromMap(::map::MapGraph &map)
                 core::vector3df(0, 50, 0));
             selector->drop();
             camera->addAnimator(anim);
+
+						terrain->setMaterialFlag(video::EMF_FOG_ENABLE, true);
 
             _terrainGridNodes[x + map.gridXMax() * z] = terrain;
             _terrainGridAnims[x + map.gridXMax() * z] = anim;

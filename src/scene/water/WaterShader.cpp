@@ -30,7 +30,8 @@ void WaterShader::init()
 		          vertexShader.c_str(), "main", video::EVST_VS_1_1,
 		          fragmentShader.c_str(), "main", video::EPST_PS_1_1,
 		          this,
-              video::EMT_TRANSPARENT_REFLECTION_2_LAYER);
+              video::EMT_TRANSPARENT_REFLECTION_2_LAYER); // http://irrlicht.sourceforge.net/docu/namespaceirr_1_1video.html#ac8e9b6c66f7cebabd1a6d30cbc5430f1a8b074c837c82178daa178a3a7321a32d
+  std::cout << "TODO : check EMF_ZBUFFER and enable depth buffer" << std::endl; // sorry, but i need to not forget this one
 }
 
 
@@ -53,6 +54,7 @@ void WaterShader::OnSetConstants(video::IMaterialRendererServices *services, s32
   core::matrix4 projection = driver->getTransform(video::ETS_PROJECTION);
 	core::matrix4 view = driver->getTransform(video::ETS_VIEW);
 	core::matrix4 world = driver->getTransform(video::ETS_WORLD); // use as model ?
+
   core::vector3df camPos = _smgr->getActiveCamera()->getAbsolutePosition();
 
   services->setVertexShaderConstant("projectionMatrix", projection.pointer(), 16);
@@ -63,8 +65,8 @@ void WaterShader::OnSetConstants(video::IMaterialRendererServices *services, s32
   services->setPixelShaderConstant("lightColour", &lightColour.X, 3); // static
   services->setPixelShaderConstant("moveFactor", &moveFactor, 1); // static
 
-  int var0 = 0; // refraction
-  int var1 = 1; // reflection
+  int var0 = 0; // reflection
+  int var1 = 1; // refraction
   int var2 = 2; // dudvMap
   int var3 = 3; // normalMap
 
