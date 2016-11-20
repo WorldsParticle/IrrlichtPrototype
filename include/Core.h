@@ -1,6 +1,7 @@
 #pragma once
 
 #include <irrlicht.h>
+#include <ISceneNode.h>
 #include "driverChoice.h"
 #include "WorldSettings.h"
 
@@ -54,4 +55,6 @@ public:
 
 	bool isInterfaceVisible() const;
 	void toggleInterface();
+
+	void applyFogRec(irr::scene::ISceneNode *node);
 };

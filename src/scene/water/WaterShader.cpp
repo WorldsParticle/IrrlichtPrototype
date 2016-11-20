@@ -3,6 +3,8 @@
 
 #include "module/SkyboxModule.h" // Temporary .. or not ?
 
+#include "WorldSettings.h"
+
 const core::stringc WaterShader::VERTEX_FILE = RESOURCES_PATH "/shaders/watVertTemp.txt";
 const core::stringc WaterShader::FRAGMENT_FILE = RESOURCES_PATH "/shaders/watFragTemp.txt";
 
@@ -31,7 +33,6 @@ void WaterShader::init()
 		          fragmentShader.c_str(), "main", video::EPST_PS_1_1,
 		          this,
               video::EMT_TRANSPARENT_REFLECTION_2_LAYER); // http://irrlicht.sourceforge.net/docu/namespaceirr_1_1video.html#ac8e9b6c66f7cebabd1a6d30cbc5430f1a8b074c837c82178daa178a3a7321a32d
-  std::cout << "TODO : check EMF_ZBUFFER and enable depth buffer" << std::endl; // sorry, but i need to not forget this one
 }
 
 
@@ -44,8 +45,8 @@ void WaterShader::OnSetConstants(video::IMaterialRendererServices *services, s32
   moveFactor = (int)moveFactor % 1000;
   moveFactor /= 1000.0f;
 
-  core::vector3df lightColour(0.95f, 0.95f, 0.9f); // ca fait l'affaire
-  core::vector3df lightPosition(200000.0f, 20000.0f, -200000.0f); // inverser x/z pour nuit
+  video::SColorf  lightColour = WP_SUN_COLOR;
+  core::vector3df lightPosition = WP_SUN_POSITION;
 
   // end of static madness
 
@@ -62,7 +63,7 @@ void WaterShader::OnSetConstants(video::IMaterialRendererServices *services, s32
 	services->setVertexShaderConstant("modelMatrix", world.pointer(), 16);
   services->setVertexShaderConstant("camPos", &camPos.X, 3);
   services->setVertexShaderConstant("lightPosition", &lightPosition.X, 3);
-  services->setPixelShaderConstant("lightColour", &lightColour.X, 3); // static
+  services->setPixelShaderConstant("lightColour", &lightColour.r, 3); // static
   services->setPixelShaderConstant("moveFactor", &moveFactor, 1); // static
 
   int var0 = 0; // reflection

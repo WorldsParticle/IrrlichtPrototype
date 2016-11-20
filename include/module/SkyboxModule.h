@@ -28,6 +28,9 @@ public:
     inline bool  night() const
     { return _night; }
 
+  inline scene::ISceneNode *skybox() const
+  { return _active; }
+
 private:
     scene::ISceneNode * createSkybox(const std::string & path);
 

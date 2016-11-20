@@ -38,7 +38,6 @@ void WaterNode::init()
                       core::dimension2df(WP_SEA_TILE_SCALE, WP_SEA_TILE_SCALE));
 
   _waterNode = _smgr->addMeshSceneNode(_waterMesh);
-  //_waterNode = _smgr->addWaterSurfaceSceneNode(_waterMesh, 5.0f, 500.0f, 200.0f);
   _waterNode->setPosition(_pos);
 
 
@@ -85,7 +84,7 @@ void WaterNode::OnRegisterSceneNode()
 
 void WaterNode::render()
 {
-  // not usefull
+  // not usefull atm
 }
 
 const core::aabbox3d<float>& WaterNode::getBoundingBox() const

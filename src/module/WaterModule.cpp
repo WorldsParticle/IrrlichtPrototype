@@ -25,6 +25,9 @@ int WaterModule::init()
 		//ORIGIN_POS + core::vector3df(0, WATER_HEIGHT, 0), core::vector2df(MAP_SIZE, MAP_SIZE));
                                                     core::vector3df(WP_TERRAIN_SIZE / 2, WP_SEA_HEIGHT, WP_TERRAIN_SIZE / 2),
                                                     core::vector2df(WP_SEA_SIZE, WP_SEA_SIZE));
+																										
+	std::cout << "TODO : check EMF_ZBUFFER and enable depth buffer" << std::endl; // sorry, but i need to not forget this one
+	//w->setMaterialFlag(video::EMF_ZWRITE_ENABLE, true);
 
 	_waterNodes.push_back(w);
   smgr->getRootSceneNode()->addChild(w);
