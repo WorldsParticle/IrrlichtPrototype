@@ -96,6 +96,7 @@ int Core::initModules()
 																													WP_SUN_POSITION,
 																													WP_SUN_COLOR,
 																													WP_SUN_RADIUS);
+	std::cout << "Directionnal light added : " << light << std::endl; // hardcore warning removal
 
 
 	camera = _smgr->addCameraSceneNodeFPS(0, 100.0f, WP_CAM_DEV_SPEED, -1, keyMap, 8); // 0.5
@@ -111,7 +112,7 @@ int Core::initModules()
 	//MODULES
 	//
 	//Add light
-	_smgr->setAmbientLight(video::SColorf(0.6,0.6,0.6,1));
+	_smgr->setAmbientLight(video::SColorf(0.3,0.3,0.3,1));
 
     if (CustomTreeShader::Initialize(this->_driver->getGPUProgrammingServices()) == false)
     {

@@ -32,6 +32,6 @@
 #define WP_CAM_DEV_SPEED    (WP_CAM_EXPLO_SPEED * 20)
 
 // Sun
-#define WP_SUN_COLOR        video::SColorf(0.8f, 0.2f, 0.1f) // ca fait l'affaire
+#define WP_SUN_COLOR        video::SColorf(0.9f, 0.8f, 0.7f) // ca fait l'affaire
 #define WP_SUN_POSITION     core::vector3df(WP_SEA_SIZE, WP_TERRAIN_SCALE * 255.0f * 2.0f, -WP_SEA_SIZE) // inverser x/z pour nuit
 #define WP_SUN_RADIUS       (WP_SEA_SIZE)
