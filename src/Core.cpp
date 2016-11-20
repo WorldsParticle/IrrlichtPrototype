@@ -165,10 +165,12 @@ void Core::generate()
 	terrainModule->generateFromMap(*map);
 
 	camera->setPosition(vector3df(WP_TERRAIN_SIZE / 2,
-															  terrainModule->getHeight(WP_TERRAIN_SIZE / 2, WP_TERRAIN_SIZE / 2),
+															  terrainModule->getHeight(WP_TERRAIN_SIZE / 2, WP_TERRAIN_SIZE / 2) + WP_TERRAIN_SCALE,
 																WP_TERRAIN_SIZE / 2));
 	camera->setTarget(vector3df(0, terrainModule->getHeight(WP_TERRAIN_SIZE / 2, WP_TERRAIN_SIZE / 2), 0));
 	elementsModule->generateDouglasFirTree();
+
+	_receiver->switchCameraMode(); // Carefull, remove when we will have a camera class. It suppose we are in dev mode
 }
 
 int Core::run()
