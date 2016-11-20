@@ -38,7 +38,6 @@ scene::ISceneNode * SkyboxModule::createSkybox(const std::string & path)
 
 int SkyboxModule::update()
 {
-	//nothing to do
 	return 0;
 }
 
@@ -53,5 +52,6 @@ void SkyboxModule::setSkybox(bool night, int weather)
     else
         _active = _skyboxes[_weather].second;
 
+    _active->setMaterialFlag(video::EMF_FOG_ENABLE, false);
     _active->setVisible(true);
 }

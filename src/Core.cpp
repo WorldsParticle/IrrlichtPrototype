@@ -178,7 +178,7 @@ void Core::generate()
 	elementsModule->generateDouglasFirTree();
 
 	applyFogRec(_smgr->getRootSceneNode());
-	skyboxModule->skybox()->setMaterialFlag(video::EMF_FOG_ENABLE, false);
+	skyboxModule->skybox()->setMaterialFlag(video::EMF_FOG_ENABLE, false); // Bad Workaround
 
 	_receiver->switchCameraMode(); // Carefull, remove when we will have a camera class. It suppose we are in dev mode
 }
