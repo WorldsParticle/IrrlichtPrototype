@@ -5,7 +5,7 @@
 
 // Generic
 #define WP_TEXTURE_SIZE 512
-#define WP_WORLD_SCALE  500.0f
+#define WP_WORLD_SCALE  50.0f
 
 // Map (one node = one heightmap)
 #define WP_MAP_NODE_SIZE    (WP_TEXTURE_SIZE * 2)  // More *2, more presition from the generator
@@ -23,7 +23,7 @@
 #define WP_SEA_HEIGHT           (WP_WORLD_SCALE * 255.0f / 10.0F) // Heightmap store height from 0 to 255
 
 // Element
-#define WP_ELEMENT_SCALE  5.0f
+#define WP_ELEMENT_SCALE  1.0f
 
 // Camera
 #define WP_CAM_FARVALUE     (WP_TERRAIN_SIZE / 4)
