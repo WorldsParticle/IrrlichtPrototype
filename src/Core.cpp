@@ -65,7 +65,7 @@ int Core::initModules()
 	device->setWindowCaption(L"WorldsParticle prototype");
 
 	_driver->setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
-	_driver->setFog(video::SColor(0,125,125,125),EFT_FOG_LINEAR, WP_CAM_FARVALUE, WP_CAM_FARVALUE * 2, 0.5, true, true);
+	_driver->setFog(video::SColor(0,125,125,125),EFT_FOG_LINEAR, WP_CAM_FARVALUE / 8, WP_CAM_FARVALUE * 0.8, 0.5, true, true);
 
 	//
 	// CAMERA
@@ -101,7 +101,6 @@ int Core::initModules()
 
 	camera = _smgr->addCameraSceneNodeFPS(0, 100.0f, WP_CAM_DEV_SPEED, -1, keyMap, 8); // 0.5
 	camera->setFarValue(WP_CAM_FARVALUE);
-	//_smgr->addCameraSceneNode(0, vector3df(0, 30, -40), vector3df(0, 5, 0));
 
 	//camera->setPosition(core::vector3df(_worldSettings.OriginX, _worldSettings.OriginY, -_worldSettings.OriginZ));
 	//camera->setTarget(core::vector3df(_worldSettings.OriginX, 0, -_worldSettings.OriginZ));
@@ -178,8 +177,8 @@ void Core::generate()
 	camera->setTarget(vector3df(0, terrainModule->getHeight(WP_TERRAIN_SIZE / 2, WP_TERRAIN_SIZE / 2), 0));
 	elementsModule->generateDouglasFirTree();
 
-	//applyFogRec(_smgr->getRootSceneNode());
-	//skyboxModule->skybox()->setMaterialFlag(video::EMF_FOG_ENABLE, false);
+	applyFogRec(_smgr->getRootSceneNode());
+	skyboxModule->skybox()->setMaterialFlag(video::EMF_FOG_ENABLE, false);
 
 	_receiver->switchCameraMode(); // Carefull, remove when we will have a camera class. It suppose we are in dev mode
 }
