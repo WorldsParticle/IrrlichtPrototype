@@ -171,11 +171,9 @@ scene::ITerrainSceneNode	*TerrainModule::loadTerrain(::map::MapGraph &map, unsig
 
 	terrain->setMaterialFlag(video::EMF_LIGHTING, true);
 	terrain->setMaterialTexture(0,
-			driver->getTexture(RESOURCES_PATH "/terrain-texture.jpg"));
-	terrain->setMaterialTexture(1,
-			driver->getTexture(RESOURCES_PATH "/detailmap3.jpg"));
-	terrain->setMaterialType(video::EMT_DETAIL_MAP);
-	terrain->scaleTexture(1.0f, 20.0f);
+			driver->getTexture(RESOURCES_PATH "/4096_grass.jpg"));
+	terrain->setMaterialType(video::EMT_SOLID);
+	terrain->scaleTexture(WP_TERRAIN_SIZE / 4096.0f, 0.0f);
 
 	terrain->drop();
 
