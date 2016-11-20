@@ -48,7 +48,7 @@ int WaterModule::update()
 
 
 	const core::vector3df &pos = smgr->getActiveCamera()->getAbsolutePosition();
-	if (pos.Y  < WP_SEA_HEIGHT + WP_WORLD_SCALE)
+	if (pos.Y  < WP_SEA_HEIGHT + WP_TERRAIN_SCALE)
 		smgr->getActiveCamera()->setPosition(lastPos);
 	else
 		lastPos = pos;
