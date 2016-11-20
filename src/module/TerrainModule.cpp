@@ -84,7 +84,6 @@ int TerrainModule::update()
 void TerrainModule::generateFromMap(::map::MapGraph &map)
 {
     clearNodes();
-	float scale = WORLD_UNIT_SCALE;
     _terrainGridNodes.resize(map.gridXMax() * map.gridZMax());
     _terrainGridAnims.resize(map.gridXMax() * map.gridZMax());
 
@@ -93,7 +92,7 @@ void TerrainModule::generateFromMap(::map::MapGraph &map)
         for (unsigned int z = 0; z < map.gridZMax(); ++z)
         {
             std::cout << "x : " << x << ", z : " << z << std::endl;
-						scene::ITerrainSceneNode *terrain = loadTerrain(map, x, z, scale);
+						scene::ITerrainSceneNode *terrain = loadTerrain(map, x, z, WP_WORLD_SCALE);
 
             // create triangle selector for the terrain
             scene::ITriangleSelector* selector

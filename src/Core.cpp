@@ -90,10 +90,8 @@ int Core::initModules()
     keyMap[7].Action = EKA_STRAFE_RIGHT;
     keyMap[7].KeyCode = KEY_KEY_D;
 
-	camera = _smgr->addCameraSceneNodeFPS(0, 100.0f, 10.0f, -1, keyMap, 8);
-	camera->setPosition(ORIGIN_CAM_POS);
-	camera->setTarget(ORIGIN_POS);
-	camera->setFarValue(FAR_VALUE);
+	camera = _smgr->addCameraSceneNodeFPS(0, 100.0f, WP_CAM_DEV_SPEED, -1, keyMap, 8); // 0.5
+	camera->setFarValue(WP_CAM_FARVALUE);
 	//_smgr->addCameraSceneNode(0, vector3df(0, 30, -40), vector3df(0, 5, 0));
 
 	//camera->setPosition(core::vector3df(_worldSettings.OriginX, _worldSettings.OriginY, -_worldSettings.OriginZ));
@@ -115,7 +113,7 @@ int Core::initModules()
     {
         std::cout << "Failed to initialize CustomLeafShader" << std::endl;
     }
-	
+
 	soundModule = new SoundModule(this, device, camera);
 	soundModule->init();
 	soundModule->AddBGMusic(RESOURCES_PATH "/sound/river_bg.ogg");
@@ -162,8 +160,13 @@ void Core::generate()
 	if (map)
 		delete map;
 
-	map = generator->run(MAP_SIZE, MAP_SIZE);
+	map = generator->run(WP_MAP_SIZE, WP_MAP_SIZE);
 	terrainModule->generateFromMap(*map);
+
+	camera->setPosition(vector3df(WP_TERRAIN_SIZE / 2,
+															  terrainModule->getHeight(WP_TERRAIN_SIZE / 2, WP_TERRAIN_SIZE / 2),
+																WP_TERRAIN_SIZE / 2));
+	camera->setTarget(vector3df(0, terrainModule->getHeight(WP_TERRAIN_SIZE / 2, WP_TERRAIN_SIZE / 2), 0));
 	//elementsModule->generateDouglasFirTree();
 }
 

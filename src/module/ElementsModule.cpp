@@ -167,7 +167,7 @@ glm::vec3 ElementsModule::getXYPos(int width, int height)
 
 	int isThisOnlyWater = 50;
 	//while (_terrain->getHeight(value.x, value.y) < waterHeight && isThisOnlyWater > 0)
-	while (0 < WATER_HEIGHT && isThisOnlyWater > 0)
+	while (0 < WP_SEA_HEIGHT && isThisOnlyWater > 0)
 	{
 		value = glm::linearRand(glm::vec3(50, 50, 0), glm::vec3(width, height, 0));
 		--isThisOnlyWater;

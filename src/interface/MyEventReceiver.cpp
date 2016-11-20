@@ -37,9 +37,9 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 	{
 		switch (event.KeyInput.Key)
 		{
-	  //case irr::KEY_KEY_C: // switch camera
-			////switchCameraMode();
-			//return true;
+	  case irr::KEY_KEY_C: // switch camera
+			switchCameraMode();
+			return true;
 		case irr::KEY_KEY_V: // switch wireframe mode
 			switchWireframe();
 			return true;
@@ -163,7 +163,7 @@ void MyEventReceiver::switchCameraMode()
 		else if (anim->getType() == ESNAT_CAMERA_FPS)
 		{
 			reinterpret_cast<ISceneNodeAnimatorCameraFPS *> (anim)->setVerticalMovement(freeCam);
-			reinterpret_cast<ISceneNodeAnimatorCameraFPS *> (anim)->setMoveSpeed(freeCam ? 10.0 : 2.0);
+			reinterpret_cast<ISceneNodeAnimatorCameraFPS *> (anim)->setMoveSpeed(freeCam ? WP_CAM_DEV_SPEED : WP_CAM_EXPLO_SPEED);
 		}
 	}
 }

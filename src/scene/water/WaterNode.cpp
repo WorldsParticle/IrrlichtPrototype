@@ -6,7 +6,9 @@
 #include "scene/water/WaterFrameBuffers.h"
 #include "scene/water/WaterShader.h"
 
-const core::vector2df  WaterNode::TILE_SIZE = core::vector2df(4096, 4096);
+#include "WorldSettings.h"
+
+const core::vector2df  WaterNode::TILE_SIZE = core::vector2df(WP_SEA_TILE_SIZE, WP_SEA_TILE_SIZE);
 
 
 WaterNode::WaterNode(scene::ISceneNode *parent, scene::ISceneManager *smgr, const core::vector3df &pos, const core::vector2df &size) :

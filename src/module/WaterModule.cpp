@@ -20,10 +20,10 @@ WaterModule::~WaterModule()
 
 int WaterModule::init()
 {
-	WaterNode *w = new WaterNode(smgr->getRootSceneNode(), smgr, 
+	WaterNode *w = new WaterNode(smgr->getRootSceneNode(), smgr,
 		//ORIGIN_POS + core::vector3df(0, WATER_HEIGHT, 0), core::vector2df(MAP_SIZE, MAP_SIZE));
-                                                    core::vector3df((512 * 500) / 2 - 512, WATER_HEIGHT, (512 * 500) / 2 - 512),
-                                                    core::vector2df((512 * 500) * 2, (512 * 500) * 2));
+                                                    core::vector3df(WP_TERRAIN_SIZE / 2, WP_SEA_HEIGHT, WP_TERRAIN_SIZE / 2),
+                                                    core::vector2df(WP_SEA_SIZE, WP_SEA_SIZE));
 
 
 	_waterNodes.push_back(w);
