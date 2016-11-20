@@ -4,6 +4,7 @@
 #include "Configuration.h"
 #include "WorldSettings.h"
 #include "scene/water/WaterNode.h"
+#include "Core.h"
 #include <iostream>
 
 WaterModule::WaterModule(Core *c, IrrlichtDevice* _device, scene::ICameraSceneNode* _camera, TerrainModule *terrain) :
@@ -33,5 +34,14 @@ int WaterModule::init()
 
 int WaterModule::update()
 {
+	// Temporary
+	static core::vector3df correctPos(0, WP_SEA_HEIGHT + 1, 0); // CAREFULL, this will fail if cam start under water
+
+
+	const core::vector3df &pos = smgr->getActiveCamera()->getAbsolutePosition();
+	if (pos.Y  < WP_SEA_HEIGHT + 1)
+		smgr->getActiveCamera()->setPosition(correctPos);
+	else
+		correctPos = pos;
 	return true;
 }

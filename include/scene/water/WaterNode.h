@@ -26,8 +26,6 @@ private:
   void  applyReflection();
   void  applyRefraction();
 
-  static const core::vector2df  TILE_SIZE;
-
   scene::ISceneManager  *_smgr;
 
   const core::vector3df _pos; // Center

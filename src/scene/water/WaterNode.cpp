@@ -8,9 +8,6 @@
 
 #include "WorldSettings.h"
 
-const core::vector2df  WaterNode::TILE_SIZE = core::vector2df(WP_SEA_TILE_SIZE, WP_SEA_TILE_SIZE);
-
-
 WaterNode::WaterNode(scene::ISceneNode *parent, scene::ISceneManager *smgr, const core::vector3df &pos, const core::vector2df &size) :
   scene::ISceneNode(parent, smgr),
   _smgr(smgr),
@@ -34,10 +31,11 @@ void WaterNode::init()
   _waterShader = new WaterShader(_smgr, &_time);
   _waterBuffers = new WaterFrameBuffers(_smgr);
 
-  _waterMesh = _smgr->getGeometryCreator()->createPlaneMesh(TILE_SIZE,
-                      core::dimension2du(_size.X / TILE_SIZE.X, _size.Y / TILE_SIZE.Y),
+  _waterMesh = _smgr->getGeometryCreator()->createPlaneMesh(
+                      core::dimension2df(WP_SEA_TILE_SIZE, WP_SEA_TILE_SIZE),
+                      core::dimension2du(_size.X / WP_SEA_TILE_SIZE, _size.Y / WP_SEA_TILE_SIZE),
                       0,
-                      core::dimension2df(4096 / 512, 4096 / 512));
+                      core::dimension2df(WP_SEA_TILE_SCALE, WP_SEA_TILE_SCALE));
 
   _waterNode = _smgr->addMeshSceneNode(_waterMesh);
   //_waterNode = _smgr->addWaterSurfaceSceneNode(_waterMesh, 5.0f, 500.0f, 200.0f);

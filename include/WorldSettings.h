@@ -18,7 +18,8 @@
 #define WP_TERRAIN_SIZE         (WP_MAP_SIZE * WP_TERRAIN_SCALE)
 
 // Sea
-#define WP_SEA_TILE_SIZE        (WP_TEXTURE_SIZE * 2 * 2 * 2)
+#define WP_SEA_TILE_SCALE       8.0f
+#define WP_SEA_TILE_SIZE        (WP_TEXTURE_SIZE * WP_SEA_TILE_SCALE)
 #define WP_SEA_SIZE             (WP_TERRAIN_SIZE * 2)
 #define WP_SEA_HEIGHT           (WP_WORLD_SCALE * 255.0f / 10.0F) // Heightmap store height from 0 to 255
 

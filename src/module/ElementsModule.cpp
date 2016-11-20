@@ -112,7 +112,7 @@ ElementsModule::generateDouglasFirTree(void)
         std::cout << "DouglasFir scale : (" << DouglasFirNode->getScale().X << ", " << DouglasFirNode->getScale().Y << ", " << DouglasFirNode->getScale().Z << ")" << std::endl;
 
 
-        for (int i = 0; i < (WP_WORLD_SCALE) ; ++i)
+        for (int i = 0; i < (WP_TERRAIN_SCALE) ; ++i)
         {
             auto node = DouglasFirNode->clone();
             glm::vec2 new_position = glm::linearRand(glm::vec2(0.0f), glm::vec2(WP_TERRAIN_SIZE));
