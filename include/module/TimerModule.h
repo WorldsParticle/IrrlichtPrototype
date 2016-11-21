@@ -5,8 +5,8 @@
 class TimerModule : public AModule
 {
 public:
-    TimerModule(IrrlichtDevice* _device, scene::ICameraSceneNode* _camera)
-        : AModule{ _device, _camera },
+    TimerModule(Core *c, IrrlichtDevice* _device, scene::ICameraSceneNode* _camera)
+        : AModule{c, _device, _camera },
         _timer(nullptr),
         _lastTime(0),
         _elapsedTime(0)

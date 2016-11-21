@@ -63,11 +63,6 @@ scene::ISceneNode * SkyboxModule::createSkybox(const std::string & path)
     return skybox;
 }
 
-int SkyboxModule::update()
-{
-	return 0;
-}
-
 void SkyboxModule::setSkybox(bool night, int weather)
 {
     _active->setVisible(false);

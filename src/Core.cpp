@@ -123,7 +123,7 @@ int Core::initModules()
         std::cout << "Failed to initialize CustomLeafShader" << std::endl;
     }
 
-    timerModule = new TimerModule(device, camera);
+    timerModule = new TimerModule(this, device, camera);
     timerModule->init();
 	soundModule = new SoundModule(this, device, camera);
 	soundModule->init();
