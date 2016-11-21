@@ -9,4 +9,7 @@ public:
         irr::video::IVideoDriver * driver);
 
     virtual ~RainWeather() = default;
+
+private:
+    virtual void updateWeather();
 };

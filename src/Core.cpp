@@ -6,6 +6,7 @@
 #include "module/WaterModule.h"
 #include "module/SoundModule.h"
 #include "module/ParticleModule.h"
+#include "module/TimerModule.h"
 #include "interface/gui_radiocheckboxgroup.h"
 #include "generator/generator.h"
 #include "map/map.h"
@@ -122,10 +123,12 @@ int Core::initModules()
         std::cout << "Failed to initialize CustomLeafShader" << std::endl;
     }
 
+    timerModule = new TimerModule(device, camera);
+    timerModule->init();
 	soundModule = new SoundModule(this, device, camera);
 	soundModule->init();
 	soundModule->AddBGMusic(RESOURCES_PATH "/sound/river_bg.ogg");
-	skyboxModule = new SkyboxModule(this, device, camera);
+	skyboxModule = new SkyboxModule(this, device, camera, timerModule);
 	skyboxModule->init();
 	terrainModule = new TerrainModule(this, device, camera);
 	terrainModule->init();
@@ -133,8 +136,9 @@ int Core::initModules()
 	elementsModule->init();
 	waterModule = new WaterModule(this, device, camera, terrainModule);
 	waterModule->init();
-	particleModule = new ParticleModule(this, device, camera);
+	particleModule = new ParticleModule(this, device, camera, timerModule);
 	particleModule->init();
+    
 
 
 	setGUI();
@@ -191,6 +195,7 @@ int Core::run()
 	while (device->run())
 		if (device->isWindowActive())
 		{
+            timerModule->update();
 			elementsModule->update();
 			skyboxModule->update();
 			terrainModule->update();
