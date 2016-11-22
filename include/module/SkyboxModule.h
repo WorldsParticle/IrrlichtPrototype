@@ -6,7 +6,7 @@
 #include <map>
 
 // Real time length for one day (in min)
-#define     DAY_LENGTH      1.0f
+#define     DAY_LENGTH      5.0f
 
 class SkyboxModule : public AModule, video::IShaderConstantSetCallBack
 {

@@ -44,18 +44,6 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 		case irr::KEY_KEY_V: // switch wireframe mode
 			switchWireframe();
 			return true;
-		case irr::KEY_KEY_N: // night
-			//_core->skyboxModule->activate(true);
-			return true;
-		case irr::KEY_KEY_B: // day
-			//_core->skyboxModule->activate(false);
-			return true;
-        case irr::KEY_KEY_P: // change weather
-            //_core->particleModule->activate();
-            return true;
-        case irr::KEY_KEY_M: // Test weather change for Skyboxes
-            //_core->skyboxModule->setWeather(AWeather::E_WEATHER::SNOW);
-            return true;
 		case irr::KEY_ESCAPE: // quit
 			_core->close(); //comment this to get the confirmation before quitting back
 			if (confirmQuit == nullptr) {

@@ -46,6 +46,7 @@ int Core::initIrrlicht()
 	irr::SIrrlichtCreationParameters params;
 	params.DriverType = driverType;
 	params.WindowSize = core::dimension2d<u32>(1280, 720);
+    params.ZBufferBits = 24;
 	device = createDeviceEx(params);
 
 	if (device == 0)
