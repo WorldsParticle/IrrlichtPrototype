@@ -177,10 +177,9 @@ void Core::generate()
 	terrainModule->generateFromMap(*map);
 
 	camera->setPosition(vector3df(WP_TERRAIN_SIZE / 2,
-															  terrainModule->getHeight(WP_TERRAIN_SIZE / 2, WP_TERRAIN_SIZE / 2) + WP_TERRAIN_SCALE,
-																WP_TERRAIN_SIZE / 2));
+		terrainModule->getHeight(WP_TERRAIN_SIZE / 2, WP_TERRAIN_SIZE / 2) + WP_TERRAIN_SCALE,
+		WP_TERRAIN_SIZE / 2));
 	camera->setTarget(vector3df(0, terrainModule->getHeight(WP_TERRAIN_SIZE / 2, WP_TERRAIN_SIZE / 2), 0));
-	elementsModule->generateDouglasFirTree();
 
 	applyFogRec(_smgr->getRootSceneNode());
 	skyboxModule->skybox()->setMaterialFlag(video::EMF_FOG_ENABLE, false); // Bad Workaround
@@ -192,7 +191,7 @@ int Core::run()
 {
 	int lastFPS = -1;
 
-	generate();
+	_receiver->Generate();
 	while (device->run())
 		if (device->isWindowActive())
 		{

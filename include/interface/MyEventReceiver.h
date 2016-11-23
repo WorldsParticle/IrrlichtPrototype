@@ -45,5 +45,7 @@ private:
 	SAppContext _context;
 	irr::gui::IGUIWindow *confirmQuit = nullptr;
 
+public://Called by the core at initialization
 	void ApplyGUIParametersToWorld();
+	void Generate();
 };
