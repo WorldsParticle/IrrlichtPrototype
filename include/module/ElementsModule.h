@@ -39,7 +39,13 @@ public:
 	void createObjectsFromName(int totalElementInZone, int width, int height, SObjectInfo const &objInfo);
 
 //private:
-    void        generateDouglasFirTree(void);
+/// Generate a DouglasFir Tree in (0,0,0) and returne the parent node.
+    ISceneNode  *generateDouglasFirTree(void);
+    /// Generate a LargeOak Tree in (0,0,0) and returne the parent node.
+    ISceneNode  *generateLargeOakTree(void);
+    /// Generate a American Moutain Ash Tree in (0,0,0) and returne the parent node.
+    ISceneNode  *generateAmericanMoutainAshTree(void);
+    ISceneNode  *generateAmericanSweetgumTree(void);
 
 private:
     glm::vec3   getXYPos(int width, int height);

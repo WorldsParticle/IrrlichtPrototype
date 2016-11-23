@@ -180,9 +180,31 @@ void Core::generate()
 															  terrainModule->getHeight(WP_TERRAIN_SIZE / 2, WP_TERRAIN_SIZE / 2) + WP_TERRAIN_SCALE,
 																WP_TERRAIN_SIZE / 2));
 	camera->setTarget(vector3df(0, terrainModule->getHeight(WP_TERRAIN_SIZE / 2, WP_TERRAIN_SIZE / 2), 0));
-	elementsModule->generateDouglasFirTree();
 
-	applyFogRec(_smgr->getRootSceneNode());
+    auto LargeOakTree = elementsModule->generateLargeOakTree();
+    auto AmericanMoutainAshNode = elementsModule->generateAmericanMoutainAshTree();
+    auto DouglasFirNode = elementsModule->generateDouglasFirTree();
+    auto AmericanSweetgum = elementsModule->generateAmericanSweetgumTree();
+    for (int i = 0; i < (WP_TERRAIN_SCALE * 5) ; ++i)
+    {
+        glm::vec2 new_position = glm::linearRand(glm::vec2(0.0f), glm::vec2(WP_TERRAIN_SIZE));
+        f32 	height = terrainModule->getHeight(new_position.x, new_position.y);
+        if (height > WP_SEA_HEIGHT)
+        {
+            ISceneNode *node;
+            switch (glm::linearRand<int>(0, 3))
+            {
+            case 0: node = DouglasFirNode->clone(); break;
+            case 1: node = LargeOakTree->clone(); break;
+            case 2: node = AmericanMoutainAshNode->clone(); break;
+            case 3: node = AmericanSweetgum->clone(); break;
+            }
+            node->setPosition(irr::core::vector3df(new_position.x, height, new_position.y));
+            node->setScale(irr::core::vector3df(WP_ELEMENT_SCALE * glm::linearRand(1.0f, 2.0f)));
+        }
+    }
+
+    applyFogRec(_smgr->getRootSceneNode());
 	skyboxModule->skybox()->setMaterialFlag(video::EMF_FOG_ENABLE, false); // Bad Workaround
 
 	_receiver->switchCameraMode(); // Carefull, remove when we will have a camera class. It suppose we are in dev mode
