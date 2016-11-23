@@ -22,6 +22,7 @@ public:
 
 private:
     irr::ITimer * _timer;
+    irr::u32      _IGTime;
     irr::u32      _lastTime;
     float         _elapsedTime;
 };

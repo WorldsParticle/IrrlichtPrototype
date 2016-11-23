@@ -1,18 +1,23 @@
 #include "module/TimerModule.h"
+#include "irrlicht/CTimer.h"
 
 int TimerModule::init()
 {
     _timer = device->getTimer();
-    _timer->setTime(0);
+    setTime(0);
 
     return 0;
 }
 
 int TimerModule::update()
 {
+    // Calc elapsedTime
     irr::u32 time = _timer->getTime();
     _elapsedTime = (time - _lastTime) / 1000.0f;
     _lastTime = time;
+
+    // Update InGame Time
+    _IGTime += _elapsedTime;
 
     return 0;
 }
@@ -20,15 +25,13 @@ int TimerModule::update()
 
 void TimerModule::setTime(irr::u32 time)
 {
-    _timer->setTime(time);
-    _lastTime = time;
+    _IGTime = time;
     _elapsedTime = 0;
 }
 
 irr::u32 TimerModule::getTime() const
 {
-    irr::u32 time = _timer->getTime();
-    return time;
+    return _IGTime;
 }
 
 float TimerModule::getElapsedTime() const
