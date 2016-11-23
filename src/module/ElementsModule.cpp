@@ -71,9 +71,6 @@ ElementsModule::generateDouglasFirTree(void)
     auto raw_mesh = smgr->getMesh(RESOURCES_PATH "/models/Trees/DouglasFir/HEO_DouglasFir.obj");
     auto mesh = smgr->getMeshManipulator()->createMeshWithTangents(raw_mesh);
 
-    //irr::io::IAttributes &attributes = const_cast<irr::io::IAttributes &>(driver->getDriverAttributes());
-    //std::cout << "ShaderLanguageVersion : " << attributes.getAttributeAsString("ShaderLanguageVersion").c_str() << std::endl;
-
     // generate a DouglasFir_node
     {
 
@@ -91,6 +88,13 @@ ElementsModule::generateDouglasFirTree(void)
         DouglasFirBarkNode->setMaterialTexture(0, driver->getTexture(RESOURCES_PATH "/models/Trees/DouglasFir/DouglasFirBark_diffuse.png"));
         DouglasFirBarkNode->setMaterialTexture(1, driver->getTexture(RESOURCES_PATH "/models/Trees/DouglasFir/DouglasFirBark_normals.png"));
 
+        DouglasFirBarkNode->getMesh()->getMeshBuffer(0)->recalculateBoundingBox();
+        DouglasFirBarkNode->getMesh()->getMeshBuffer(1)->recalculateBoundingBox();
+        core::aabbox3df aabb;
+        aabb = DouglasFirBarkNode->getMesh()->getMeshBuffer(0)->getBoundingBox();
+        aabb.addInternalBox(DouglasFirBarkNode->getMesh()->getMeshBuffer(1)->getBoundingBox());
+        DouglasFirBarkNode->getMesh()->setBoundingBox(aabb);
+
         // generate the DouglasFirNeedlesNode
         irr::scene::SMesh   *needlesMesh = new irr::scene::SMesh();
         needlesMesh->addMeshBuffer(mesh->getMeshBuffer(4));
@@ -104,6 +108,12 @@ ElementsModule::generateDouglasFirTree(void)
 
         // Settings not needed at the end.
 
+        DouglasFirNeedlesNode->getMesh()->getMeshBuffer(0)->recalculateBoundingBox();
+        DouglasFirNeedlesNode->getMesh()->getMeshBuffer(1)->recalculateBoundingBox();
+        aabb = DouglasFirNeedlesNode->getMesh()->getMeshBuffer(0)->getBoundingBox();
+        aabb.addInternalBox(DouglasFirNeedlesNode->getMesh()->getMeshBuffer(1)->getBoundingBox());
+        DouglasFirNeedlesNode->getMesh()->setBoundingBox(aabb);
+
         DouglasFirNode->setPosition(irr::core::vector3df(5000.0f, -5000.0f, 5000.0f));
         DouglasFirNode->setRotation(irr::core::vector3df(-90.0f, 0.0f, 0.0f));
 
@@ -116,15 +126,15 @@ ElementsModule::generateDouglasFirTree(void)
         {
             auto node = DouglasFirNode->clone();
             glm::vec2 new_position = glm::linearRand(glm::vec2(0.0f), glm::vec2(WP_TERRAIN_SIZE));
-						f32 	height = core->terrainModule->getHeight(new_position.x, new_position.y);
-						if (height > WP_SEA_HEIGHT)
-						{
-            	node->setPosition(irr::core::vector3df(new_position.x,
-																									core->terrainModule->getHeight(new_position.x, new_position.y),
-																									new_position.y));
-							float randomScale = ( (float)( (rand() % 10) + 5 ) ) / 10.0f; // 0.5~1.4
-            	node->setScale(irr::core::vector3df(WP_ELEMENT_SCALE * randomScale));
-						}
+            f32 	height = core->terrainModule->getHeight(new_position.x, new_position.y);
+            if (height > WP_SEA_HEIGHT)
+            {
+                node->setPosition(irr::core::vector3df(new_position.x,
+                    core->terrainModule->getHeight(new_position.x, new_position.y),
+                    new_position.y));
+                float randomScale = ((float)((rand() % 10) + 5)) / 10.0f; // 0.5~1.4
+                node->setScale(irr::core::vector3df(WP_ELEMENT_SCALE * randomScale));
+            }
         }
 
     }
