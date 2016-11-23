@@ -23,7 +23,7 @@
 *.out
 *.app
 
-./lib/irrlicht/*
+lib/irrlicht
 ./bin/
 ./idea/
 ./Debug

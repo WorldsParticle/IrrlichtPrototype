@@ -25,6 +25,12 @@ TerrainModule::~TerrainModule()
 
 int TerrainModule::init()
 {
+	_groundInfoByZone = {
+		{ RESOURCES_PATH "/grounds/detailmap3.jpg", RESOURCES_PATH "/grounds/Peetmoss_pxr128.png" }, //zone 0 : mountain
+		{ RESOURCES_PATH "/grounds/detailmap3.jpg", RESOURCES_PATH "/grounds/4096_grass.jpg" }, //zone 1 : forest
+		{ RESOURCES_PATH "/grounds/detailmap3.jpg", RESOURCES_PATH "/grounds/Beach_sand_pxr128.png" }, //zone 2 : beach
+	};
+
 	//TerrainSceneNode *n = new TerrainSceneNode(nullptr, nullptr, nullptr, -1);
 	//TerrainSceneNode *terrain = new TerrainSceneNode(
 	//	smgr->getRootSceneNode(),
@@ -168,12 +174,13 @@ scene::ITerrainSceneNode	*TerrainModule::loadTerrain(::map::MapGraph &map, unsig
 	///
 	/// END - LMP - Part of placing the terrain at the good position.
 	///
+	int zone = 0;//TODO HUD
 
 	terrain->setMaterialFlag(video::EMF_LIGHTING, true);
 	terrain->setMaterialTexture(0,
-			driver->getTexture(RESOURCES_PATH "/detailmap3.jpg")); // 512
+		driver->getTexture(_groundInfoByZone[zone].detailTexturePath.c_str()));
 	terrain->setMaterialTexture(1,
-			driver->getTexture(RESOURCES_PATH "/4096_grass.jpg"));
+		driver->getTexture(_groundInfoByZone[zone].baseTexturePath.c_str()));
 	terrain->setMaterialType(video::EMT_DETAIL_MAP);
 	terrain->scaleTexture(WP_TERRAIN_SIZE / (512.0f * 2.0f * 2.0f * 2.0f), WP_TERRAIN_SIZE / 4096.0f);
 
