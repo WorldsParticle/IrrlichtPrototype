@@ -177,7 +177,7 @@ void Core::generate()
 	terrainModule->generateFromMap(*map);
 
 	camera->setPosition(vector3df(WP_TERRAIN_SIZE / 2,
-		terrainModule->getHeight(WP_TERRAIN_SIZE / 2, WP_TERRAIN_SIZE / 2) + WP_TERRAIN_SCALE,
+		terrainModule->getHeight(WP_TERRAIN_SIZE / 2, WP_TERRAIN_SIZE / 2) + WP_TERRAIN_SCALE + WP_CAM_OFFSET,
 		WP_TERRAIN_SIZE / 2));
 	camera->setTarget(vector3df(0, terrainModule->getHeight(WP_TERRAIN_SIZE / 2, WP_TERRAIN_SIZE / 2), 0));
 

@@ -30,6 +30,7 @@
 #define WP_CAM_FARVALUE     (WP_TERRAIN_SIZE / 2)
 #define WP_CAM_EXPLO_SPEED  0.5f
 #define WP_CAM_DEV_SPEED    (WP_CAM_EXPLO_SPEED * 20)
+#define WP_CAM_OFFSET		(WP_TERRAIN_SCALE) // Human height
 
 // Sun
 #define WP_SUN_COLOR        video::SColorf(0.9f, 0.8f, 0.7f) // ca fait l'affaire
