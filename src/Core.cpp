@@ -199,10 +199,10 @@ void Core::generate()
             ISceneNode *node;
             switch (glm::linearRand<int>(0, 3))
             {
-            case 0: node = DouglasFirNode->clone(); break;
-            case 1: node = LargeOakTree->clone(); break;
-            case 2: node = AmericanMoutainAshNode->clone(); break;
-            case 3: node = AmericanSweetgum->clone(); break;
+            case 0: node = DouglasFirNode->clone(trees); break;
+            case 1: node = LargeOakTree->clone(trees); break;
+            case 2: node = AmericanMoutainAshNode->clone(trees); break;
+            case 3: node = AmericanSweetgum->clone(trees); break;
             }
             node->setPosition(irr::core::vector3df(new_position.x, height, new_position.y));
             node->setScale(irr::core::vector3df(WP_ELEMENT_SCALE * glm::linearRand(1.0f, 2.0f)));
