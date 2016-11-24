@@ -144,7 +144,6 @@ void    HeightMapingStep::run()
     //int seed = rand() % 1000000;
 
     m_zoneLookUp.createCloud(m_map);
-
     for (unsigned int i = 0; i < m_map->xMax(); ++i)
     {
         for (unsigned int j = 0; j < m_map->zMax(); ++j)
@@ -152,7 +151,6 @@ void    HeightMapingStep::run()
             ::map::HeightPoint &p = m_map->heightMap().pointAt(i, j);
             p.x = static_cast<double>(i);
             p.z = static_cast<double>(j);
-
             ::map::Zone *z;
             // trouve la zone à laquelle appartient le pixel en (i, j)
             z = m_zoneLookUp.getNearestZone(static_cast<double>(i), static_cast<double>(j));
@@ -186,8 +184,6 @@ void    HeightMapingStep::run()
                     break;
                 }
             }
-
-
             // génère du bruit aléatoire
             /*float  additionalNoise = octave_noise_2d(8.0f, 0.5f, 0.012f, static_cast<float>(j) + static_cast<float>(seed), static_cast<float>(i) + static_cast<float>(seed));
             additionalNoise = additionalNoise / 10.0f;*/
@@ -198,7 +194,6 @@ void    HeightMapingStep::run()
                 p.y = 1.0;
         }
     }
-
     //m_map->heightMap().generateMesh();
 
     // LakerStep needs to be done after setting heights, but before generating the heightmaps.

@@ -16,6 +16,8 @@ ZoneLookUp::~ZoneLookUp()
 
 void    ZoneLookUp::createCloud(::map::MapGraph *m)
 {
+    _cloud.pts.clear();
+
     for (const auto & zone : m->zones())
     {
         ::map::PointCloud<double>::LPoint p = {zone.second->point.x, zone.second->point.z, zone.second};

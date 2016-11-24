@@ -43,7 +43,7 @@ void    Voronoi::clearData()
 const std::vector<Edge *> *Voronoi::fortuneAlgo(const std::vector<Point *> &sites)
 {
     clearData();
-    std::cout << "houray" << std::endl;
+
     for (std::vector<Point *>::const_iterator it = sites.begin(); it != sites.end(); ++it)
         m_events.push(new Event(new Point((*it)->x, (*it)->z), true));
 
@@ -67,7 +67,7 @@ const std::vector<Edge *> *Voronoi::fortuneAlgo(const std::vector<Point *> &site
             removeParabola(event);
     }
 
-    finishEdge(m_root.get());
+    finishEdge(m_root);
     for(std::vector<Edge *>::iterator it = m_edges.begin(); it != m_edges.end(); ++it)
     {
         if( (*it)->neighbour)
@@ -99,7 +99,7 @@ void	Voronoi::finishEdge(Parabola * p)
 
 void    Voronoi::addParabola(Point *site)
 {
-    if (!m_root) { m_root = std::shared_ptr<Parabola>(new Parabola(site)); return; }
+    if (!m_root) { m_root = new Parabola(site); return; }
 
     // Nop
     /*if (_root->isLeaf && _root->site->point.z - site->point.z < 1)
@@ -182,7 +182,7 @@ void    Voronoi::removeParabola(Event *e)
 
     Parabola * higher = nullptr;
     Parabola * par = p1;
-    while(par != m_root.get())
+    while(par != m_root)
     {
         par = par->parent;
         if(par == pLeft) higher = pLeft;
@@ -257,7 +257,7 @@ double      Voronoi::getXofEdge(Parabola *p, double z)
 
 Parabola    *Voronoi::getParabolaAtX(double nx)
 {
-    Parabola *p = m_root.get();
+    Parabola *p = m_root;
     double x = 0.0;
 
     while(!p->isLeaf)

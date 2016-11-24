@@ -97,7 +97,7 @@ private:
     std::set<Event *>   m_deleted; // comme je repasse sur une queue
 
     double                      m_sweepLine;     // sweep line going down
-    std::shared_ptr<Parabola>   m_root;         // root parabola containing the beach line
+    Parabola                    *m_root;         // root parabola containing the beach line
 };
 
 }
