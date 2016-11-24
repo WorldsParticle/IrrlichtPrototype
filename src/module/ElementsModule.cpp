@@ -63,8 +63,6 @@ ElementsModule::generateAmericanSweetgumTree(void)
     auto raw_mesh = smgr->getMesh(RESOURCES_PATH "/models/Trees/AmericanSweetgum/AmericanSweetgum.obj");
     auto mesh = smgr->getMeshManipulator()->createMeshWithTangents(raw_mesh);
 
-    std::cout << "American SWEET GUUUUUUm : " << mesh->getMeshBufferCount() << std::endl;
-
     auto AmericanMoutainAshNode = this->smgr->addEmptySceneNode();
     AmericanMoutainAshNode->setName("AmericanSweetgumNode");
 

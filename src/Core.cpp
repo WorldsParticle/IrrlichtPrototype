@@ -166,6 +166,7 @@ int	Core::initGenerator()
 
 void Core::generate()
 {
+    static ISceneNode*  trees = nullptr;
 	// apply gui value
 	// todo
 	dynamic_cast<IntValue *>(generator->step("Zones")->param("Nombre"))->setValue(200);
@@ -181,6 +182,10 @@ void Core::generate()
 																WP_TERRAIN_SIZE / 2));
 	camera->setTarget(vector3df(0, terrainModule->getHeight(WP_TERRAIN_SIZE / 2, WP_TERRAIN_SIZE / 2), 0));
 
+
+    if (trees) trees->removeAll();
+
+    trees = _smgr->addEmptySceneNode();
     auto LargeOakTree = elementsModule->generateLargeOakTree();
     auto AmericanMoutainAshNode = elementsModule->generateAmericanMoutainAshTree();
     auto DouglasFirNode = elementsModule->generateDouglasFirTree();
@@ -203,6 +208,10 @@ void Core::generate()
             node->setScale(irr::core::vector3df(WP_ELEMENT_SCALE * glm::linearRand(1.0f, 2.0f)));
         }
     }
+    LargeOakTree->removeAll();
+    AmericanMoutainAshNode->removeAll();
+    DouglasFirNode->removeAll();
+    AmericanSweetgum->removeAll();
 
     applyFogRec(_smgr->getRootSceneNode());
 	skyboxModule->skybox()->setMaterialFlag(video::EMF_FOG_ENABLE, false); // Bad Workaround
