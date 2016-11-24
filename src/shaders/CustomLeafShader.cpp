@@ -44,7 +44,7 @@ CustomLeafShader::Initialize(irr::video::IGPUProgrammingServices *gpu)
         RESOURCES_PATH "/shaders/CustomLeafShader.vert", "main", irr::video::EVST_VS_5_0,
         RESOURCES_PATH "/shaders/CustomLeafShader.frag", "main", irr::video::EPST_PS_5_0,
         CustomLeafShader::m_instance.get(),
-        irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL, 0, irr::video::EGSL_DEFAULT);
+        irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL_REF, 0, irr::video::EGSL_DEFAULT);
     if (result == -1) return false;
     CustomLeafShader::m_material_type = static_cast<irr::video::E_MATERIAL_TYPE>(result);
     CustomLeafShader::m_initialized = true;
@@ -94,10 +94,8 @@ CustomLeafShader::OnSetConstants(irr::video::IMaterialRendererServices* services
     irr::f32    specular_hardness = 100.0f;
     irr::s32    texture_layer_id = 0;
     services->setPixelShaderConstant("diffuse_texture", &texture_layer_id, 1);
-    texture_layer_id = 1;
-    services->setPixelShaderConstant("normal_texture", &texture_layer_id, 1);
-    texture_layer_id = 2;
-    services->setPixelShaderConstant("alpha_texture", &texture_layer_id, 1);
+    services->setPixelShaderConstant("normal_texture", &(texture_layer_id = 1), 1);
+    services->setPixelShaderConstant("alpha_texture", &(texture_layer_id = 2), 1);
 
     services->setPixelShaderConstant("lights.position", &light_position.X, 3);
     services->setPixelShaderConstant("lights.ambient", &light_ambient.X, 3);
