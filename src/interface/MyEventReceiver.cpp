@@ -28,7 +28,7 @@ void MyEventReceiver::ApplyGUIParametersToWorld()
 	_core->soundModule->SetEnvironmentalSound(_context.envRadioBox->getSelected(),
 			_context.timeRadioBox->getSelected(),
 			_context.climatRadioBox->getSelected());
-	_core->elementsModule->putElementsOfZone(_context.envRadioBox->getSelected());
+	//_core->elementsModule->putElementsOfZone(_context.envRadioBox->getSelected());
 }
 
 bool MyEventReceiver::OnEvent(const SEvent& event)
@@ -86,7 +86,7 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 				switch(id)
 				{
 					case GUI_ID_GENERATE_BUTTON:
-						ApplyGUIParametersToWorld();
+						_core->generate();//ApplyGUIParametersToWorld();
 						//generatorModule->buildTerrain(_context.envRadioBox->getSelected());
 						return true;
 					case GUI_ID_APPLY_PARAMS_BUTTON:

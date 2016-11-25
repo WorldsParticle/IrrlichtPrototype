@@ -27,7 +27,7 @@
 #define WP_ELEMENT_SCALE    (WP_WORLD_SCALE * 1.0f)
 
 // Camera
-#define WP_CAM_FARVALUE     (WP_TERRAIN_SIZE / 2)
+#define WP_CAM_FARVALUE     (3 * WP_TERRAIN_SIZE / 4)
 #define WP_CAM_EXPLO_SPEED  0.5f
 #define WP_CAM_DEV_SPEED    (WP_CAM_EXPLO_SPEED * 20)
 

@@ -179,9 +179,9 @@ ElementsModule::generateLargeOakTree(void)
     aabb = LargeOakTreeTwigsNode->getMesh()->getMeshBuffer(0)->getBoundingBox();
     LargeOakTreeTwigsNode->getMesh()->setBoundingBox(aabb);
     
-    LargeOakTreeBarkNode->setScale(irr::core::vector3df(2.0f));
-    LargeOakTreeLeafNode->setScale(irr::core::vector3df(2.0f));
-    LargeOakTreeTwigsNode->setScale(irr::core::vector3df(2.0f));
+    //LargeOakTreeBarkNode->setScale(irr::core::vector3df(2.0f));
+    //LargeOakTreeLeafNode->setScale(irr::core::vector3df(2.0f));
+    //LargeOakTreeTwigsNode->setScale(irr::core::vector3df(2.0f));
     LargeOakTreeNode->setPosition(irr::core::vector3df(0.0f));
     //LargeOakTreeNode->setRotation(irr::core::vector3df(-90.0f, 0.0f, 0.0f));
 
