@@ -47,6 +47,7 @@ int Core::initIrrlicht()
 	params.DriverType = driverType;
 	params.WindowSize = core::dimension2d<u32>(1280, 720);
     params.ZBufferBits = 24;
+    params.Vsync = true;
 	device = createDeviceEx(params);
 
 	if (device == 0)
@@ -183,7 +184,11 @@ void Core::generate()
 	camera->setTarget(vector3df(0, terrainModule->getHeight(WP_TERRAIN_SIZE / 2, WP_TERRAIN_SIZE / 2), 0));
 
 
-    if (trees) trees->removeAll();
+    if (trees) 
+    {
+        trees->removeAll();
+        trees->remove();
+    }
 
     trees = _smgr->addEmptySceneNode();
     auto LargeOakTree = elementsModule->generateLargeOakTree();
@@ -209,9 +214,13 @@ void Core::generate()
         }
     }
     LargeOakTree->removeAll();
+    LargeOakTree->remove();
     AmericanMoutainAshNode->removeAll();
+    AmericanMoutainAshNode->remove();
     DouglasFirNode->removeAll();
+    DouglasFirNode->remove();
     AmericanSweetgum->removeAll();
+    AmericanSweetgum->remove();
 
     applyFogRec(_smgr->getRootSceneNode());
 	skyboxModule->skybox()->setMaterialFlag(video::EMF_FOG_ENABLE, false); // Bad Workaround

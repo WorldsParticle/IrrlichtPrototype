@@ -118,15 +118,14 @@ void TerrainModule::generateFromMap(::map::MapGraph &map)
 void TerrainModule::clearNodes()
 {
     for (scene::ITerrainSceneNode *node : _terrainGridNodes)
-		{
+    {
         node->removeAll();
-				delete node;
-		}
+        node->remove();
+    }
     for (scene::ISceneNodeAnimator *anim : _terrainGridAnims)
-		{
+    {
         camera->removeAnimator(anim);
-				delete anim;
-		}
+    }
 }
 
 float
