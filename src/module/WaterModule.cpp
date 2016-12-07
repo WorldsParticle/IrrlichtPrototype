@@ -1,6 +1,5 @@
 #include "module/WaterModule.h"
 #include "module/TerrainModule.h"
-#include "scene/water/RealisticWater.h"
 #include "Configuration.h"
 #include "WorldSettings.h"
 #include "scene/water/WaterNode.h"
