@@ -9,13 +9,14 @@
 
 // Map (one node = one heightmap)
 #define WP_MAP_NODE_SIZE    (WP_TEXTURE_SIZE * 2)  // More *2, more presition from the generator
-#define WP_MAP_NODE_NUMBER  1 // Let to 1 until clipping implémented
+#define WP_MAP_NODE_NUMBER  2 // Let to 1 until clipping implémented
 #define WP_MAP_SIZE         (WP_MAP_NODE_SIZE * WP_MAP_NODE_NUMBER)
 
 // Terrain (size in irrlicht unit, or should be)
 #define WP_TERRAIN_SCALE        (WP_WORLD_SCALE * 50.0f)
 #define WP_TERRAIN_NODE_SIZE    (WP_MAP_NODE_SIZE * WP_TERRAIN_SCALE)
 #define WP_TERRAIN_SIZE         (WP_MAP_SIZE * WP_TERRAIN_SCALE)
+#define WP_MOUNT_MIN_HEIGHT	(20 * WP_TERRAIN_SCALE)
 
 // Sea
 #define WP_SEA_TILE_SCALE       8.0f
