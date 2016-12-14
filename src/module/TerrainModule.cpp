@@ -7,6 +7,7 @@
 
 #include "generator/generator.h"
 #include "map/map.h"
+#include "map/zonelookup.h"
 
 #include "scene/terrain/TerrainSceneNode.h"
 
@@ -25,6 +26,12 @@ TerrainModule::~TerrainModule()
 
 int TerrainModule::init()
 {
+	_groundInfoByZone = {
+		{ RESOURCES_PATH "/grounds/detailmap3.jpg", RESOURCES_PATH "/grounds/Peetmoss_pxr128.png" }, //zone 0 : mountain
+		{ RESOURCES_PATH "/grounds/detailmap3.jpg", RESOURCES_PATH "/grounds/4096_grass.jpg" }, //zone 1 : forest
+		{ RESOURCES_PATH "/grounds/detailmap3.jpg", RESOURCES_PATH "/grounds/Beach_sand_pxr128.png" }, //zone 2 : beach
+	};
+
 	//TerrainSceneNode *n = new TerrainSceneNode(nullptr, nullptr, nullptr, -1);
 	//TerrainSceneNode *terrain = new TerrainSceneNode(
 	//	smgr->getRootSceneNode(),
@@ -87,6 +94,7 @@ void TerrainModule::generateFromMap(::map::MapGraph &map)
     _terrainGridNodes.resize(map.gridXMax() * map.gridZMax());
     _terrainGridAnims.resize(map.gridXMax() * map.gridZMax());
 
+    std::cout << "\n\n gridSize \n" << map.gridXMax() << ' ' << map.gridZMax() << '\n';
     for (unsigned int x = 0; x < map.gridXMax(); ++x)
     {
         for (unsigned int z = 0; z < map.gridZMax(); ++z)
@@ -173,12 +181,31 @@ scene::ITerrainSceneNode	*TerrainModule::loadTerrain(::map::MapGraph &map, unsig
 	///
 	/// END - LMP - Part of placing the terrain at the good position.
 	///
+	int zone = 0;//TODO HUD
+	::map::ZoneLookUp findZone;
+	findZone.createCloud(&map);
+	::map::Zone *mapZone = findZone.getNearestZone(x * (aabb.MaxEdge.X - aabb.MinEdge.X), z * (aabb.MaxEdge.Z - aabb.MinEdge.Z));
+	if (mapZone == nullptr) {
+	    std::cout << "ERROR: there's no map at: " << x * (aabb.MaxEdge.X - aabb.MinEdge.X) << ' ' << z * (aabb.MaxEdge.Z - aabb.MinEdge.Z) << std::endl;
+	}
+	if (mapZone->coast) {
+		std::cout << "Zone is beach\n";
+	    zone = 2; //beach
+	} else if (mapZone->elevation > WP_MOUNT_MIN_HEIGHT) {
+		std::cout << "Zone is mountain\n";
+	    zone = 0; //mountain
+	} else {
+		std::cout << "Zone is forest\n";
+	    zone = 1; //forest
+	}
+	std::cout << "Elevation = " << mapZone->elevation << " min Height =" << WP_MOUNT_MIN_HEIGHT << '\n';
+	std::cout << "Map at: " << x * (aabb.MaxEdge.X - aabb.MinEdge.X) << ' ' << z * (aabb.MaxEdge.Z - aabb.MinEdge.Z) << '\n';
 
 	terrain->setMaterialFlag(video::EMF_LIGHTING, true);
 	terrain->setMaterialTexture(0,
-			driver->getTexture(RESOURCES_PATH "/detailmap3.jpg")); // 512
+		driver->getTexture(_groundInfoByZone[zone].detailTexturePath.c_str()));
 	terrain->setMaterialTexture(1,
-			driver->getTexture(RESOURCES_PATH "/4096_grass.jpg"));
+		driver->getTexture(_groundInfoByZone[zone].baseTexturePath.c_str()));
 	terrain->setMaterialType(video::EMT_DETAIL_MAP);
 	terrain->scaleTexture(WP_TERRAIN_SIZE / (512.0f * 2.0f * 2.0f * 2.0f), WP_TERRAIN_SIZE / 4096.0f);
 

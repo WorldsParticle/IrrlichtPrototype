@@ -11,6 +11,12 @@ class bitmap_image;
 class TerrainModule : public AModule
 {
 public:
+	struct SGroundInfo
+	{
+		std::string detailTexturePath;
+		std::string baseTexturePath;
+	};
+
 	TerrainModule(Core *c, IrrlichtDevice* _device, scene::ICameraSceneNode* _camera);
 	~TerrainModule();
 
@@ -31,6 +37,7 @@ private:
 	scene::ITerrainSceneNode	*loadTerrain(::map::MapGraph &map, unsigned int x, unsigned int z, float scale);
 
     // should be in a std::pair
-  std::vector<scene::ITerrainSceneNode *>		_terrainGridNodes;
+  std::vector<scene::ITerrainSceneNode *>	_terrainGridNodes;
   std::vector<scene::ISceneNodeAnimator *>	_terrainGridAnims;
+  std::vector<SGroundInfo>					_groundInfoByZone;
 };

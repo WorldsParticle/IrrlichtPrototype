@@ -28,9 +28,16 @@ void MyEventReceiver::ApplyGUIParametersToWorld()
 	_core->soundModule->SetEnvironmentalSound(_context.envRadioBox->getSelected(),
 			_context.timeRadioBox->getSelected(),
 			_context.climatRadioBox->getSelected());
-	_core->elementsModule->putElementsOfZone(_context.envRadioBox->getSelected());
+	//_core->elementsModule->putElementsOfZone(_context.envRadioBox->getSelected());
+	_core->elementsModule->generateDouglasFirTree();
 }
 
+void MyEventReceiver::Generate()
+{
+	_core->generate();
+	//generatorModule->buildTerrain(_context.envRadioBox->getSelected());
+	ApplyGUIParametersToWorld();
+}
 bool MyEventReceiver::OnEvent(const SEvent& event)
 {
 	// check if user presses the key 'W' or 'D'
@@ -39,7 +46,7 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 		switch (event.KeyInput.Key)
 		{
 	  case irr::KEY_KEY_C: // switch camera
-			switchCameraMode();
+			//switchCameraMode();
 			return true;
 		case irr::KEY_KEY_V: // switch wireframe mode
 			switchWireframe();
@@ -69,9 +76,6 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 		case irr::KEY_KEY_I: // interface
 			_core->toggleInterface();
 			return true;
-        case irr::KEY_KEY_G:
-						_core->generate();
-            return true;
 		default:
 			break;
 		}
@@ -86,8 +90,7 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 				switch(id)
 				{
 					case GUI_ID_GENERATE_BUTTON:
-						ApplyGUIParametersToWorld();
-						//generatorModule->buildTerrain(_context.envRadioBox->getSelected());
+						Generate();
 						return true;
 					case GUI_ID_APPLY_PARAMS_BUTTON:
 						ApplyGUIParametersToWorld();
