@@ -19,17 +19,17 @@ SnowWeather::SnowWeather(irr::scene::IParticleSystemSceneNode * particleSystem,
     _texture = driver->getTexture(RESOURCES_PATH "/snow.bmp"); 
 }
 
-void SnowWeather::updateWeather()
+void SnowWeather::update(E_INTENSITY intensity)
 {
-    switch (_intensity)
+    switch (intensity)
     {
-    case WeatherIntensity::LOW:
+    case E_INTENSITY::LOW:
         updateEmitter(200, 500, irr::core::vector3df(0.0f, -0.08f, 0.0f));
         break;
-    case WeatherIntensity::MEDIUM:
+    case E_INTENSITY::MEDIUM:
         updateEmitter(500, 800, irr::core::vector3df(0.0f, -0.1f, 0.0f));
         break;
-    case WeatherIntensity::HIGH:
+    case E_INTENSITY::HIGH:
         updateEmitter(800, 1300, irr::core::vector3df(0.0f, -0.15f, 0.0f));
         break;
     }
