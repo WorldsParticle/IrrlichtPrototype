@@ -86,7 +86,8 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 				switch(id)
 				{
 					case GUI_ID_GENERATE_BUTTON:
-						ApplyGUIParametersToWorld();
+						//ApplyGUIParametersToWorld();
+                        _core->generate();//ApplyGUIParametersToWorld();
 						//generatorModule->buildTerrain(_context.envRadioBox->getSelected());
 						return true;
 					case GUI_ID_APPLY_PARAMS_BUTTON:
@@ -109,13 +110,13 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 				if (id == GUI_ID_MUSIC_SCROLL_BAR)
 				{
 					s32 pos = ((IGUIScrollBar*)event.GUIEvent.Caller)->getPos();
-					_core->soundModule->SetVolume((float)pos / 100.0);
+					_core->soundModule->SetVolume((float)pos / 100.0f);
 					std::cout << "Music volume: " << pos << std::endl;
 				}
 				else if (id == GUI_ID_SOUND_SCROLL_BAR)
 				{
 					s32 pos = ((IGUIScrollBar*)event.GUIEvent.Caller)->getPos();
-					_core->elementsModule->SetVolume((float)pos / 100.0);
+					_core->elementsModule->SetVolume((float)pos / 100.0f);
 					std::cout << "Sound volume: " << pos << std::endl;
 				}
 				break;
@@ -148,7 +149,7 @@ void MyEventReceiver::switchCameraMode()
 	for (ISceneNodeAnimator *anim : _core->camera->getAnimators())
 	{
 		if (anim->getType() == ESNAT_COLLISION_RESPONSE)
-			reinterpret_cast<ISceneNodeAnimatorCollisionResponse *> (anim)->setGravity(core::vector3df(0, freeCam ? 0 : -30, 0));
+			reinterpret_cast<ISceneNodeAnimatorCollisionResponse *> (anim)->setGravity(core::vector3df(0.f, freeCam ? 0.f : -30.f, 0.f));
 		else if (anim->getType() == ESNAT_CAMERA_FPS)
 		{
 			reinterpret_cast<ISceneNodeAnimatorCameraFPS *> (anim)->setVerticalMovement(freeCam);

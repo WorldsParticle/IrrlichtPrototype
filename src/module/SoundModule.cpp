@@ -54,9 +54,9 @@ int SoundModule::FMODErrorCheck(int result)
     return 0;
 }
 
-void SoundModule::setListenerPos(int x = 0, int y = 0, int z = 0)
+void SoundModule::setListenerPos(float x = 0, float y = 0, float z = 0)
 {
-    FMOD_VECTOR listenerNewPos = {static_cast<float>(x), static_cast<float>(y), static_cast<float>(z)};
+    FMOD_VECTOR listenerNewPos = {x, y, z};
     _listenerPos = listenerNewPos;
     soundSystem->set3DListenerAttributes(0, &_listenerPos, NULL, NULL, NULL);
     if (_BGChannel != NULL)

@@ -25,7 +25,7 @@ public:
     //FMOD Error checks
     int FMODErrorCheck(int);
     //Sets the listener position
-    void setListenerPos(int, int, int);
+    void setListenerPos(float, float, float);
     //Adds a background music
     void AddBGMusic(std::string);
     //Changes the volume. 1.0 is default, >1 is louder, < 0 "inverts the signal"
