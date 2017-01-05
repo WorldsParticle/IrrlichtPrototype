@@ -108,7 +108,7 @@ int SkyboxModule::update()
 {
     // Get elapsedTime
     irr::u32 time = _timer->getTime();
-    float elapsedTime = _timer->getElapsedTime();
+    float elapsedTime = _timer->getElapsedTime() / 1000.0f;
     time %= static_cast<int>(TIME_OF_DAY);
 
     // Calc rotation speed for one Day/Night cycle

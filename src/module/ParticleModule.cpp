@@ -35,37 +35,139 @@ int ParticleModule::update()
     // Manage weather update depending on the _updateSpeed
     if (_timer->getTime() > _nextUpdate)
     {
-        // 20% chance to change
-        // getNextWeather();
-        // getPreviousWeather();
-        auto weather = _weathers[_weather];
-        if (weather)
-            weather->update(_particleSystem);
+        if (_IGWeathers[_IGWeather] == AWeather::E_WEATHER::NONE)
+            updateWeather();
+        else
+        {
+            updateIntensity();
+            updateWeather();
+        }
+
         _nextUpdate += _updateSpeed;
     }
     return 0;
 }
 
-void ParticleModule::setWeather(int w) // Get vector<int> w
+void ParticleModule::updateWeather()
 {
-    // Define time for next weather update
-    _nextUpdate = _timer->getTime() + _updateSpeed;
+    // 20% chance to change Weather
+    int random = rand() % 10;
+    int threshold = 2;
+    if (random < threshold)
+    {
+        // 50/50 chance to have next or previous weather
+        random < threshold / 2 ?
+            previousWeather() :
+            nextWeather();
 
-    // int rand = rand() % w.size();
-    // _weather = static_cast<int>(w[rand]);
-    _weather = static_cast<AWeather::E_WEATHER>(w);
-    auto weather = _weathers[_weather];
+    }
+}
+
+void ParticleModule::updateIntensity()
+{
+    // 50% chance to Increase or Decrease Intensity
+    int random = rand() % 10;
+    if (random < 5)
+        decreaseIntensity();
+    else
+        increaseIntensity();
+
+    // Update weather particles with new intensity
+    int w = _IGWeathers[_IGWeather];
+    AWeather * weather = _weathers[w];
+
     if (weather)
-        weather->setWeather(_particleSystem);
+        weather->update(_weatherIntensity);
     else
         _particleSystem->setEmitter(nullptr);
 }
 
-void ParticleModule::setWeatherIntensity(int i)
+#include <iostream>
+void ParticleModule::setWeather(int w, int intensity) // Get vector<int> w
 {
-    auto weather = _weathers[_weather];
+    // Define time for next weather update
+    _nextUpdate = _timer->getTime() + _updateSpeed;
+
+    // For now but will get it from param
+    std::vector<int> ws = { w };
+    _IGWeathers = ws;
+    _weatherIntensity = static_cast<AWeather::E_INTENSITY>(intensity);
+
+    std::cout << "inten:" << intensity << " / "<< "w: " << w << "\n";
+
+    // Start with a random weather
+    int random = rand() % ws.size();
+    std::cout <<  "YO:m" << std::endl;
+    _IGWeather = 0;
+    std::cout <<  "YO:mqsdsq" << std::endl;
+    // Update Particles with new weather
+    changeWeather();
+}
+
+void ParticleModule::changeWeather()
+{
+    int w = _IGWeathers[_IGWeather];
+    AWeather * weather = _weathers[w];
+
+    std::cout << "W: " << w <<"\n";
     if (weather)
-        weather->setWeatherIntensity(_particleSystem, i);
+        weather->setWeather(_particleSystem, _weatherIntensity);
+    else
+        _particleSystem->setEmitter(nullptr);
+}
+
+
+void ParticleModule::decreaseIntensity()
+{
+    switch (_weatherIntensity)
+    {
+    case AWeather::E_INTENSITY::MEDIUM:
+        _weatherIntensity = AWeather::E_INTENSITY::LOW;
+        break;
+    case AWeather::E_INTENSITY::HIGH:
+        _weatherIntensity = AWeather::E_INTENSITY::MEDIUM;
+        break;
+    }
+}
+
+void ParticleModule::increaseIntensity()
+{
+    switch (_weatherIntensity)
+    {
+    case AWeather::E_INTENSITY::LOW:
+        _weatherIntensity = AWeather::E_INTENSITY::MEDIUM;
+        break;
+    case AWeather::E_INTENSITY::MEDIUM:
+        _weatherIntensity = AWeather::E_INTENSITY::HIGH;
+        break;
+    }
+}
+
+
+void ParticleModule::previousWeather()
+{
+    if (_IGWeather == 0)
+        return;
+
+    _IGWeather--;
+    // We don't want no weather if intensity is not LOW
+    if (_IGWeathers[_IGWeather] == AWeather::E_WEATHER::NONE)
+        _weatherIntensity == AWeather::E_INTENSITY::LOW ?
+        _weatherIntensity = AWeather::E_INTENSITY::ZERO : _IGWeather++;
+
+    changeWeather();
+}
+
+void ParticleModule::nextWeather()
+{
+    if (_IGWeather == _IGWeathers.size() - 1)
+        return;
+
+    if (_IGWeathers[_IGWeather] == AWeather::E_WEATHER::NONE)
+        _weatherIntensity = AWeather::E_INTENSITY::LOW;
+    _IGWeather++;
+
+    changeWeather();
 }
 
 

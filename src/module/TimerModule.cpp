@@ -13,7 +13,7 @@ int TimerModule::update()
 {
     // Calc elapsedTime
     irr::u32 time = _timer->getTime();
-    _elapsedTime = (time - _lastTime) / 1000.0f;
+    _elapsedTime = (time - _lastTime);
     _lastTime = time;
 
     // Update InGame Time

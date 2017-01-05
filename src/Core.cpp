@@ -386,6 +386,7 @@ void Core::setGUI()
     	context.envRadioBox = envRB;
     	context.timeRadioBox = timeRB;
     	context.climatRadioBox = climatRB;
+			context.climatIntensityRadioBox = climatIntensityRB;
 	context.env = _env;
 
 	// create event receiver
