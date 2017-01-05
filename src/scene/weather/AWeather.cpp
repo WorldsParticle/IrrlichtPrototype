@@ -8,6 +8,7 @@ void AWeather::updateEmitter(int minPart, int maxPart, irr::core::vector3df dire
     _emitter->setDirection(direction);
 }
 
+
 void AWeather::setWeather(irr::scene::IParticleSystemSceneNode * ps, E_INTENSITY intensity)
 {
     ps->setEmitter(_emitter);

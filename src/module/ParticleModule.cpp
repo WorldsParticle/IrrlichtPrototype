@@ -84,24 +84,21 @@ void ParticleModule::updateIntensity()
         _particleSystem->setEmitter(nullptr);
 }
 
-#include <iostream>
 void ParticleModule::setWeather(int w, int intensity) // Get vector<int> w
 {
     // Define time for next weather update
     _nextUpdate = _timer->getTime() + _updateSpeed;
 
     // For now but will get it from param
+
     std::vector<int> ws = { w };
     _IGWeathers = ws;
     _weatherIntensity = static_cast<AWeather::E_INTENSITY>(intensity);
 
-    std::cout << "inten:" << intensity << " / "<< "w: " << w << "\n";
-
     // Start with a random weather
     int random = rand() % ws.size();
-    std::cout <<  "YO:m" << std::endl;
     _IGWeather = 0;
-    std::cout <<  "YO:mqsdsq" << std::endl;
+
     // Update Particles with new weather
     changeWeather();
 
@@ -118,7 +115,6 @@ void ParticleModule::changeWeather()
     int w = _IGWeathers[_IGWeather];
     AWeather * weather = _weathers[w];
 
-    std::cout << "W: " << w <<"\n";
     if (weather)
         weather->setWeather(_particleSystem, _weatherIntensity);
     else

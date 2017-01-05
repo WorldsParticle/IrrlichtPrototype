@@ -27,7 +27,7 @@ public:
     virtual int update();
 
     void setWeather(int w, int intensity);
-    
+
 
 private:
     void changeWeather();
