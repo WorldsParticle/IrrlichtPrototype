@@ -1,6 +1,7 @@
 #include "module/ParticleModule.h"
 #include "scene/weather/SnowWeather.h"
 #include "scene/weather/RainWeather.h"
+#include "scene/weather/HailWeather.h"
 
 // Weather update speed in sec
 #define     WEATHER_UPDATE_SPEED  10
@@ -100,6 +101,13 @@ void ParticleModule::setWeather(int w) // Get vector<int> w, int intensity
 
     // Update Particles with new weather
     changeWeather();
+
+    // FOG but need to set the material flag EMF_FOG_ENABLe to true in every scene node
+  /*  driver->setFog(video::SColor(255, 255, 255, 255),
+                   video::EFT_FOG_LINEAR,
+                   250, 1000,
+                   .05f,
+                   false, false);*/
 }
 
 void ParticleModule::changeWeather()
