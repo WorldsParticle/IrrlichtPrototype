@@ -5,9 +5,6 @@
 #include "scene/weather/AWeather.h"
 #include <map>
 
-// Real time length for one day (in min)
-#define     DAY_LENGTH      5.0f
-
 class SkyboxModule : public AModule, video::IShaderConstantSetCallBack
 {
 public:
@@ -44,6 +41,9 @@ public:
 private:
     void createSkyboxesPair(AWeather::E_WEATHER w, const std::string & pathDay, const std::string & pathNight);
     scene::ISceneNode * createSkybox(const std::string & path);
+
+    void updateRotation(float time);
+    void updateMixFactor(irr::u32 time);
 
 private:
     // Current active skybox

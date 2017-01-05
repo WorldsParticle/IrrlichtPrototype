@@ -1,7 +1,6 @@
 #include "module/SkyboxModule.h"
 #include "Configuration.h"
 
-#define     TIME_OF_DAY         DAY_LENGTH * 60 * 1000  // Time of one day in ms depending on DAY_LENGTH
 #define     TWILIGHT_START      TIME_OF_DAY * 0.5f
 #define     NIGHT_START         TIME_OF_DAY * 0.575f
 #define     DAWN_START          TIME_OF_DAY * 0.925f
@@ -62,17 +61,21 @@ scene::ISceneNode * SkyboxModule::createSkybox(const std::string & path)
 
     return skybox;
 }
-
+#include <iostream>
 void SkyboxModule::setSkybox(bool night, int weather)
 {
     _active->setVisible(false);
 
     _night = night;
     _weather = static_cast<AWeather::E_WEATHER>(weather);
-    if (!_night)
+    if (!_night) // Should disapear
         _active = _skyboxes[_weather].first;
     else
         _active = _skyboxes[_weather].second;
+
+    irr::u32 time = _timer->getTime();
+    updateRotation(time / 1000.0f);
+    updateMixFactor(time % static_cast<int>(TIME_OF_DAY));
 
     _active->setMaterialFlag(video::EMF_FOG_ENABLE, false);
     _active->setVisible(true);
@@ -111,21 +114,34 @@ int SkyboxModule::update()
     float elapsedTime = _timer->getElapsedTime() / 1000.0f;
     time %= static_cast<int>(TIME_OF_DAY);
 
-    // Calc rotation speed for one Day/Night cycle
+    updateRotation(elapsedTime);
+    updateMixFactor(time);
+ 
+    return 0;
+}
+
+
+void SkyboxModule::updateRotation(float time)
+{
+    // Calc rotation angle depending on the Length of one day
     float angle = 360.0f / (DAY_LENGTH * 60);
-    float speed = angle * elapsedTime;
+    // Calc rotation angle depending on time
+    float rotation = angle * time;
 
     // Update skybox rotation
     irr::core::vector3df rot = _active->getRotation();
-    rot.Y -= speed;
+    rot.Y -= rotation;
     _active->setRotation(rot);
+}
 
+void SkyboxModule::updateMixFactor(irr::u32 time)
+{
     // Calc mixFactor's Skyboxes depending on time
     _mixFactor = 0;
     // Dawn start
     if (time >= DAWN_START)
         _mixFactor = (TIME_OF_DAY - time) /
-                     (TIME_OF_DAY - DAWN_START);
+        (TIME_OF_DAY - DAWN_START);
 
     // Twilight end / Night start
     else if (time >= NIGHT_START)
@@ -134,7 +150,5 @@ int SkyboxModule::update()
     // Twilight start
     else if (time >= TWILIGHT_START)
         _mixFactor = (time - TWILIGHT_START) /
-                     (NIGHT_START - TWILIGHT_START);
- 
-    return 0;
+        (NIGHT_START - TWILIGHT_START);
 }
