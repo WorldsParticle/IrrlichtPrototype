@@ -2,13 +2,13 @@
 
 #include "AWeather.h"
 
-class RainWeather : public AWeather
+class HailWeather : public AWeather
 {
 public:
-    RainWeather(irr::scene::IParticleSystemSceneNode * particleSystem,
+    HailWeather(irr::scene::IParticleSystemSceneNode * particleSystem,
         irr::video::IVideoDriver * driver);
 
-    virtual ~RainWeather() = default;
+    virtual ~HailWeather() = default;
 
 public:
     virtual void update(E_INTENSITY intensity);

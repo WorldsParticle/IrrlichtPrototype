@@ -10,6 +10,6 @@ public:
 
     virtual ~SnowWeather() = default;
 
-private:
-    virtual void updateWeather();
+public:
+    virtual void update(E_INTENSITY intensity);
 };

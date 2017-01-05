@@ -7,9 +7,7 @@
 class AWeather
 {
 public:
-    AWeather() :
-        _intensity(WeatherIntensity::LOW)
-    {}
+    AWeather() {}
     virtual ~AWeather()
     {
         if (_emitter)
@@ -17,24 +15,19 @@ public:
     }
 
 public:
-    void update(irr::scene::IParticleSystemSceneNode * ps);
-    void setWeather(irr::scene::IParticleSystemSceneNode * ps);
+    enum E_WEATHER { NONE, RAIN, SNOW, HAIL };
+    enum E_INTENSITY { ZERO, LOW, MEDIUM, HIGH };
 
 public:
-    enum E_WEATHER { NONE, RAIN, SNOW };
+    virtual void update(E_INTENSITY intensity) = 0;
+    void setWeather(irr::scene::IParticleSystemSceneNode * ps,
+                    E_INTENSITY intensity);
 
 
 protected:
-    virtual void updateWeather() {}
-
-    void increaseIntensity(irr::scene::IParticleSystemSceneNode * ps);
-    void decreaseIntensity(irr::scene::IParticleSystemSceneNode * ps);
     void updateEmitter(int minPart, int maxPart, irr::core::vector3df direction);
 
 protected:
-    enum WeatherIntensity { ZERO, LOW, MEDIUM, HIGH };
-
-    WeatherIntensity               _intensity;
     irr::scene::IParticleEmitter * _emitter;
     irr::video::ITexture	     * _texture;
 };
