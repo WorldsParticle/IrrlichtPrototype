@@ -15,7 +15,7 @@ public:
     }
 
 public:
-    enum E_WEATHER { NONE, RAIN, SNOW };
+    enum E_WEATHER { NONE, RAIN, SNOW, HAIL };
     enum E_INTENSITY { ZERO, LOW, MEDIUM, HIGH };
 
 public:
