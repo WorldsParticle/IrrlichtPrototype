@@ -25,6 +25,7 @@ void MyEventReceiver::ApplyGUIParametersToWorld()
 	_core->skyboxModule->setSkybox(_context.timeRadioBox->getSelected(),
 			_context.climatRadioBox->getSelected()); // Will later only get weather value
 	_core->particleModule->setWeather(_context.climatRadioBox->getSelected());
+	_core->particleModule->setWeatherIntensity(_context.climatIntensityRadioBox->getSelected());
 	_core->soundModule->SetEnvironmentalSound(_context.envRadioBox->getSelected(),
 			_context.timeRadioBox->getSelected(),
 			_context.climatRadioBox->getSelected());
@@ -52,7 +53,7 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 			switchWireframe();
 			return true;
 		case irr::KEY_ESCAPE: // quit
-			_core->close(); //comment this to get the confirmation before quitting back
+			//_core->close(); //comment this to get the confirmation before quitting back
 			if (confirmQuit == nullptr) {
 				if (!_core->isInterfaceVisible())
 					_core->toggleInterface();

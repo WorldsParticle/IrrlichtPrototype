@@ -19,6 +19,7 @@ public:
 public:
     void update(irr::scene::IParticleSystemSceneNode * ps);
     void setWeather(irr::scene::IParticleSystemSceneNode * ps);
+    void setWeatherIntensity(irr::scene::IParticleSystemSceneNode *ps, int i);
 
 public:
     enum E_WEATHER { NONE, RAIN, SNOW };

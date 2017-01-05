@@ -61,6 +61,13 @@ void ParticleModule::setWeather(int w) // Get vector<int> w
         _particleSystem->setEmitter(nullptr);
 }
 
+void ParticleModule::setWeatherIntensity(int i)
+{
+    auto weather = _weathers[_weather];
+    if (weather)
+        weather->setWeatherIntensity(_particleSystem, i);
+}
+
 
 ParticleModule::~ParticleModule()
 {

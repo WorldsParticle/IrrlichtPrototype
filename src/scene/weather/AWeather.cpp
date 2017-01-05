@@ -61,6 +61,36 @@ void AWeather::decreaseIntensity(irr::scene::IParticleSystemSceneNode * ps)
     }
 }
 
+void AWeather::setWeatherIntensity(irr::scene::IParticleSystemSceneNode *ps, int i)
+{
+    bool emitter = false;
+    if (_intensity == WeatherIntensity::ZERO)
+    {
+	emitter = true;
+    }
+    if (i == 0)
+    {
+	_intensity = WeatherIntensity::ZERO;
+	ps->setEmitter(nullptr);
+    }
+    else if (i == 1)
+    {
+        _intensity = WeatherIntensity::LOW;
+    }
+    else if (i == 2)
+    {
+        _intensity = WeatherIntensity::MEDIUM;
+    }
+    else
+    {
+        _intensity = WeatherIntensity::HIGH;
+    }
+    if (emitter)
+    {
+	ps->setEmitter(_emitter);   // Reset emitter to emit particles again
+    }
+    updateWeather();
+}
 
 void AWeather::setWeather(irr::scene::IParticleSystemSceneNode * ps)
 {

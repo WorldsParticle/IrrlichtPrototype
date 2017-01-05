@@ -338,13 +338,29 @@ void Core::setGUI()
 	climatRB->add(rain);
 	climatRB->add(snow);
 
+	//create climat intensity radioButtons
+	CGUIRadioCheckBoxGroup *climatIntensityRB = new CGUIRadioCheckBoxGroup(_env, _tab);
+	IGUICheckBox* zero = _env->addCheckBox(false, core::rect<s32>(0, 0, width, height), _tab, 0, L"None");
+	IGUICheckBox* low = _env->addCheckBox(false, core::rect<s32>(width, 0, 2 * width, height), _tab, 0, L"Low");
+	IGUICheckBox* medium = _env->addCheckBox(false, core::rect<s32>(2 * width, 0, 3 * width, height), _tab, 0, L"Medium");
+	IGUICheckBox* high = _env->addCheckBox(false, core::rect<s32>(0, height, width, height * 2), _tab, 0, L"High");
+	climatIntensityRB->add(zero);
+	climatIntensityRB->add(low);
+	climatIntensityRB->add(medium);
+	climatIntensityRB->add(high);
+
 	//position of radiobuttons
 	envRB->setRelativePosition(core::rect<s32>(x, y, x + width * 3, y + height));
 	y += height + 10;
 	timeRB->setRelativePosition(core::rect<s32>(x, y, x + width * 2, y + height));
 	y += height + 10;
 	climatRB->setRelativePosition(core::rect<s32>(x, y, x + width * 3, y + height));
+	y += height + 10;
+	_env->addStaticText(L"Weather intensity:", rect<s32>(x, y, x + 200, y + height), false, true, _tab);
+	y += height + 10;
+	climatIntensityRB->setRelativePosition(core::rect<s32>(x, y, x + width * 4, y + height * 2));
 
+	y += height + 10;
 	y += height + 10;
 	y += height + 10;
 	_env->addStaticText(L"Music volume", rect<s32>(x, y, x + 100, y + height), false, true, _tab);
@@ -370,6 +386,7 @@ void Core::setGUI()
     	context.envRadioBox = envRB;
     	context.timeRadioBox = timeRB;
     	context.climatRadioBox = climatRB;
+    	context.climatIntensityRadioBox = climatIntensityRB;
 	context.env = _env;
 
 	// create event receiver

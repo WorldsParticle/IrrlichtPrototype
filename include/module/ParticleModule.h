@@ -11,8 +11,8 @@ public:
     ParticleModule(Core *c, IrrlichtDevice* _device, scene::ICameraSceneNode* _camera,
 		TimerModule * timer)
         : AModule(c, _device, _camera),
-        _weather(AWeather::E_WEATHER::NONE),
         _particleSystem(nullptr),
+        _weather(AWeather::E_WEATHER::NONE),
         _timer(timer)
 
     {
@@ -24,6 +24,7 @@ public:
     virtual int update();
 
     void setWeather(int w);
+    void setWeatherIntensity(int i);
 
 
 private:

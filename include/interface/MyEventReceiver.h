@@ -19,6 +19,7 @@ public:
 		irr::gui::CGUIRadioCheckBoxGroup*	envRadioBox;
 		irr::gui::CGUIRadioCheckBoxGroup*	timeRadioBox;
 		irr::gui::CGUIRadioCheckBoxGroup*	climatRadioBox;
+		irr::gui::CGUIRadioCheckBoxGroup*	climatIntensityRadioBox;
 		irr::gui::IGUIEnvironment*		env;
 	};
 	// Define some values that we'll use to identify individual GUI controls.
