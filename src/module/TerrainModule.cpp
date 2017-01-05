@@ -202,12 +202,13 @@ scene::ITerrainSceneNode	*TerrainModule::loadTerrain(::map::MapGraph &map, unsig
 	std::cout << "Map at: " << x * (aabb.MaxEdge.X - aabb.MinEdge.X) << ' ' << z * (aabb.MaxEdge.Z - aabb.MinEdge.Z) << '\n';
 
 	terrain->setMaterialFlag(video::EMF_LIGHTING, true);
-	terrain->setMaterialTexture(0,
-		driver->getTexture(_groundInfoByZone[zone].detailTexturePath.c_str()));
-	terrain->setMaterialTexture(1,
-		driver->getTexture(_groundInfoByZone[zone].baseTexturePath.c_str()));
+	//terrain->setMaterialTexture(0,
+	//		driver->getTexture(RESOURCES_PATH "/detailmap3.jpg")); // 512
+	std::string text = std::string(RESOURCES_PATH) + "/4096_full" + std::to_string(rand() % 5 + 1) + ".jpg";
+	terrain->setMaterialTexture(1, driver->getTexture(text.c_str()));
 	terrain->setMaterialType(video::EMT_DETAIL_MAP);
-	terrain->scaleTexture(WP_TERRAIN_SIZE / (512.0f * 2.0f * 2.0f * 2.0f), WP_TERRAIN_SIZE / 4096.0f);
+	terrain->scaleTexture(1, 1);
+	//terrain->scaleTexture(WP_TERRAIN_SIZE / (512.0f * 2.0f * 2.0f * 2.0f), WP_TERRAIN_SIZE / 4096.0f);
 
 	terrain->drop();
 

@@ -114,7 +114,7 @@ int Core::initModules()
 	//MODULES
 	//
 	//Add light
-	_smgr->setAmbientLight(video::SColorf(0.2,0.2,0.2, 1));
+	_smgr->setAmbientLight(video::SColorf(0.5,0.5,0.5, 1));
 
     if (CustomTreeShader::Initialize(this->_driver->getGPUProgrammingServices()) == false)
     {
@@ -140,7 +140,7 @@ int Core::initModules()
 	waterModule->init();
 	particleModule = new ParticleModule(this, device, camera, timerModule);
 	particleModule->init();
-    
+
 
 
 	setGUI();
@@ -170,7 +170,8 @@ void Core::generate()
     static ISceneNode*  trees = nullptr;
 	// apply gui value
 	// todo
-	dynamic_cast<IntValue *>(generator->step("Zones")->param("Nombre"))->setValue(200);
+	dynamic_cast<IntValue *>(generator->step("Zones")->param("Nombre"))->setValue(rand() % 200 + 300);
+	dynamic_cast<IntValue *>(generator->step("Elevation")->param("Facteur d'aplanissement"))->setValue(rand() % 100);
 
 	if (map)
 		delete map;
@@ -184,7 +185,7 @@ void Core::generate()
 	camera->setTarget(vector3df(0, terrainModule->getHeight(WP_TERRAIN_SIZE / 2, WP_TERRAIN_SIZE / 2), 0));
 
 
-    if (trees) 
+    if (trees)
     {
         trees->removeAll();
         trees->remove();

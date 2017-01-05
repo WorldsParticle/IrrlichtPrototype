@@ -4,12 +4,12 @@
 // please take time to remove into correspondant modules
 
 // Generic
-#define WP_TEXTURE_SIZE 512
+#define WP_TEXTURE_SIZE 2046
 #define WP_WORLD_SCALE  1.0f
 
 // Map (one node = one heightmap)
-#define WP_MAP_NODE_SIZE    (WP_TEXTURE_SIZE * 2)  // More *2, more presition from the generator
-#define WP_MAP_NODE_NUMBER  2 // Let to 1 until clipping implémented
+#define WP_MAP_NODE_SIZE    (WP_TEXTURE_SIZE)  // More *2, more presition from the generator
+#define WP_MAP_NODE_NUMBER  1 // Let to 1 until clipping implémented
 #define WP_MAP_SIZE         (WP_MAP_NODE_SIZE * WP_MAP_NODE_NUMBER)
 
 // Terrain (size in irrlicht unit, or should be)
