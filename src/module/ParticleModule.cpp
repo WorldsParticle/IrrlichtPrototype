@@ -83,7 +83,7 @@ void ParticleModule::updateIntensity()
 }
 
 
-void ParticleModule::setWeather(int w) // Get vector<int> w
+void ParticleModule::setWeather(int w) // Get vector<int> w, int intensity
 {
     // Define time for next weather update
     _nextUpdate = _timer->getTime() + _updateSpeed;
@@ -91,7 +91,7 @@ void ParticleModule::setWeather(int w) // Get vector<int> w
     // For now but will get it from param
     std::vector<int> ws = { w, AWeather::E_WEATHER::RAIN };
     _IGWeathers = ws;
-    _weatherIntensity = AWeather::E_INTENSITY::LOW;
+    _weatherIntensity = AWeather::E_INTENSITY::LOW; // static_cast<AWeather::E_INTENSITY(intensity)
 
     // Start with a random weather
     int random = rand() % ws.size();

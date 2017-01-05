@@ -25,7 +25,10 @@ int TimerModule::update()
 
 void TimerModule::setTime(irr::u32 time)
 {
-    _IGTime = time;
+    // Set IGTime in ms depending on defined time (0 to 24h) and TIME_OF_DAY duration
+    _IGTime = time * TIME_OF_DAY / 24;
+    // Increase IGTime by NIGHT_START to get a proper midnight
+    _IGTime += TIME_OF_DAY * 0.575f;
     _elapsedTime = 0;
 }
 

@@ -2,6 +2,11 @@
 
 #include "module/AModule.h"
 
+// Real time length for one day (in min)
+#define     DAY_LENGTH      5.0f
+// Time of one day in ms depending on DAY_LENGTH
+#define     TIME_OF_DAY     DAY_LENGTH * 60 * 1000
+
 class TimerModule : public AModule
 {
 public:
