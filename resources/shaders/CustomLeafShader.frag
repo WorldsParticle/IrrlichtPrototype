@@ -38,7 +38,7 @@ uniform float       specular_hardness;
 
 void    main()
 {
-    vec4    fragment_color = pow(texture(diffuse_texture, texture_coords), vec4(2.2f));
+    vec4    fragment_color = pow(texture(diffuse_texture, texture_coords), vec4(1.6f));
     vec4    alpha = texture(alpha_texture, texture_coords);
 //    normal = texture(normal_texture, texture_coords);
 

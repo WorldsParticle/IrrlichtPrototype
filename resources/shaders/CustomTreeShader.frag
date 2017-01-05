@@ -36,7 +36,7 @@ uniform float       specular_hardness;
 
 void    main()
 {
-    vec4    fragment_color = pow(texture(diffuse_texture, texture_coords), vec4(2.2f));
+    vec4    fragment_color = pow(texture(diffuse_texture, texture_coords), vec4(1.6f));
     //vec3    fragment_normal = vec3(1.0f, 0.0f, 0.0f); // todo : get the normal from the texture map
 
     vec3 light_direction = normalize(light.position - position);
