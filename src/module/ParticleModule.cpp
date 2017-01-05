@@ -22,6 +22,7 @@ int ParticleModule::init()
     _weathers[AWeather::E_WEATHER::NONE] = nullptr;
     _weathers[AWeather::E_WEATHER::SNOW] = new SnowWeather(_particleSystem, driver);
     _weathers[AWeather::E_WEATHER::RAIN] = new RainWeather(_particleSystem, driver);
+    _weathers[AWeather::E_WEATHER::HAIL] = new HailWeather(_particleSystem, driver);
 
     // Define the weather update speed (in ms)
     _updateSpeed = WEATHER_UPDATE_SPEED * 1000;
