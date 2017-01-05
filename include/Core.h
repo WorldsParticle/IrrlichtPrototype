@@ -43,6 +43,7 @@ private:
 
 	void setGUI();
 
+
 public:
 	ElementsModule	*elementsModule;
 	SkyboxModule	*skyboxModule;
@@ -59,6 +60,9 @@ public:
 
 	bool isInterfaceVisible() const;
 	void toggleInterface();
+
+	inline MyEventReceiver *eventReceiver()
+	{ return _receiver; }
 
 	void applyFogRec(irr::scene::ISceneNode *node);
 };

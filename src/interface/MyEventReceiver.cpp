@@ -25,20 +25,12 @@ void MyEventReceiver::ApplyGUIParametersToWorld()
 	_core->skyboxModule->setSkybox(_context.timeRadioBox->getSelected(),
 			_context.climatRadioBox->getSelected()); // Will later only get weather value
 	_core->particleModule->setWeather(_context.climatRadioBox->getSelected());
-	_core->particleModule->setWeatherIntensity(_context.climatIntensityRadioBox->getSelected());
 	_core->soundModule->SetEnvironmentalSound(_context.envRadioBox->getSelected(),
 			_context.timeRadioBox->getSelected(),
 			_context.climatRadioBox->getSelected());
-	//_core->elementsModule->putElementsOfZone(_context.envRadioBox->getSelected());
-	_core->elementsModule->generateDouglasFirTree();
+	_core->elementsModule->putElementsOfZone(_context.envRadioBox->getSelected());
 }
 
-void MyEventReceiver::Generate()
-{
-	_core->generate();
-	//generatorModule->buildTerrain(_context.envRadioBox->getSelected());
-	ApplyGUIParametersToWorld();
-}
 bool MyEventReceiver::OnEvent(const SEvent& event)
 {
 	// check if user presses the key 'W' or 'D'
@@ -47,13 +39,13 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 		switch (event.KeyInput.Key)
 		{
 	  case irr::KEY_KEY_C: // switch camera
-			//switchCameraMode();
+			switchCameraMode();
 			return true;
 		case irr::KEY_KEY_V: // switch wireframe mode
 			switchWireframe();
 			return true;
 		case irr::KEY_ESCAPE: // quit
-			//_core->close(); //comment this to get the confirmation before quitting back
+			_core->close(); //comment this to get the confirmation before quitting back
 			if (confirmQuit == nullptr) {
 				if (!_core->isInterfaceVisible())
 					_core->toggleInterface();
@@ -77,6 +69,9 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 		case irr::KEY_KEY_I: // interface
 			_core->toggleInterface();
 			return true;
+        case irr::KEY_KEY_G:
+						_core->generate();
+            return true;
 		default:
 			break;
 		}
@@ -91,7 +86,8 @@ bool MyEventReceiver::OnEvent(const SEvent& event)
 				switch(id)
 				{
 					case GUI_ID_GENERATE_BUTTON:
-						Generate();
+						ApplyGUIParametersToWorld();
+						//generatorModule->buildTerrain(_context.envRadioBox->getSelected());
 						return true;
 					case GUI_ID_APPLY_PARAMS_BUTTON:
 						ApplyGUIParametersToWorld();

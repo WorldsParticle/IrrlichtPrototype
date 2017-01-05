@@ -40,6 +40,9 @@ public:
 	void switchCameraMode();
 	void switchWireframe();
 
+	inline SAppContext &context()
+	{ return _context; }
+
 private:
 
 	Core	    *_core;

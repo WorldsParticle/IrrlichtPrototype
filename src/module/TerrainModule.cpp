@@ -8,6 +8,7 @@
 #include "generator/generator.h"
 #include "map/map.h"
 #include "map/zonelookup.h"
+#include "interface/MyEventReceiver.h"
 
 #include "scene/terrain/TerrainSceneNode.h"
 
@@ -204,7 +205,9 @@ scene::ITerrainSceneNode	*TerrainModule::loadTerrain(::map::MapGraph &map, unsig
 	terrain->setMaterialFlag(video::EMF_LIGHTING, true);
 	//terrain->setMaterialTexture(0,
 	//		driver->getTexture(RESOURCES_PATH "/detailmap3.jpg")); // 512
-	std::string text = std::string(RESOURCES_PATH) + "/4096_full" + std::to_string(rand() % 5 + 1) + ".jpg";
+
+	std::string text = std::string(RESOURCES_PATH) + "/4096_full" +
+			std::to_string(core->eventReceiver()->context().envRadioBox->getSelected()) + ".jpg";
 	terrain->setMaterialTexture(1, driver->getTexture(text.c_str()));
 	terrain->setMaterialType(video::EMT_DETAIL_MAP);
 	terrain->scaleTexture(1, 1);
