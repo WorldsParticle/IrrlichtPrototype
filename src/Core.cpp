@@ -26,6 +26,7 @@
 
 #include "Configuration.h"
 
+
 using namespace irr;
 using namespace core;
 using namespace scene;
